@@ -1,0 +1,190 @@
+1 hour ->
+
+
+reddit ->
+subreddit =  5  [all,hot,politics,worldnews,videos]
+type =  2 [rising,hot]
+[#] of posts = 20 -> submission title + submission comments -> join -> send
+
+  1st analysis gotten data example:
+    categoies -> label & confidence
+    sentiment -> label & confidence pos/new
+    entities ->
+
+
+database schema:
+
+
+
+
+catagories:
+----------
+1. article
+[2017-04-22 16:15:59,373] INFO: root: {'categories': [{'label': 'LAW_GOVERNMENT_AND_POLITICS', 'confidence': 0.12227408626371404}], 'responseHeaders': {'Strict-Transport-Security': 'max-age=63072000; includeSubdomains; preload', 'X-RosetteAPI-ProcessedLanguage': 'eng', 'Server': 'openresty', 'Connection': 'keep-alive', 'X-RosetteAPI-Request-Id': '81c7278674bb4acab491c9f93a053265', 'X-RosetteAPI-App-Id': '1409614621895', 'Content-Length': '89', 'X-RosetteAPI-Concurrency': '2', 'Date': 'Sat, 22 Apr 2017 20:15:59 GMT', 'Content-Type': 'application/json'}}
+'categories':[
+
+    {
+        'label':'LAW_GOVERNMENT_AND_POLITICS',
+        'confidence':0.12227408626371404
+    }
+
+]
+
+2. reddit
+[2017-04-22 17:45:22,799] INFO: root: {'responseHeaders': {'X-RosetteAPI-App-Id': '1409614621895', 'Server': 'openresty', 'Strict-Transport-Security': 'max-age=63072000; includeSubdomains; preload', 'Connection': 'keep-alive', 'X-RosetteAPI-Request-Id': 'ba86796c12445afafccf24620f0944e1', 'Content-Length': '85', 'Content-Type': 'application/json', 'X-RosetteAPI-ProcessedLanguage': 'eng', 'X-RosetteAPI-Concurrency': '2', 'Date': 'Sat, 22 Apr 2017 21:45:22 GMT'}, 'categories': [{'confidence': 0.5316236499823158, 'label': 'TECHNOLOGY_AND_COMPUTING'}]}
+
+
+root.catagories -> array of json containing (usually 1) { label:TECHNOLOGY_AND_COMPUTING   & confidence:  }
+    'confidence':0.5316236499823158,
+    'label':'TECHNOLOGY_AND_COMPUTING'
+
+
+sentiment:
+----------
+1. article
+{
+
+    'entities':[16],
+    'responseHeaders':{},
+    'document':{
+        'label':'neu',
+        'confidence':0.9719513972797291
+    }
+
+}
+SyntaxError: JSON.parse: expected property name or '}' at line 1 column 2 of the JSON data
+
+'entities':[16],
+
+2. reddit
+root.document -> confidence of label, label-> +/- neutral
+{
+
+    'responseHeaders':{},
+    'document':{
+        'confidence':0.9999999675996256,
+        'label':'pos'
+    },
+    'entities':[171]
+
+}
+
+entities:
+----------
+
+SyntaxError: JSON.parse: expected property name or '}' at line 1 column 2 of the JSON data
+
+'entities':[],
+
+1. article
+  'entities':[
+    {
+        'mention':'Reuters',
+        'count':4,
+        'type':'ORGANIZATION',
+        'sentiment':{
+            'label':'neu',
+            'confidence':0.6934126616866995
+        },
+        'normalized':'Reuters',
+        'entityId':'Q130879'
+    }
+
+2. reddit
+
+---> more parsing
+
+
+
+
+
+-----------------
+reddit trends public api via rosetta? gather data evrer certain time and store it on db... use db to take data?
+
+use d3 js visualizer
+
+
+
+see hot post every hour?
+
+tools for mod to track analytics
+
+--
+
+docker installer app node js
+--
+next step for tomorrow -> use same data  to create array of apis to go and log it out on file
+
+look at log file, come up with a schema 
+start  parsing functions to match schema/stopre
+
+--
+
+/sentiment [use]
+
+-> document's label -> confidence 
+-> entitiy's label -> condidence
+
+
+/catagories [use]
+-> categorization mapping
+
+Arts & Entertainment 	Travel
+Business 	Automotive
+Education 	Careers
+Food & Drink 	Family & Parenting
+Hobbies & Interests 	Health & Fitness
+Law, Gov’t & Politics 	Home & Garden
+Personal Finance 	Pets
+Real Estate 	Religion & Spirituality
+Science 	Sports
+Society 	Technology & Computing
+Style & Fashion 	
+
+
+/relationships[nope]
+relation -> org of, member of etc.
+
+
+/entities [use]
+-> entities -> detailed category
+    LOCATION: A city, state, country, region, building, monument, body of water, park, or address.
+
+    ORGANIZATION: A corporation, institution, agency, or other group defined by an organizational structure.
+
+    PERSON: A human identified by name, nickname, or alias.
+
+The following entities are available in select languages. Contact us for more information.
+
+    PRODUCT: A brand name item produced by an organization.
+
+    TITLE: Appellation associated with an occupation, office, or status.
+
+    NATIONALITY: Reference to a country or region of origin.
+
+    RELIGION: Reference to an organized religion or theology, as well as its followers.
+
+    IDENTIFIER:CREDIT_CARD_NUM: Credit card numbers.
+
+    IDENTIFIER:EMAIL: Email addresses.
+
+    IDENTIFIER:MONEY: Currencies.
+
+    IDENTIFIER:PERSONAL_ID_NUM: Personal identification numbers.
+
+    IDENTIFIER:PHONE_NUMBER: Phone numbers.
+
+    IDENTIFIER:URL: Web addresses.
+
+    TEMPORAL:DATE: Date.
+
+    TEMPORAL:TIME: Time.
+
+    IDENTIFIER:DISTANCE: Distance.
+
+    IDENTIFIER:LATITUDE_LONGITUDE: Geographic locations in latitude and longitude coordinates.
+
+
+/syntactic-dependencies
+-> future save those
+/text-embedding
