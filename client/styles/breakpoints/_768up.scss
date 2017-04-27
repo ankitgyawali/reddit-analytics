@@ -1,0 +1,63 @@
+/******************************************************************
+
+768px and up
+
+******************************************************************/
+
+/*********************
+GENERAL STYLES
+*********************/
+
+body {
+	font-family: $font;
+}
+
+/*********************
+LAYOUT & GRID STYLES
+*********************/
+
+.container {
+	width: 760px;
+}
+
+/*********************
+HEADER STYLES
+*********************/
+
+.header {
+
+	a {
+		font-weight: $bold;
+	}
+}
+
+#logo {
+	margin: 0;
+	line-height: 1;
+}
+
+/*********************
+NAVIGATION STYLES
+*********************/
+
+.nav {
+	border: 0;
+
+	ul {
+		background:$black;
+		margin-top:0;
+	}
+
+	li {
+		position: relative;
+
+		a {
+			border-bottom: 0;
+
+			&:hover, &:focus {
+				color: $white;
+				text-decoration: underline;
+			}
+		}
+	}
+}

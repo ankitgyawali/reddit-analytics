@@ -1,3 +1,14 @@
 server/config.ini
 __pycache__
 server/__pycache__
+client/node_modules
+client/bower_components
+client/sftp-config.json
+client/_build
+client/npm-debug.log
+client/.idea
+client/style.css
+client/style.min.css
+node_modules
+bower_components
+client/package.json*

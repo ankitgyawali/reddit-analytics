@@ -1,21 +1,41 @@
 1 hour ->
 
+length limit ->  50000
+
+
 
 reddit ->
 subreddit =  5  [all,hot,politics,worldnews,videos]
 type =  2 [rising,hot]
 [#] of posts = 20 -> submission title + submission comments -> join -> send
 
+1 submission row ->
+
+[ 1 day graph ->  
+for hot rising ->  24 times   [] ->  20 different post per hour though -> gotta combine them
+]
   1st analysis gotten data example:
     categoies -> label & confidence
     sentiment -> label & confidence pos/new
-    entities ->
+        entities ->
 
 
-database schema:
+database schema in one hour -- with 20 post:
 
+worldnews-hot table [one-post] 
+    reddit_submission_id: String  --> create post link via    ---> reddit.com/{{id}}
+    reddit_submission_title: String -- not necessary ? 
+    reddit_submission_url: String  -- not necessary ?
+    sentiment: { label: string
+                 & confidence: integer}
+    catagories: { label: string
+                 & confidence: integer}
+    entities: [{
 
+    }]
 
+post * hour * month = 20 * 24 * 30 = 3360
+       hour * month =  24 * 30  =  720
 
 catagories:
 ----------
@@ -127,7 +147,7 @@ start  parsing functions to match schema/stopre
 
 
 /catagories [use]
--> categorization mapping
+-> categorization mapping -> 21 catagories with confidence mapping
 
 Arts & Entertainment 	Travel
 Business 	Automotive
