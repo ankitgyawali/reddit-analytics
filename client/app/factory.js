@@ -9,7 +9,7 @@
    * 
    */
   angular
-    .module('boilerplate')
+    .module('reddit-analytics')
     .factory('getDataFromAPI', getDataFromAPI);
 
   getDataFromAPI.$inject = ['$http', 'LocalStorage'];

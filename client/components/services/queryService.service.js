@@ -30,7 +30,7 @@
 
 
   angular
-    .module('boilerplate')
+    .module('reddit-analytics')
     .factory('QueryService', [
       '$http', '$q', 'CONSTANTS', QueryService
     ]);

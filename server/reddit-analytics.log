@@ -120,40 +120,72 @@ https://www.reddit.com/r/videos/comments/5ylldf/this_just_happened_on_bbc_news/
 [2017-04-23 20:35:54,490] INFO: root: MAINTEXT ANKIT
 [2017-04-23 20:35:54,490] INFO: root:
 https://www.reddit.com/r/worldnews/comments/4d75i7/26_terabyte_leak_of_panamanian_shell_company_data/[2017-04-25 01:09:29,589] INFO: root: Starting timestamp reddit bot.
-
-[2017-04-26 02:03:16,577] INFO: root: Scraping data from reddit for reddit-analytics..
-[2017-04-26 02:03:16,579] INFO: rosette.api: Initialized on https://api.rosette.com/rest/v1/
-[2017-04-26 02:03:21,444] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:03:23,629] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:03:33,715] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:03:35,926] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:03:38,947] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:03:41,271] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:03:46,631] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:03:53,846] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:03:57,193] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:03:59,546] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:04:01,912] INFO: root: Stored metadata from /r/worldnews to database.
-[2017-04-26 02:16:05,878] INFO: root: Scraping data from reddit for reddit-analytics..
-[2017-04-26 02:16:05,879] INFO: rosette.api: Initialized on https://api.rosette.com/rest/v1/
-[2017-04-26 02:16:10,439] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:16:12,699] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:16:16,534] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:16:18,708] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:16:21,724] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:16:23,984] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:16:29,206] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:16:31,390] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:16:34,863] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:16:37,011] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:16:41,819] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:16:44,001] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:16:48,960] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:16:51,139] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:16:54,686] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:16:56,828] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:17:00,463] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:17:02,643] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:17:05,963] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
-[2017-04-26 02:17:08,096] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
-[2017-04-26 02:17:10,433] INFO: root: Stored metadata from /r/worldnews to database.
+lytics..[2017-04-28 00:48:29,767] INFO: root: Scraping data from reddit for reddit-analytics..
+[2017-04-28 00:48:29,990] INFO: root: Initialized table: all
+[2017-04-28 00:48:30,192] INFO: root: Initialized table: worldnews
+[2017-04-28 00:48:30,427] INFO: root: Initialized table: politics
+[2017-04-28 00:48:30,640] INFO: root: Initialized table: videos
+[2017-04-28 00:48:30,842] INFO: root: Initialized table: askreddit
+[2017-04-28 00:48:30,966] INFO: rosette.api: Initialized on https://api.rosette.com/rest/v1/
+[2017-04-28 00:49:59,928] INFO: root: Scraping data from reddit for reddit-analytics..
+[2017-04-28 00:49:59,929] INFO: root: Initialized table: all
+[2017-04-28 00:49:59,929] INFO: root: Initialized table: worldnews
+[2017-04-28 00:49:59,929] INFO: root: Initialized table: politics
+[2017-04-28 00:49:59,929] INFO: root: Initialized table: videos
+[2017-04-28 00:49:59,930] INFO: root: Initialized table: askreddit
+[2017-04-28 00:49:59,931] INFO: rosette.api: Initialized on https://api.rosette.com/rest/v1/
+[2017-04-28 00:53:07,897] INFO: root: Scraping data from reddit for reddit-analytics..
+[2017-04-28 00:53:07,898] INFO: root: Initialized table: all
+[2017-04-28 00:53:07,899] INFO: root: Initialized table: worldnews
+[2017-04-28 00:53:07,899] INFO: root: Initialized table: politics
+[2017-04-28 00:53:07,899] INFO: root: Initialized table: videos
+[2017-04-28 00:53:07,899] INFO: root: Initialized table: askreddit
+[2017-04-28 00:53:07,901] INFO: rosette.api: Initialized on https://api.rosette.com/rest/v1/
+[2017-04-28 00:53:49,539] INFO: root: Scraping data from reddit for reddit-analytics..
+[2017-04-28 00:53:49,540] INFO: rosette.api: Initialized on https://api.rosette.com/rest/v1/
+[2017-04-28 00:54:07,931] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 00:54:15,488] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 00:54:19,835] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 00:54:22,064] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 00:54:25,164] INFO: root: Stored metadata from /r/worldnews to database.
+[2017-04-28 00:54:31,333] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 00:54:33,792] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 00:54:41,510] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 00:54:48,746] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 00:54:51,986] INFO: root: Stored metadata from /r/politics to database.
+[2017-04-28 00:54:58,018] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 00:54:58,640] INFO: root: Error for submission [67xqs9] while calling rosette API: tooMuchData: extracted text length 50478 exceeds system limit 50000:
+  https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:08:06,101] INFO: root: Initialized table: worldnews
+[2017-04-28 21:08:06,347] INFO: root: Initialized table: politics
+[2017-04-28 21:08:06,572] INFO: root: Initialized table: videos
+[2017-04-28 21:08:06,862] INFO: root: Initialized table: askreddit
+[2017-04-28 21:08:07,355] INFO: rosette.api: Initialized on https://api.rosette.com/rest/v1/
+[2017-04-28 21:08:10,916] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:08:13,199] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 21:08:20,197] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:08:22,412] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 21:08:26,671] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:08:28,884] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 21:08:31,840] INFO: root: Stored metadata from /r/worldnews to database.
+[2017-04-28 21:08:36,360] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:08:38,561] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 21:09:29,841] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:09:32,064] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 21:09:37,464] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:09:40,001] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 21:09:43,271] INFO: root: Stored metadata from /r/politics to database.
+[2017-04-28 21:09:48,299] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:09:50,588] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 21:10:00,602] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:10:18,244] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 21:10:22,954] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:10:25,152] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 21:10:28,482] INFO: root: Stored metadata from /r/videos to database.
+[2017-04-28 21:10:34,514] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:10:36,992] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 21:10:42,487] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:10:48,386] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 21:10:54,478] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-28 21:11:01,962] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-28 21:11:05,196] INFO: root: Stored metadata from /r/askreddit to database.

@@ -5,8 +5,8 @@
    * Definition of the main app module and its dependencies
    */
   angular
-    .module('boilerplate', [
-      'ngRoute'
+    .module('reddit-analytics', [
+      'ngRoute', 'nvd3'
     ])
     .config(config);
 
@@ -37,8 +37,13 @@
         controller: 'MainController',
         controllerAs: 'main'
       })
-      .when('/setup', {
-        templateUrl: 'views/setup.html',
+      .when('/explore', {
+        templateUrl: 'views/explore.html',
+        controller: 'MainController',
+        controllerAs: 'main'
+      })
+      .when('/documentation', {
+        templateUrl: 'views/documentation.html',
         controller: 'MainController',
         controllerAs: 'main'
       })
@@ -57,7 +62,7 @@
    * 
    */
   angular
-    .module('boilerplate')
+    .module('reddit-analytics')
     .factory('authInterceptor', authInterceptor);
 
   authInterceptor.$inject = ['$rootScope', '$q', 'LocalStorage', '$location'];
@@ -89,15 +94,15 @@
    * Run block
    */
   angular
-    .module('boilerplate')
+    .module('reddit-analytics')
     .run(run);
 
-  run.$inject = ['$rootScope', '$location'];
+  run.$inject = ['$location'];
 
-  function run($rootScope, $location) {
+  function run($location) {
 
     // put here everything that you need to run on page load
-
+   
   }
 
 

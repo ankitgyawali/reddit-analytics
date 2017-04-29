@@ -4,7 +4,7 @@
 
 
   angular
-    .module('boilerplate')
+    .module('reddit-analytics')
     .directive('mainNav', tinMainNav);
 
   function tinMainNav() {

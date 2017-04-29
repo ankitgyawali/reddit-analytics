@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-csp="" ng-app="boilerplate"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-csp="" ng-app="reddit-analytics"> <!--<![endif]-->
 
 	<head>
 
@@ -63,6 +63,10 @@
 	<script type="text/javascript" src="bower_components/angular/angular.js"></script>
 	<script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
 	<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+	<script src="bower_components/d3/d3.js"></script>
+	<script src="bower_components/nvd3/build/nv.d3.js"></script> <!-- or use another assembly -->
+	<script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+	<link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css">
 	<!-- endbuild -->
 
 	<!-- Angular components -->
@@ -73,13 +77,13 @@
 	<script type="text/javascript" src="components/services/queryService.service.js"></script>
 	<script type="text/javascript" src="components/directives/main.nav.directive.js"></script>
 	<script type="text/javascript" src="components/directives/responsive.nav.directive.js"></script>
-	<script type="text/javascript" src="components/directives/owl.slider.directive.js"></script>
 	<!-- endbuild -->
 
 	<!-- Application sections -->
 	<!-- build:mainapp js/mainapp.js -->
 	<script type="text/javascript" src="app/factory.js"></script>
 	<script type="text/javascript" src="app/controller.js"></script>
+	<script type="text/javascript" src="app/homeController.js"></script>
 	<!-- endbuild -->
 
 	<!-- templates from $templateCache -->

@@ -12,7 +12,7 @@
    * Example in main-nav.html file
    * 
    */
-  angular.module('boilerplate')
+  angular.module('reddit-analytics')
     .directive('responsiveNav', responsiveNav);
 
 

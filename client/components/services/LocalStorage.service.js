@@ -21,7 +21,7 @@
      *
      */
     angular
-      .module('boilerplate')
+      .module('reddit-analytics')
       .factory('LocalStorage', [
         '$window', '$rootScope', LocalStorageService
       ]);

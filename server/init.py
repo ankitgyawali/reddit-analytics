@@ -1,5 +1,5 @@
 # Initialize reddit to get comments, process those comments via rosette api and parse them for sending db friendly data to database-driver.py
-import praw, time, re, requests, json, sqlite3, logging, configparser, time, ast
+import praw, time, re, requests, json, sqlite3, logging, configparser, ast
 
 from rosette.api import API, DocumentParameters, MorphologyOutput
 import rosette.api
@@ -15,6 +15,7 @@ sql = sqlite3.connect(config.get('DATABASE', 'DB_FILENAME'))
 
 # Bot Configs
 # SLEEPTIME = int(config.get('SLEEPTIME', 'TIME'))
+categorymappings = json.loads(config.get('MAPPING', 'CATEGORY_MAPPING'))
 
 logging.basicConfig(
     format = '[%(asctime)s] %(levelname)s: %(name)s: %(message)s',
@@ -26,12 +27,14 @@ logging.info('Scraping data from reddit for reddit-analytics..')
 if(config.get('DATABASE', 'INIT_DB')== "True"):
     initDB.initializeDB(sql,ast.literal_eval(config.get('ALL', 'SUBREDDITS')),logging)
 
-reddit = praw.Reddit(client_id=config.get('PRAW_DETAILS', 'CLIENT_ID'),
+try:
+    reddit = praw.Reddit(client_id=config.get('PRAW_DETAILS', 'CLIENT_ID'),
                      client_secret=config.get('PRAW_DETAILS', 'CLIENT_SECRET'),
                      password=config.get('PRAW_DETAILS', 'BOT_PASSWORD'),
                      user_agent=config.get('PRAW_DETAILS', 'USERAGENT'),
                      username=config.get('PRAW_DETAILS', 'BOT_USERNAME'))
-
+except:
+    logging.info("Cannot login into reddit")
 
 api = API("e4897f0ec498c64935cf0b022fc3eef4")
 params = DocumentParameters()
@@ -39,18 +42,30 @@ params = DocumentParameters()
 def classifyComment(comment):
     return "processsed"
 
+def categoryMapper(category):
+    try:
+        return categorymappings[category]
+    except:
+        return category
+
 
 def processASubmission(submission):
     singleComment = []
     submission.comments.replace_more(limit=0)
     for comment in submission.comments.list():
         singleComment.append(comment.body)
-    return ' '.join(singleComment)[:49950]
+    commentToReturn = ' '.join(singleComment)
+    commentToReturn = commentToReturn.rstrip('\r\n')
+    return commentToReturn[:49950]
     # return singleComment
 # logging.info(api.categories(params))
 
 def processASubReddit(subreddit,params):
-    submissions = reddit.subreddit(subreddit).hot(limit=int(config.get('ALL', 'NUMBER_OF_POSTS')))
+    try:
+        submissions = reddit.subreddit(subreddit).hot(limit=int(config.get('ALL', 'NUMBER_OF_POSTS')))
+    except Exception as e:
+        logging.info("Error with reddit API while fetching posts from /r/"+subreddit+": "+ str(e))
+        return [[],True]
     entities = []
     sentiment = []
     catagories = []
@@ -59,20 +74,34 @@ def processASubReddit(subreddit,params):
     for submission in submissions: #sleep 3 sec here #Returns a single post for each submission
         try:
             params['content'] = processASubmission(submission)
-            catagories.append(api.categories(params)['categories'])
+            cat = api.categories(params)['categories']
+            cats = []
+            for c in cat:
+                cats.append(json.dumps({'l': categoryMapper(c['label']), 'c': str(c['confidence'])[2:4]}))
+            catagories.append(cats)
             time.sleep(int(config.get('SLEEPTIME', 'ROSETTE_SLEEP')))
             sentities = api.sentiment(params)
-            sentiment.append(sentities['document'])
-            entities.append(sentities['entities'][:3])
+            sentis = sentities['document']
+            entis = sentities['entities'][:5]
+            newentis = []
+            for e in entis:
+                newentis.append(json.dumps({'l': e['sentiment']['label'],'c':str(e['sentiment']['confidence'])[2:4],'n':e['normalized'],'o':e['count']}))
+            sentiment.append(json.dumps({'l': sentis['label'], 'c': str(sentis['confidence'])[2:4]}))
+            entities.append(newentis)
             reddit_id.append(submission.id)
         except Exception as e:
             logging.info('Error for submission ['+submission.id+'] while calling rosette API: '+ str(e))
+            return [[],True]
         time.sleep(int(config.get('SLEEPTIME', 'ROSETTE_SLEEP')))
-    return [subreddit,reddit_id,sentiment,entities,catagories]
+    return [[subreddit,reddit_id,sentiment,entities,catagories],None]
 
 
 for subreddit in ast.literal_eval(config.get('ALL', 'SUBREDDITS')):
-    databaseDriver.addToDatabase(sql,*processASubReddit(subreddit,params))
+    processedSubreddit = processASubReddit(subreddit,params)
+    if (processedSubreddit[1] is not None):
+        logging.info("Didn't store anything to db. Something went wrong")
+    else:
+        databaseDriver.addToDatabase(sql,*processedSubreddit[0])
     time.sleep(int(config.get('SLEEPTIME', 'SR_SLEEP'))) 
 
 # 5. Set parameters.
@@ -89,12 +118,3 @@ for subreddit in ast.literal_eval(config.get('ALL', 'SUBREDDITS')):
 
 
 #   5 subreddits times 10 posts times 31 days times  6/day (every 4 hour)  -> API KEY 1
-#   5 subreddits times 10 posts times 31 days times  6/day (every 4 hour)  -> API KEY 2
-
-
-
-# logging.info((len(comments))
-#  -> api morphology -> send to parser -> sleep() -> next api 
-# logging.info(comments)
-# result is a Python dictionary that contains
-
