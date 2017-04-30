@@ -11,10 +11,38 @@
     .module('reddit-analytics')
     .controller('homeController', homeController);
 
-  homeController.$inject = ['LocalStorage', 'QueryService','$scope','CONSTANTS'];
+  homeController.$inject = ['LocalStorage', 'QueryService','$scope','CONSTANTS','$http','dataProcessor'];
 
 
-  function homeController(LocalStorage, QueryService,$scope,CONSTANTS) {
+  function homeController(LocalStorage, QueryService,$scope,CONSTANTS,$http,dataProcessor) {
+        $scope.xdata = "test";
+        $scope.loadData = function(){
+                    $http({
+                    method: 'POST',
+                    url: '/initialize',
+                    // set the headers so angular passing info as form data (not request payload)
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+
+                }).success(function(data, status, headers, config) {
+                    
+                $scope.xdata = dataProcessor.processThisWeek(JSON.parse(JSON.stringify(data).replace("\'","'")));
+                console.log($scope.xdata);
+            
+                //   console.log(JSON.parse($scope.reddit_id))
+                })
+                .error(function(data, status, headers, config) {
+            console.log(status);    
+            });
+
+
+};
+
+
+
+
+
 
     // 'controller as' syntax
     var self = this;

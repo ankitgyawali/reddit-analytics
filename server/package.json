@@ -1,0 +1,25 @@
+{
+  "name": "reddit-analytics",
+  "version": "1.0.0",
+  "description": "Reddit Analytics",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "analytics"
+  ],
+  "author": "Ankit Gyawali",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.4.0",
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "path": "^0.12.7",
+    "sqlite": "^2.5.0",
+    "sqlite3": "^3.1.8"
+  }
+}

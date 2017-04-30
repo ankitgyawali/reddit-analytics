@@ -208,3 +208,57 @@ The following entities are available in select languages. Contact us for more in
 /syntactic-dependencies
 -> future save those
 /text-embedding
+
+reddit trends public api via rosetta? gather data evrer certain time and store it on db... use db to take data?
+
+use d3 js visualizer
+
+
+--
+try using memchache free open source on gitlab
+--
+see hot post every hour?
+
+tools for mod to track analytics
+
+--
+
+docker installer app node js
+
+-
+i
+node module to generate node js code from swagger docs for api?
+
+
+===
+
+riot api some data viz for each matches
+
+===
+data - viz ->
+combine one sentiment with another sentiment to produce new sentiments.
+
+next step for tomorrow -> use same data  to create array of apis to go and log it out on file
+
+look at log file, come up with a schema 
+start  parsing functions to match schema/stopre
+--
+one more end point to get data by date in the future
+--
+
+SELECT * FROM "all" WHERE DATE(process_datetime) >= DATE('now', 'weekday 0', '-7 days');
+
+
+CREATE VIEW IF NOT EXISTS thisWeek AS 
+SELECT "1" as id, process_datetime,reddit_id ,sentiment ,entities ,catagories FROM "all" WHERE DATE(process_datetime) >= DATE("now", "weekday 0", "-7 days")
+UNION ALL
+SELECT "2" as id, process_datetime,reddit_id ,sentiment ,entities ,catagories FROM "worldnews" WHERE DATE(process_datetime) >= DATE("now", "weekday 0", "-7 days")
+UNION ALL
+SELECT "3" as id,process_datetime,reddit_id ,sentiment ,entities ,catagories FROM "askreddit" WHERE DATE(process_datetime) >= DATE("now", "weekday 0", "-7 days")
+UNION ALL
+SELECT "4" as id,process_datetime,reddit_id ,sentiment ,entities ,catagories FROM "videos" WHERE DATE(process_datetime) >= DATE("now", "weekday 0", "-7 days")
+UNION ALL
+SELECT "5" as id,process_datetime,reddit_id ,sentiment ,entities ,catagories FROM "politics" WHERE DATE(process_datetime) >= DATE("now", "weekday 0", "-7 days")
+
+
+select * from thisWeek
