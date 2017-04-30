@@ -8,7 +8,18 @@
 
 Show data
 </button>
-{{xdata}}
+
+
+<div ng-repeat="row in xdata track by $index">   
+<b> {{$index+1}}</b>  {{row.sentiment}}
+
+<br>    
+  {{row.reddit}}
+<br> <br>
+<hr>
+
+</div>
+<!--{{xdata}}-->
 <br><br>
         <nvd3 options='options' data='data'></nvd3>
 

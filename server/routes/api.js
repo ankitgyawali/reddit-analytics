@@ -4,7 +4,8 @@
 // Helps with different CRUD operation on the database collection.
 var express = require('express'),
 async = require('async');
-    router = express.Router();
+    router = express.Router(),
+     util = require('util');
 
 var sqlite3 = require('sqlite3');
 var db = new sqlite3.Database('db-reddit-analytics.db');
@@ -14,11 +15,30 @@ var db = new sqlite3.Database('db-reddit-analytics.db');
 //Extracs required data, stores them in session value and sends back appropriate response.
 router.post('/initialize', function(req, res) {
 
-    db.get("SELECT * FROM thisweek", function(err, row){
-        console.log(row);
-        console.log(err);
-        res.json(row);
-});
+
+  db.serialize(function() {
+
+        db.all("SELECT * FROM thisWeek", function(err, allRows) {
+
+            if(err != null){
+               res.sendStatus(500);
+            }
+
+            console.log(util.inspect(allRows));
+            // callback(allRows);
+             res.json(allRows);
+
+        });
+
+
+    });
+
+
+//     db.get("SELECT * FROM thisweek", function(err, row){
+//         console.log(row);
+//         console.log(err);
+//         res.json(row);
+// });
 
 // var posts = [];
 // db.serialize(function() {

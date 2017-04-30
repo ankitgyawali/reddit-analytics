@@ -19,7 +19,7 @@
         $scope.loadData = function(){
                     $http({
                     method: 'POST',
-                    url: '/initialize',
+                    url: 'http://localhost:3001/initialize',
                     // set the headers so angular passing info as form data (not request payload)
                     headers: {
                         'Content-Type': 'application/json'
@@ -28,23 +28,72 @@
                 }).success(function(data, status, headers, config) {
                     
                 $scope.xdata = dataProcessor.processThisWeek(JSON.parse(JSON.stringify(data).replace("\'","'")));
-                console.log($scope.xdata);
+
+                   for (var i = 0; i < $scope.xdata.length; i++) {
+                                 
+                                 
+                                 console.log(JSON.stringify($scope.xdata[i].subreddit) + ":  " + i);
+
+                                     for (var k = 0; k  <$scope.xdata[i].sentiment.length; k++) {
+
+                                 console.log(JSON.stringify($scope.xdata[i].sentiment[k]) + ":  " + i);
+
+                                        $scope.data[0].children[$scope.xdata[i].id].children.push(
+                                     {
+                                         name: $scope.xdata[i].sentiment[k].label + i + k + '',
+                                         color: ($scope.xdata[i].sentiment[k].label == "pos")? "green": (($scope.xdata[i].sentiment[k].label == "neg")? "red":"yellow"),
+                                         children:[]
+                                     });
+
+
+                                
+                            
+                         }
+                                 
+                                 console.log(JSON.stringify($scope.data[0].children[$scope.xdata[i].id]) + ":  " + i);
+                                
+                         
+
+
+                                //  console.log(JSON.stringify($scope.xdata[i].id));
+                                //  console.log(JSON.stringify($scope.xdata[i].process_datetime));
+                                //  console.log(JSON.stringify($scope.xdata[i].sentiment));
+                                //  console.log("JSON.stringify($scope.xdata[i].sentiment");
+                                    // console.log( $scope.xdata[i].sentiment.label);
+
+                                        //   for (var k = 0; k  <$scope.xdata[i].sentiment.length; k++) {
+                                                    // console.log( $scope.xdata[i].sentiment)
+
+                                //  $scope.data[0].children[$scope.xdata[i].id].children.push(
+                                //      {
+                                //          name: $scope.xdata[i].sentiment[i].label,
+                                //          color: ($scope.xdata[i].sentiment[i].label == "pos")? "green": "red"
+                                //      }
+                                     
+                                //      );
+                        //  }
+
+
+                
+        }
             
+                            console.log(JSON.stringify($scope.data[0]));
+            
+   
+                
+
+
+
                 //   console.log(JSON.parse($scope.reddit_id))
                 })
                 .error(function(data, status, headers, config) {
-            console.log(status);    
-            });
-
+                    console.log(status);    
+                });
 
 };
 
 
-
-
-
-
-    // 'controller as' syntax
+   // 'controller as' syntax
     var self = this;
     $scope.options = {
         chart: {
@@ -62,8 +111,13 @@
         children: []}];
 
     CONSTANTS.reddit.forEach(function(element,index) {
-        $scope.data[0].children.push({ name: "/r/"+element, color:CONSTANTS.color[index]  })
+        $scope.data[0].children.push({ name: "/r/"+element, color:CONSTANTS.color[index],children:[]  })
     }, this);
+
+
+
+
+ 
 
     ////////////  function definitions
 

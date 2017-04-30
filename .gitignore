@@ -1,3 +1,5 @@
+server/db-reddit-analytics.db
+server/reddit-analytics.log
 server/config.ini
 __pycache__
 server/__pycache__

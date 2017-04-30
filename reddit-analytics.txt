@@ -262,3 +262,17 @@ SELECT "5" as id,process_datetime,reddit_id ,sentiment ,entities ,catagories FRO
 
 
 select * from thisWeek
+
+
+--
+sunburst
+
+-> center -> subreddits -> sentiment//entities//categories -> group by remaining
+
+// entities
+// catagories
+// sentiment
+
+
+
+->
