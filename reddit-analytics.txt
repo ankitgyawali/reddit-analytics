@@ -276,3 +276,7 @@ sunburst
 
 
 ->
+
+catagories label -> sentiment (smoothen out color from red to white to green using d3 interpolater) -> entities ->
+
+

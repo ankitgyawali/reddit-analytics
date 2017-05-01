@@ -26,61 +26,96 @@
                     }
 
                 }).success(function(data, status, headers, config) {
-                    
+                    // console.log(data);
+                     $scope.rgb2hex = function(red, green, blue) {
+        var rgb = blue | (green << 8) | (red << 16);
+        return '#' + (0x1000000 + rgb).toString(16).slice(1)
+  }
+
+ function rgb2hex(red, green, blue) {
+        var rgb = blue | (green << 8) | (red << 16);
+        return '#' + (0x1000000 + rgb).toString(16).slice(1)
+  }
+
+
+
                 $scope.xdata = dataProcessor.processThisWeek(JSON.parse(JSON.stringify(data).replace("\'","'")));
 
                    for (var i = 0; i < $scope.xdata.length; i++) {
                                  
                                  
-                                 console.log(JSON.stringify($scope.xdata[i].subreddit) + ":  " + i);
 
-                                     for (var k = 0; k  <$scope.xdata[i].sentiment.length; k++) {
 
-                                 console.log(JSON.stringify($scope.xdata[i].sentiment[k]) + ":  " + i);
+
+                                     for (var k = 0; k  <$scope.xdata[i].categories.length; k++) {
+
+                                         $scope.newchildren = function(entities){
+
+                                             $scope.varstoReturn = [];
+                                             
+                                            //  $scope.xdata[i].entities
+                                            // console.log(entities)
+                                            // console.log(entities.length);
+                    
+                                      
+                                                for (var m = 0; m  <entities[k].length; m++) {
+                                                //  console.log(entities[l][m])
+                                               
+                                                    // 
+                                                 $scope.varstoReturn.push({   name: entities[k][m].normalized+k+m+'', color:"green", children:[]    })
+                                                 console.log({   name: entities[k][m].normalized+k+m+'', color:"green", children:[]    });
+                                                }
+
+
+                                            // console.log(entities)
+                                        // return [{  name:"Test", color: "blue", children:[] }]
+                                                 console.log("+AAAAAAA");
+                                                 console.log(JSON.stringify($scope.varstoReturn));
+                                                 $scope.oldtest = [{name:"te3211st"+i+k,   color:"blue", children:[]},
+                                                 {name:"te321x1st"+i+k+m,   color:"green", children:[]}
+                                                 
+                                        
+                                        ];
+                                        $scope.varstoReturn.push(
+                                                 {name:"te321x1st"+i+k+m,   color:"green", children:[]}
+                                            
+                                        );
+                                        
+                                       console.log(JSON.stringify($scope.oldtest));
+                                        return $scope.varstoReturn;
+                                        // return $scope.oldtest;
+                                         
+                                        }
 
                                         $scope.data[0].children[$scope.xdata[i].id].children.push(
                                      {
-                                         name: $scope.xdata[i].sentiment[k].label + i + k + '',
-                                         color: ($scope.xdata[i].sentiment[k].label == "pos")? "green": (($scope.xdata[i].sentiment[k].label == "neg")? "red":"yellow"),
-                                         children:[]
+                                         name: $scope.xdata[i].categories[k].name + i + k + '',
+                                         color: rgb2hex(CONSTANTS.contrast_set[$scope.xdata[i].categories[k].label_id][0],CONSTANTS.contrast_set[$scope.xdata[i].categories[k].label_id][1],CONSTANTS.contrast_set[$scope.xdata[i].categories[k].label_id][2]),
+                                         
+                                         // Figure out color here
+                                         children: [{ name: "REd"+i+k+'', color: ($scope.xdata[i].sentiment[k].label == "pos")? "green":(($scope.xdata[i].sentiment[k].label == "neg") ? "red" : "white"  ),
+                                         
+                                        //  children:[{name:"te3211st"+i+k,   color:"blue", children:[] }  ]
+                                         children:$scope.newchildren($scope.xdata[i].entities)
+                                        
+                                    }
+                                        ]
+
+
+
                                      });
 
+//    console.log($scope.data[0].children[$scope.xdata[i].id].children)
 
                                 
                             
                          }
-                                 
-                                 console.log(JSON.stringify($scope.data[0].children[$scope.xdata[i].id]) + ":  " + i);
-                                
-                         
-
-
-                                //  console.log(JSON.stringify($scope.xdata[i].id));
-                                //  console.log(JSON.stringify($scope.xdata[i].process_datetime));
-                                //  console.log(JSON.stringify($scope.xdata[i].sentiment));
-                                //  console.log("JSON.stringify($scope.xdata[i].sentiment");
-                                    // console.log( $scope.xdata[i].sentiment.label);
-
-                                        //   for (var k = 0; k  <$scope.xdata[i].sentiment.length; k++) {
-                                                    // console.log( $scope.xdata[i].sentiment)
-
-                                //  $scope.data[0].children[$scope.xdata[i].id].children.push(
-                                //      {
-                                //          name: $scope.xdata[i].sentiment[i].label,
-                                //          color: ($scope.xdata[i].sentiment[i].label == "pos")? "green": "red"
-                                //      }
-                                     
-                                //      );
-                        //  }
-
-
-                
-        }
+    
+   }
             
-                            console.log(JSON.stringify($scope.data[0]));
             
    
-                
+                    //    console.log( $scope.data);
 
 
 
@@ -98,8 +133,10 @@
     $scope.options = {
         chart: {
             type: 'sunburstChart',
-            height: 450,
+            height: 950,
+            showLabels: false,
             color: function(color){return color; },
+       
             // color: d3.scale.category20c(),
             duration: 250
         }
@@ -107,7 +144,8 @@
 
     $scope.data = [{
         name: "Subreddits",
-        color: "white",
+        height: 200,
+        color: "grey",
         children: []}];
 
     CONSTANTS.reddit.forEach(function(element,index) {
@@ -130,6 +168,8 @@
     //   .then(function(ovocie) {
     //     self.ovocie = ovocie.data;
     //   });
+
+    $scope.loadData();
   }
 
 

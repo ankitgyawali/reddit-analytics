@@ -23,7 +23,7 @@ router.post('/initialize', function(req, res) {
             if(err != null){
                res.sendStatus(500);
             }
-
+            console.log(err);
             console.log(util.inspect(allRows));
             // callback(allRows);
              res.json(allRows);

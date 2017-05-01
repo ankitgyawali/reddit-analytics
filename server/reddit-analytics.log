@@ -247,3 +247,31 @@ lytics..[2017-04-28 00:48:29,767] INFO: root: Scraping data from reddit for redd
 [2017-04-29 02:04:20,935] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
 [2017-04-29 02:04:23,109] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
 [2017-04-29 02:04:41,303] INFO: root: Stored metadata from /r/askreddit to database.
+[2017-04-30 20:15:37,692] INFO: root: Scraping data from reddit for reddit-analytics..
+[2017-04-30 20:15:37,693] INFO: root: Initialized table: worldnews
+[2017-04-30 20:15:37,694] INFO: root: Initialized table: politics
+[2017-04-30 20:15:37,694] INFO: root: Initialized table: videos
+[2017-04-30 20:15:37,694] INFO: root: Initialized table: askreddit
+[2017-04-30 20:15:37,694] INFO: root: CREATE VIEW IF NOT EXISTS thisWeek AS SELECT "0" as id, process_datetime,reddit_id ,sentiment ,entities ,catagories FROM "worldnews" WHERE DATE(process_datetime) >= DATE("now", "-7 days") UNION ALL SELECT "1" as id, process_datetime,reddit_id ,sentiment ,entities ,catagories FROM "politics" WHERE DATE(process_datetime) >= DATE("now", "-7 days") UNION ALL SELECT "2" as id, process_datetime,reddit_id ,sentiment ,entities ,catagories FROM "videos" WHERE DATE(process_datetime) >= DATE("now", "-7 days") UNION ALL SELECT "3" as id, process_datetime,reddit_id ,sentiment ,entities ,catagories FROM "askreddit" WHERE DATE(process_datetime) >= DATE("now", "-7 days")
+[2017-04-30 20:15:38,027] INFO: rosette.api: Initialized on https://api.rosette.com/rest/v1/
+[2017-04-30 20:15:41,569] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-30 20:15:43,097] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-30 20:15:46,834] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-30 20:15:48,078] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-30 20:15:50,377] INFO: root: Stored metadata from /r/worldnews to database.
+[2017-04-30 20:15:54,979] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-30 20:15:56,235] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-30 20:16:00,326] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-30 20:16:01,519] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-30 20:16:03,791] INFO: root: Stored metadata from /r/politics to database.
+[2017-04-30 20:16:06,408] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-30 20:16:07,590] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-30 20:16:10,525] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-30 20:16:11,714] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-30 20:16:31,736] INFO: root: Error for submission [68h396] while calling rosette API: 'ConnectionError' object has no attribute 'message'
+[2017-04-30 20:16:31,736] INFO: root: Didn't store anything to db. Something went wrong
+[2017-04-30 20:16:35,617] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-30 20:16:37,061] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-30 20:16:41,827] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/categories
+[2017-04-30 20:16:43,014] INFO: rosette.api: operate: https://api.rosette.com/rest/v1/sentiment
+[2017-04-30 20:16:45,362] INFO: root: Stored metadata from /r/askreddit to database.

@@ -1,16 +1,9 @@
-<h2 class="text-center">Reddit Analytics</h2>
 
 
 <!--<h3>Explore!</h3>-->
 <div class="container cf" ng-controller ="homeController">
 
-<button ng-click="loadData()">
-
-Show data
-</button>
-
-
-<div ng-repeat="row in xdata track by $index">   
+<!--<div ng-repeat="row in xdata track by $index">   
 <b> {{$index+1}}</b>  {{row.sentiment}}
 
 <br>    
@@ -18,12 +11,16 @@ Show data
 <br> <br>
 <hr>
 
-</div>
+</div>-->
 <!--{{xdata}}-->
-<br><br>
+
         <nvd3 options='options' data='data'></nvd3>
 
 <br><br>
+<button ng-click="loadData()">
+
+Show data
+</button>
 
 </div>
 
