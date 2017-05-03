@@ -280,3 +280,31 @@ sunburst
 catagories label -> sentiment (smoothen out color from red to white to green using d3 interpolater) -> entities ->
 
 
+-> 
+scope.data structure 
+
+[
+    { // REDDIT 
+        "name":"Subreddits",
+        "height":200,
+        "color":"grey",
+            "children":[ 4 objects => {   /R/ SUBREDDIT
+                                    "name":"/r/worldnews",
+                                    "color":"#FFwede",
+                                    "children":[ 11 objects =>{ // CATEGORIES // 11 POST OBJECTS
+                                                    "name":"3 : BUSINESS : 01:08:31 GMT-0400 (EDT) - reddit.com/685grs",
+                                                    "color":"#4c005c",
+                                                    "children":[ 1 object => { // SENTIMENT
+                                                                    "name":"reddit.com/685grs00",
+                                                                    "color":"red",
+                                                                    "children":[ 6 objects => { // ENTITIES
+                                                                            "name":"Kim Jong-un0000",
+                                                                            "color":"red",
+                                                                            "children":[ 0 children ]
+                                                                    }]
+                                                            }]
+                                                     }]
+                                                }
+                       ]
+    }
+]

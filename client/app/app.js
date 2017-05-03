@@ -6,9 +6,14 @@
    */
   angular
     .module('reddit-analytics', [
-      'ngRoute', 'nvd3'
+      'ngRoute', 'nvd3','angularMoment'
     ])
-    .config(config);
+    .config(config)
+      .constant('_', window._)
+  // use in views, ng-repeat="x in _.range(3)"
+  .run(function ($rootScope) {
+     $rootScope._ = window._;
+  });
 
   // safe dependency injection
   // this prevents minification issues

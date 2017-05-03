@@ -23,10 +23,10 @@ router.post('/initialize', function(req, res) {
             if(err != null){
                res.sendStatus(500);
             }
-            console.log(err);
-            console.log(util.inspect(allRows));
+            // console.log(err);
+            // console.log(util.inspect(allRows));
             // callback(allRows);
-             res.json(allRows);
+             res.json(JSON.parse(JSON.stringify(allRows).replace("\'","'")));
 
         });
 

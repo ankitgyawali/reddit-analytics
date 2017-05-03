@@ -11,11 +11,54 @@
     .module('reddit-analytics')
     .controller('homeController', homeController);
 
-  homeController.$inject = ['LocalStorage', 'QueryService','$scope','CONSTANTS','$http','dataProcessor'];
+  homeController.$inject = ['LocalStorage', 'QueryService','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment'];
 
 
-  function homeController(LocalStorage, QueryService,$scope,CONSTANTS,$http,dataProcessor) {
+  function homeController(LocalStorage, QueryService,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment) {
         $scope.xdata = "test";
+
+
+
+   // 'controller as' syntax
+    var self = this;
+    $scope.options = {
+        chart: {
+          
+                //   mode: "count",
+            type: 'sunburstChart',
+            mode: 'count',
+            height: 700,
+            showLabels: false,
+            labelFormat: function (d){ return '';},
+         tooltip: {
+      duration: 0,
+      gravity: "w",
+      distance: 25,
+      snapDistance: 0,
+      classes: null,
+      chartContainer: null,
+      enabled: true,
+      valueFormatter: function (d) {   
+         return  '';  },
+      headerFormatter: function (d) {   return '';  },
+    //   headerFormatter: function (d) {   return '<span style="font-size:80%"><b>'+ "reddit-analytics" +"</b></span>";  },
+      hideDelay: 200,
+      headerEnabled: true,
+      fixedTop: null,
+        hidden: true,
+      data: null,
+      id: "nvtooltip-42549"
+    },
+            groupColorByParent: true,
+            scale: d3.scale.category20c(),
+            color: function(color){ return color; },
+            // color: d3.scale.category20c(),
+            duration: 250,
+        },
+ 
+    
+};
+
         $scope.loadData = function(){
                     $http({
                     method: 'POST',
@@ -26,99 +69,100 @@
                     }
 
                 }).success(function(data, status, headers, config) {
-                    // console.log(data);
-                     $scope.rgb2hex = function(red, green, blue) {
-        var rgb = blue | (green << 8) | (red << 16);
-        return '#' + (0x1000000 + rgb).toString(16).slice(1)
-  }
-
- function rgb2hex(red, green, blue) {
-        var rgb = blue | (green << 8) | (red << 16);
-        return '#' + (0x1000000 + rgb).toString(16).slice(1)
-  }
 
 
+// ($scope.api.getScope().chart.color(['red','green']));
+// ($scope.api.update())
+// ($scope.api.refresh());
+// console.log($scope.api.getScope().svg);
 
-                $scope.xdata = dataProcessor.processThisWeek(JSON.parse(JSON.stringify(data).replace("\'","'")));
+    $scope.newchildren = function(reddit_id,process_datetime,entities,p,s){
+    $scope.varstoReturn = [];
+    for (var m = 0; m  <entities[k].length; m++) {
+        $scope.varstoReturn.push({   
+            name: dataProcessor.entitiesLabelMaker(reddit_id,process_datetime,entities[k].length,entities[k][m],m+1,k+m+p+s+''), 
+            // name: entities[k][m].normalized+k+m+p+s+'', 
+                                        color:(entities[k][m].label == "pos")? "green":((entities[k][m].label == "neg") ? "red" : "white"), 
+                                        children:[]})
+        }
+        $scope.varstoReturn.push({ name:"te321x1st"+i+k+m,   color:"green", children:[]});                                            
+    return $scope.varstoReturn;
+}  
+           
 
-                   for (var i = 0; i < $scope.xdata.length; i++) {
-                                 
-                                 
+$scope.xdata = dataProcessor.processThisWeek(data);
 
+$scope.test = [];
+for (var i = 0; i < $scope.xdata.length; i++) {
+// console.log($scope.xdata[i].subreddit)
+// console.log($scope.xdata[i].reddit_id)
+// console.log($scope.xdata[i].categories)
+// $rootScope._.groupBy($scope.xdata[i].categories, [iteratee=label_id])
+for (var k = 0; k  <$scope.xdata[i].categories.length; k++) {
+    //   console.log(  $scope.xdata[i].process_datetime.toTimeString() +  " - reddit.com/"+ $scope.xdata[i].reddit_id[k] + ": " +i +" VS "+ k)
 
-
-                                     for (var k = 0; k  <$scope.xdata[i].categories.length; k++) {
-
-                                         $scope.newchildren = function(entities){
-
-                                             $scope.varstoReturn = [];
-                                             
-                                            //  $scope.xdata[i].entities
-                                            // console.log(entities)
-                                            // console.log(entities.length);
-                    
-                                      
-                                                for (var m = 0; m  <entities[k].length; m++) {
-                                                //  console.log(entities[l][m])
-                                               
-                                                    // 
-                                                 $scope.varstoReturn.push({   name: entities[k][m].normalized+k+m+'', color:"green", children:[]    })
-                                                 console.log({   name: entities[k][m].normalized+k+m+'', color:"green", children:[]    });
-                                                }
-
-
-                                            // console.log(entities)
-                                        // return [{  name:"Test", color: "blue", children:[] }]
-                                                 console.log("+AAAAAAA");
-                                                 console.log(JSON.stringify($scope.varstoReturn));
-                                                 $scope.oldtest = [{name:"te3211st"+i+k,   color:"blue", children:[]},
-                                                 {name:"te321x1st"+i+k+m,   color:"green", children:[]}
-                                                 
-                                        
-                                        ];
-                                        $scope.varstoReturn.push(
-                                                 {name:"te321x1st"+i+k+m,   color:"green", children:[]}
-                                            
-                                        );
-                                        
-                                       console.log(JSON.stringify($scope.oldtest));
-                                        return $scope.varstoReturn;
-                                        // return $scope.oldtest;
-                                         
-                                        }
-
-                                        $scope.data[0].children[$scope.xdata[i].id].children.push(
-                                     {
-                                         name: $scope.xdata[i].categories[k].name + i + k + '',
-                                         color: rgb2hex(CONSTANTS.contrast_set[$scope.xdata[i].categories[k].label_id][0],CONSTANTS.contrast_set[$scope.xdata[i].categories[k].label_id][1],CONSTANTS.contrast_set[$scope.xdata[i].categories[k].label_id][2]),
-                                         
-                                         // Figure out color here
-                                         children: [{ name: "REd"+i+k+'', color: ($scope.xdata[i].sentiment[k].label == "pos")? "green":(($scope.xdata[i].sentiment[k].label == "neg") ? "red" : "white"  ),
-                                         
-                                        //  children:[{name:"te3211st"+i+k,   color:"blue", children:[] }  ]
-                                         children:$scope.newchildren($scope.xdata[i].entities)
-                                        
-                                    }
-                                        ]
-
-
-
-                                     });
-
-//    console.log($scope.data[0].children[$scope.xdata[i].id].children)
-
-                                
-                            
-                         }
+                    // console.log(($scope.xdata[i].categories[k].label_id))
+                    // console.log(($scope.xdata[i].sentiment[k].confidence))
+                    // console.log(parseInt($scope.xdata[i].categories[k].label_id.toString() + $scope.xdata[i].sentiment[k].confidence))
     
-   }
-            
-            
+                $scope.data[0].children[$scope.xdata[i].id].children.push
+                ({
+                    // height:500,
+                    // scale:500,
+                    // size:500,
+                    // sort: function(){ console.log("XX"); return "x"; },
+        size: 39,
+                    
+                    sorter: parseInt($scope.xdata[i].categories[k].label_id.toString() + $scope.xdata[i].sentiment[k].confidence),                    
+                    name:  dataProcessor.categoryLabelMaker( $scope.xdata[i].categories[k].label_id,$scope.xdata[i].categories[k].name,$scope.xdata[i].process_datetime, $scope.xdata[i].reddit_id[k]),
+                    // + "  : " +  + "  : " + .toTimeString() +  " - reddit.com/"+,
+                    label_id: $scope.xdata[i].categories[k].label_id,
+                    color: dataProcessor.rgb2hex(CONSTANTS.contrast_set[$scope.xdata[i].categories[k].label_id][0],CONSTANTS.contrast_set[$scope.xdata[i].categories[k].label_id][1],CONSTANTS.contrast_set[$scope.xdata[i].categories[k].label_id][2]),
+                    headerFormatter: "text",
+                        // Figure out color here
+                        children: 
+                        [{  name: dataProcessor.sentimentLabelMaker($scope.xdata[i].reddit_id[k],$scope.xdata[i].process_datetime, $scope.xdata[i].sentiment[k] ,i+k),
+                            // "reddit.com/"+$scope.xdata[i].reddit_id[k]+i+k, 
+                            
    
-                    //    console.log( $scope.data);
+                            
+                            color: dataProcessor.interPolateSentimentColor($scope.xdata[i].sentiment[k].label,parseInt($scope.xdata[i].sentiment[k].confidence)),
+                            // color: ($scope.xdata[i].sentiment[k].label == "pos")? "green":(($scope.xdata[i].sentiment[k].label == "neg")?"red":"white"),
+                                    children:$scope.newchildren($scope.xdata[i].reddit_id[k],$scope.xdata[i].process_datetime,$scope.xdata[i].entities,i,k)
+            }]
+        });
+ } // Loop one interation of each row posts
+} // Loop through row objects
 
+for (var z = 0; z  <$scope.data[0].children.length; z++) {
+    // $scope.data[0].children[z]  =  subreddit
+    // console.log($scope.data[0].children[z] );
+    // var before = [];
+    // var after = [];
+    // for (var x = 0; x  <$scope.data[0].children[z].children.length; x++) {
+    //         // Array of  POST objects
+    //         before.push($scope.data[0].children[z].children[x].sorter);
+    // }
+    //  $scope.data[0].children[z].children.sort(function(a,b) {return (a.sorter > b.sorter) ? 1 : ((b.sorter > a.sorter) ? -1 : 0);});
+    $scope.data[0].children[z].children.sort(function(a, b){
+    return a.sorter > b.sorter;
+    });
 
+    // for (var y = 0; y  <$scope.data[0].children[z].children.length; y++) {
+    //         // Array of  POST objects
+    //         after.push($scope.data[0].children[z].children[y].sorter);
+    // }
+    // console.log("BEFORE");
+    // console.log(before);
+    // console.log("BEFORE");
+    // console.log(after);
+    
+}
+// console.dir($scope.data[0].children) // 4 subreddits array
 
+// console.dir($scope.data[0].children) // 4 subreddits
+// console.log(JSON.stringify($scope.data))
+            
                 //   console.log(JSON.parse($scope.reddit_id))
                 })
                 .error(function(data, status, headers, config) {
@@ -126,25 +170,11 @@
                 });
 
 };
-
-
-   // 'controller as' syntax
-    var self = this;
-    $scope.options = {
-        chart: {
-            type: 'sunburstChart',
-            height: 950,
-            showLabels: false,
-            color: function(color){return color; },
-       
-            // color: d3.scale.category20c(),
-            duration: 250
-        }
-    };
-
     $scope.data = [{
-        name: "Subreddits",
+        name: "<b>Reddit</b><br><span style='font-size:80%'> Current Time:<br>" + dataProcessor.momentFormatter(new Date())+ "</span>",
+        // Viewing blob of date newDate()
         height: 200,
+        size: 152,
         color: "grey",
         children: []}];
 
@@ -152,10 +182,6 @@
         $scope.data[0].children.push({ name: "/r/"+element, color:CONSTANTS.color[index],children:[]  })
     }, this);
 
-
-
-
- 
 
     ////////////  function definitions
 
@@ -170,6 +196,11 @@
     //   });
 
     $scope.loadData();
+
+   
+
+
+
   }
 
 
