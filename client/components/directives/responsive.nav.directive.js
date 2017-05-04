@@ -22,7 +22,7 @@
     var directiveDefinitionObject = {
       restrict: 'E',
       templateUrl: 'components/directives/responsive-nav.html',
-      link: function(scope, elem, attrs, ctrl) {
+      link: function(scope, elem, attrs, ctrl,route) {
       	elem.on('click', function(e) {
       		$('.responsive-wrapper').slideToggle( 150, 'swing');
           e.preventDefault();

@@ -308,3 +308,43 @@ scope.data structure
                        ]
     }
 ]
+
+
+===
+
+
+store home page on first api call -- use localstorage
+
+
+==
+
+red -> white -> green
+99 -> 0 -> 99 -> 0 -> 99-> 0
+
+99 -> 0
+red // negative
+red to approach black (grey ??? white black)----->
+
+99 -> 0
+white // neutral ->
+white to black
+
+99 -> 0
+green // positive ->
+green to black
+
+Positive: Green.
+Negative: Red. (though negative and positive are reversed in China)
+Warning: Yellow.
+Neutral: Gray.
+
+label id -> 1 . .2. .20
+label -> 1 2 3
+confidence -> 1 to 99
+
+sort ->
+label id * 1005 + label * 105 + confidence
+
+1111
+12 1
+

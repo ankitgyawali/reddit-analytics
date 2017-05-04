@@ -1,27 +1,18 @@
 
 
+  
+
 <!--<h3>Explore!</h3>-->
 <div class="container cf" ng-controller ="homeController">
 
-<!--<div ng-repeat="row in xdata track by $index">   
-<b> {{$index+1}}</b>  {{row.sentiment}}
 
-<br>    
-  {{row.reddit}}
-<br> <br>
-<hr>
-
-</div>-->
-<!--{{xdata}}-->
-
+        <!--<nvd3 options='options' data='data' api="api"></nvd3>-->
 <nvd3 options="options"
       data="data"
-      config="config"
+     config="{ deepWatchData: true }",
       events="events"
       api="api"
       on-ready="callback"></nvd3>
-        <!--<nvd3 options='options' data='data' api="api"></nvd3>-->
-
 <br><br>
 <button ng-click="loadData()">
 

@@ -54,12 +54,12 @@ return label.charAt(0).toUpperCase() + label.slice(1);
 // return ; 
 }
 
-function categoryLabelMaker(category_label_id,category_name,post_datetime,reddit_id)
+function categoryLabelMaker(category_label_id,category_name,post_datetime,reddit_id,sorter)
 {
 // console.log(categoryLabel(category_name))
 // category_name = categoryLabel(category_name)
 // return category_name""
-return "Reddit post: reddit.com/<b>"+reddit_id+"<br>Category:"+category_name+"</center></b><br><span style='font-size:80%'>"+
+return "Reddit post: reddit.com/<b>"+reddit_id+"<br>Category:"+category_name+"</center></b><br> " + "Sorter: " +sorter + "<br><span style='font-size:80%'>"+
 //  post_datetime.toString()
 momentFormatter(post_datetime) + "</span>";
 }
@@ -97,16 +97,6 @@ function sentimentLabelMaker(reddit_id,post_datetime,sentiment,garbage)
 // return category_name""
 let returnstring = "Reddit post: reddit.com/<b>"+reddit_id+"<br>Overall Sentiment:";
 
-      if(sentiment.label=="pos"){
-      returnstring += "positive";
-    }
-    else if(sentiment.label == "neg"){
-
-      returnstring += "negative";
-    }
-    else{
-      returnstring += "neutral";
-    }
     // console.log(post_datetime);
     // console.log(moment(post_datetime.toString()).format('MMMM Do, h:mm a ddd'));
 returnstring += ", Confidence: "+sentiment.confidence+"% </center></b><br><span style='font-size:80%'>"+
@@ -115,9 +105,6 @@ momentFormatter(post_datetime) + "</span> <!--" +garbage+post_datetime.toString(
 return returnstring;
 
 }
-
-
-
     function rgb2hex(red, green, blue) {
         var rgb = blue | (green << 8) | (red << 16);
         return '#' + (0x1000000 + rgb).toString(16).slice(1)
@@ -125,17 +112,34 @@ return returnstring;
    
 
   function interPolateSentimentColor(label,confidence) {
-    let oldr = '';
+   
+
+
       if(label=="pos"){
-        confidence = confidence + 99
-      oldr = "green";
+
+      let color = d3.scale.linear()
+      .domain([0, 99])
+      .interpolate(d3.interpolateHcl)
+      .range(["black", "green"]);
+      return color(confidence);
     }
     else if(label == "neg"){
-      confidence = confidence - 99  
-      oldr = "red";
+
+        let color = d3.scale.linear()
+      .domain([0, 99])
+      .interpolate(d3.interpolateHcl)
+      .range(["black", "red"]);
+      return color(confidence);
+
+
     }
     else{
-      oldr = "white";
+      let color = d3.scale.linear()
+      .domain([0, 99])
+      .interpolate(d3.interpolateHcl)
+      .range(["black", "white"]);
+      return color(confidence);
+
     }
 
 // console.log(label + "  - " +confidence);
@@ -143,12 +147,9 @@ function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-    var color = d3.scale.linear()
-    .domain([-100, 0, 200])
-     .interpolate(d3.interpolateRgb)
-    .range(["red", "white", "green"]);
+
     // return color(getRandomArbitrary(-98,99));
-    return color(confidence);
+  
 
   }
 
@@ -203,6 +204,27 @@ function getRandomArbitrary(min, max) {
    return (allData);
   }
 
+
+                    // parseInt(($scope.xdata[i].categories[k].label_id*1005) + ($scope.xdata[i].sentiment[k].confidence*105)),                    
+
+  function sorterLabel(label_id,confidence,label){
+    let total = label_id;
+    //   if(label=="pos"){
+    //   total += (4*1005);
+    // }
+    // else if(label == "neg"){
+    //   total += (3*1005);
+    // }
+    // else{
+    //   total += (2*1004);
+    // }
+
+
+    // total += confidence;
+    return (total);
+
+  }
+
   return { //All of the data is stored as cookie by utilizing $cookies
 
    processThisWeek: processThisWeek,
@@ -211,7 +233,8 @@ function getRandomArbitrary(min, max) {
    categoryLabelMaker:categoryLabelMaker,
    sentimentLabelMaker:sentimentLabelMaker,
    entitiesLabelMaker:entitiesLabelMaker,
-   momentFormatter:momentFormatter
+   momentFormatter:momentFormatter,
+   sorterLabel:sorterLabel
   };
 
 

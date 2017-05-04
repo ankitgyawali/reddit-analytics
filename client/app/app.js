@@ -6,7 +6,7 @@
    */
   angular
     .module('reddit-analytics', [
-      'ngRoute', 'nvd3','angularMoment'
+      'ngRoute', 'nvd3','angularMoment','ngMaterial','LocalStorageModule'
     ])
     .config(config)
       .constant('_', window._)
@@ -36,21 +36,28 @@
         templateUrl: 'views/home.html',
         controller: 'MainController',
         controllerAs: 'main'
+        // activetab: 'home'
       })
       .when('/contact', {
         templateUrl: 'views/contact.html',
         controller: 'MainController',
         controllerAs: 'main'
+        // activetab: 'contact'
+        
       })
       .when('/explore', {
         templateUrl: 'views/explore.html',
         controller: 'MainController',
         controllerAs: 'main'
+        // activetab: 'explore'
+        
       })
       .when('/documentation', {
         templateUrl: 'views/documentation.html',
         controller: 'MainController',
         controllerAs: 'main'
+        // activetab: 'documentation'
+        
       })
       .otherwise({
         redirectTo: '/'

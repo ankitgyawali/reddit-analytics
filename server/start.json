@@ -1,0 +1,7 @@
+[{
+  "script"    : "server.js",
+   "watch"       : true,
+  "name"      : "reddit-analytics-server",
+//   "exec_mode" : "cluster",
+//   "instances" : -1  // number of CPUs -1
+}]
