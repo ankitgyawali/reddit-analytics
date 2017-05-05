@@ -15,3 +15,11 @@ border-bottom:2px solid blue;
   margin: 20px;
   background-color: #FFF2E0; }
 
+
+
+.radivider {
+    border-right: 1px solid black;
+
+    display: inline-block;
+    box-shadow:1px 0px 1px #888;
+}

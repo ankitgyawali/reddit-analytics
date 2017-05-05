@@ -19,10 +19,10 @@
   .factory('dataProcessor', dataProcessor);
 
 
- dataProcessor.$inject = ['CONSTANTS','moment'];
+ dataProcessor.$inject = ['CONSTANTS','moment','localStorageService'];
 
 
- getDataFromAPI.$inject = ['$http', 'LocalStorage'];
+ getDataFromAPI.$inject = ['$http'];
 
 
  /*
@@ -35,7 +35,7 @@
 
  */
 
- function dataProcessor(CONSTANTS) {
+ function dataProcessor(CONSTANTS,moment,localStorageService) {
 
 
 function momentFormatter(post_datetime){
@@ -156,6 +156,7 @@ function getRandomArbitrary(min, max) {
   function processThisWeek(data) {
 
    var allData = [];
+   var timestamps = [];
 
    for (var k = 0; k < data.length; k++) {
     var newData = {}
@@ -165,6 +166,9 @@ function getRandomArbitrary(min, max) {
     newData.subreddit = CONSTANTS.reddit[data[k].id]
 
     newData.process_datetime = new Date(data[k].process_datetime)
+    timestamps.push(newData.process_datetime);
+
+
     newData.reddit_id = new Function("return " + data[k].reddit_id + ";")();
     newData.sentiment = new Function("return " + data[k].sentiment + ";")();
     newData.entities = new Function("return " + data[k].entities + ";")();
@@ -197,15 +201,38 @@ function getRandomArbitrary(min, max) {
      }
    
     }
+
+
+
       allData.push(newData);
     // console.log(allData);
    }
 //    console.log(JSON.stringify(allData));
+
+
+  ts =  unique_timestamps_cutter(timestamps)
+
+   localStorageService.set("timestamps_arrays",timestamps)
+   localStorageService.set("unique_timestamps",Array.from(ts));
+   localStorageService.set("unique_criteria","EACHDAY")
    return (allData);
   }
 
 
-                    // parseInt(($scope.xdata[i].categories[k].label_id*1005) + ($scope.xdata[i].sentiment[k].confidence*105)),                    
+
+function unique_timestamps_cutter(timestamp){
+   var ts = new Set();    
+   timestamp.map(function(eachmap) {
+     ts.add((eachmap.getFullYear() + "/" + eachmap.getDay() + "/" + eachmap.getDate()))
+   });
+return ts;
+}
+
+
+
+
+
+// parseInt(($scope.xdata[i].categories[k].label_id*1005) + ($scope.xdata[i].sentiment[k].confidence*105)),                    
 
   function sorterLabel(label_id,confidence,label){
     let total = label_id;
@@ -225,8 +252,14 @@ function getRandomArbitrary(min, max) {
 
   }
 
-  return { //All of the data is stored as cookie by utilizing $cookies
 
+  // Process raw data to json graph
+  function   createSunburst()  {
+
+  }
+
+  return { //All of the data is stored as cookie by utilizing $cookies
+  createSunburst:createSunburst,
    processThisWeek: processThisWeek,
    interPolateSentimentColor:interPolateSentimentColor,
    rgb2hex:rgb2hex,
@@ -244,7 +277,7 @@ function getRandomArbitrary(min, max) {
 
 
 
- function getDataFromAPI($http, LocalStorage) {
+ function getDataFromAPI($http) {
 
   return {
    loadData: loadData

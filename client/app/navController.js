@@ -1,11 +1,11 @@
 
   angular
     .module('reddit-analytics')
-    .controller('navController', homeController);
+    .controller('navController', navController);
 
   navController.$inject = ['$scope'];
 
-    function homeController($scope) {
+    function navController($scope) {
 
   $scope.currentNavItem = 'home';
 

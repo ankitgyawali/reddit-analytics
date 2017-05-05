@@ -10,8 +10,19 @@
     ])
     .config(config)
       .constant('_', window._)
+
+         .config(function (localStorageServiceProvider) {
+  localStorageServiceProvider
+    .setPrefix('ra')
+    .setStorageType('localStorage')
+    .setNotify(true, true)
+})
   // use in views, ng-repeat="x in _.range(3)"
   .run(function ($rootScope) {
+
+ 
+
+
      $rootScope._ = window._;
   });
 

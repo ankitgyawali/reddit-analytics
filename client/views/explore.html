@@ -1,8 +1,55 @@
-<div class="container cf">
-    <div>
-       <h2>Tutorial</h2>
+<!--<h3>Explore!</h3>-->
+<div class="container cf" ng-controller ="exploreController">
 
-       <code>Using reddit-analytics</code><br>
-    
-    </div>
+
+
+
+<div layout="row" layout-xs="column">
+  <div flex="25"  class="radivider" style="padding:20px">
+    Pick Current Date/Time:x <br>
+    <br>
+    <br>
+<b>
+    Sunburst Chart options </b> <br><br>
+       <md-checkbox ng-click="togglelabel()" aria-label="Show Label">Show Label
+       </md-checkbox>
+    <br>
+    <br>
+    <br>
+    <br>
+
+  </div>
+
+    Time:
+  
+  <div flex="75">
+  <div>
+
+    <center><b>Sunburst chart for</b>: {{currentBlob}}</center>
+      
+      </div>
+      
+  </div>
 </div>
+
+
+<div layout="row" layout-align="center center">
+
+
+
+</div>
+
+
+        <!--<nvd3 options='options' data='data' api="api"></nvd3>-->
+
+<br><br>
+
+
+</div>
+
+<div class="text-center">
+    <br> <br>
+   
+    <small>  Copyright &copy; 2017 <a target="_blank" href="http://www.ankitgyawali.com">Ankit Gyawali</a></small>
+</div>
+

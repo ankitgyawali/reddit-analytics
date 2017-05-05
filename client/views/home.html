@@ -6,18 +6,64 @@
 <div class="container cf" ng-controller ="homeController">
 
 
-        <!--<nvd3 options='options' data='data' api="api"></nvd3>-->
-<nvd3 options="options"
+
+
+<div layout="row" layout-xs="column">
+  <div flex="25"  class="radivider" style="padding:20px">
+    Pick Current Date/Time: <br>
+    <br>
+    <br>
+<b>
+    Sunburst Chart options </b> <br><br>
+       <md-checkbox ng-click="togglelabel()" aria-label="Show Label">Show Label
+       </md-checkbox>
+
+       
+    <br>
+    <br>
+    <br>   
+  
+<b>Timeset Chosen:</b>  
+  <md-select placeholder="{{timeOptions[0]}}" ng-model="currentTimeOption" md-on-open="loadTime()" style="color:black;min-width: 200px;"
+  ng-change="selectedItemChanged(currentTimeOption)" aria-label="current time">
+      <md-option ng-value="timeOption" ng-repeat="timeOption in timeOptions track by $index">{{timeOption}}</md-option>
+    </md-select>
+    
+   
+    <p class=""><b>Current Time:</b><br> {{ now }}</p>
+
+    <br>
+    <br>
+    <br>
+
+  </div>
+  <div flex="75">
+  <div>
+    <nvd3 options="options"
       data="data"
      config="{ deepWatchData: true }",
       events="events"
       api="api"
       on-ready="callback"></nvd3>
-<br><br>
-<button ng-click="loadData()">
+    <center><b>Sunburst chart for</b>: {{timeOptions[0]}}</center>
+      
+      </div>
+      
+  </div>
+</div>
 
-Show data
-</button>
+
+<div layout="row" layout-align="center center">
+
+
+
+</div>
+
+
+        <!--<nvd3 options='options' data='data' api="api"></nvd3>-->
+
+<br><br>
+
 
 </div>
 
