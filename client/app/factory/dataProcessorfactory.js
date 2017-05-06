@@ -222,8 +222,13 @@ function getRandomArbitrary(min, max) {
 
 function unique_timestamps_cutter(timestamp){
    var ts = new Set();    
+
+  //  let cd =   dateFns.format(data[i].process_datetime,'MM/DD/YYYY');
+
+
+
    timestamp.map(function(eachmap) {
-     ts.add((eachmap.getFullYear() + "/" + eachmap.getDay() + "/" + eachmap.getDate()))
+     ts.add(dateFns.format(eachmap,'MM/DD/YYYY'));
    });
 return ts;
 }

@@ -15,6 +15,7 @@ angular
         chart: {
         type: 'sunburstChart',
         mode: 'count',
+        // mode: 'count',
         height: 800,
         // showLabels: true,
         // labelFormat: function (d){ return d.name;},

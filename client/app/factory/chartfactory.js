@@ -26,7 +26,7 @@ function sunburst(processed_data,chart_data){
     for (var m = 0; m  <entities[k].length; m++) { // Loop to populate Entities arcs
         varstoReturn.push({   
             name: dataProcessor.entitiesLabelMaker(reddit_id,process_datetime,entities[k].length,entities[k][m],m+1,k+m+p+s+''), 
-            color: dataProcessor.interPolateSentimentColor(entities[k][m].label,parseInt(entities[k][m].confidence)),children:[]})
+            color: dataProcessor.interPolateSentimentColor(entities[k][m].label,parseInt(entities[k][m].confidence)),value: 3,children:[]})
         }
     return varstoReturn;
   } 

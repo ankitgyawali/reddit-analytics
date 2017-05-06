@@ -28,20 +28,48 @@ return (processed_data.map(function(eachmap)    // Loop through given data
 }
 
 // return timestamped sunburst data from processed_data
-function tsSunburst(processed_data,timestamp){
-    console.log(timestamp)
+function tsSunburst(processed_data,data,timestamp){
     console.log(processed_data);
-    console.log("tsungurst");
+    console.log("----------MIDDLE---------------");
+    var newArray = [];
+    // data = slicebyTime(processed_data,timestamp)
+    console.log(data); // array of objects
+    for (var i = 0 ; i < data.length;i++){ // each subreddit 
+        // console.log(processed_data[0].children[i]);
+        //  console.log(dateFns.format(data[i].process_datetime,'MM/DD/YYYY') +'___VS___'+''+timestamp);
+        // console.log(dateFns.format(data[i].process_datetime,'MM/DD/YYYY')==timestamp);
+       if(dateFns.format(data[i].process_datetime,'MM/DD/YYYY')==timestamp){ newArray.push(data[i]);
+    }
+
+    }
+    // let currentdata = processed_data;
+    console.log("----------END---------------");
+    console.log(newArray);
+
+// data is filtered by timestamp 
 return processed_data;
+// return newArray;
 }
 
 // function slicebyTime(data){
-function slicebyTime(data,time){
-console.log("data");
-// console.log(time);
-// console.log(time);
-return data;
-}
+// function slicebyTime(data,time){
+//     let newdata = []
+//     // console.log(time);
+//     for(var i = 0 ; i < data[0].children.length;i++){
+//     // console.log(data[i]);
+//     // console.log(dateFns.format(data[i].process_datetime,'MM/DD/YYYY') +'___VS___'+''+time);
+//     // console.log(dateFns.format(data[i].process_datetime,'MM/DD/YYYY')==time);
+//     if(dateFns.format(data[0].children.process_datetime,'MM/DD/YYYY')==time){
+//         newdata.push(data[0].children);
+//         console.log(newdata);
+//         console.log("X");
+//     }
+// }
+
+// console.log("Datum");
+// console.log(newdata);
+// return newdata;
+// }
 
 // function t(x){
 //     // return x.map(function(eachmap) {return convertmoment(moment(eachmap));})
@@ -64,7 +92,7 @@ function convertmoment(momentdate) {
 
 
 return {
-    slicebyTime:slicebyTime,
+    // slicebyTime:slicebyTime,
     initNow:initNow,
     convertRaw:convertRaw,
     convertmoment:convertmoment,

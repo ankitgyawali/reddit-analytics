@@ -70,6 +70,8 @@
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.5.2/angular-local-storage.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.28.4/date_fns.js"></script>
+
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>-->
   <!-- Angular Material Library -->
 
@@ -119,24 +121,34 @@
 	<!-- Angular components -->
 	<!-- build:appcomponents js/appcomponents.js -->
 	<script type="text/javascript" src="app/app.js"></script>
-	<script type="text/javascript" src="app/config.js"></script>
-	<script type="text/javascript" src="components/services/LocalStorage.service.js"></script>
-	<script type="text/javascript" src="components/services/queryService.service.js"></script>
+
 	<script type="text/javascript" src="components/directives/main.nav.directive.js"></script>
 	<script type="text/javascript" src="components/directives/responsive.nav.directive.js"></script>
 	<!-- endbuild -->
 
 	<!-- Application sections -->
 	<!-- build:mainapp js/mainapp.js -->
-	<script type="text/javascript" src="app/factory.js"></script>
-	<script type="text/javascript" src="app/controller.js"></script>
-	<script type="text/javascript" src="app/homeController.js"></script>
-	<script type="text/javascript" src="app/navController.js"></script>
-	<script type="text/javascript" src="app/localstoragefactory.js"></script>
-	<script type="text/javascript" src="app/chartconfig.js"></script>
-	<script type="text/javascript" src="app/chartfactory.js"></script>
-	<script type="text/javascript" src="app/exploreController.js"></script>
-	<script type="text/javascript" src="app/timefactory.js"></script>
+
+
+	<script type="text/javascript" src="app/services/LocalStorageService.js"></script>
+	<script type="text/javascript" src="app/services/queryService.js"></script>
+
+
+	<script type="text/javascript" src="app/config/chartconfig.js"></script>
+	<script type="text/javascript" src="app/config/constants.js"></script>
+	
+	<script type="text/javascript" src="app/controller/mainController.js"></script>
+	<script type="text/javascript" src="app/controller/homeController.js"></script>
+	<script type="text/javascript" src="app/controller/navController.js"></script>
+	<script type="text/javascript" src="app/controller/exploreController.js"></script>
+
+
+	<script type="text/javascript" src="app/factory/dataProcessorfactory.js"></script>
+	<script type="text/javascript" src="app/factory/chartfactory.js"></script>
+	<script type="text/javascript" src="app/factory/timefactory.js"></script>
+	<script type="text/javascript" src="app/factory/localstoragefactory.js"></script>
+
+
 	<!-- endbuild -->
 
 	<!-- templates from $templateCache -->

@@ -19,7 +19,6 @@
   function homeController($timeout,QueryService,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,
   $route,localstoragefactory,CHARTCONFIG,chartfactory,timefactory) {
 
-    $scope.xdata = "test";
     $scope.$route = $route;
     $scope.currentNavItem = 'home';
     $scope.now = timefactory.initNow();
@@ -33,12 +32,8 @@
   };
 
 
+
 $scope.currentBlob = new Date();
-/*timeOptions
-     <md-select placeholder="Assign to user" ng-model="user" md-on-open="loadUsers()" style="min-width: 200px;">
-      <md-option ng-value="timeOption" ng-repeat="timeOption in timeOptions">{{timeOption.name}}</md-option>
-    </md-select>
-    <p class="md-caption">Current Time : {{ timeOption ? timeOption.name : 'No one yet' }}</p>*/
 
     var self = this;
     $scope.options = CHARTCONFIG.SUNBURST_CHART;
@@ -52,12 +47,12 @@ $scope.currentBlob = new Date();
     name: "<b>Reddit</b><br><span style='font-size:80%'> Current Time:<br>" + dataProcessor.momentFormatter(new Date())+ "</span>",
     // Viewing blob of date newDate()
     height: 200,
-    size: 152,
+    // size: 4,
     color: "grey",
     children: []}];
 
     CONSTANTS.reddit.forEach(function(element,index) {
-        $scope.data[0].children.push({ name: "/r/"+element, color:CONSTANTS.color[index],children:[]  })
+        $scope.data[0].children.push({ name: "/r/"+element, color:CONSTANTS.color[index],children:[]})
     }, this);
 
 //);
@@ -67,40 +62,50 @@ if (true || (localstoragefactory.keys().indexOf("processedData") != 0) || (local
 { //Call Datechecker function here
                 $http({
                 method: 'POST',
-                url: 'http://localhost:3001/initialize',
+                url: '/initialize',
                 // set the headers so angular passing info as form data (not request payload)
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).success(function(data, status, headers, config) {
-                // console.log("fetching");
-                    localstoragefactory.initialize(data); // Initialize first by trying to store data - this week raw data
 
-                    localstoragefactory.set('processedData',dataProcessor.processThisWeek(data)) // raw data normalized
-                    $scope.processed_data = localstoragefactory.get('processedData');
-    
-                    // Get timeoptions set at localstorage during dataprocess.processthisweek    
+                    // Initialize first by trying to store data - this week raw data
+                    localstoragefactory.initialize(data);
+                    console.log("Initilalize data ->  localstorage.thisWeek -> raw data ")
+                    console.log(data);
+
+                    // raw data normalized
+                    localstoragefactory.set('processedData',dataProcessor.processThisWeek(data))
+                    $scope.processed_data = localstoragefactory.get('processedData');                    
+                    console.log("Processed data -> localstorage.processedData -> from this week ")
+                    console.log($scope.processed_data);
+                   
+                    // Set of unique timesets
                     $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");  
-                    // console.log($scope.timeOptions[0]+"XXXX");
-                    // Set sunburst data after slicing it
-                    localstoragefactory.set('sunburstData',timefactory.tsSunburst($scope.data,$scope.timeOptions[0]));  
-                    
-                    
-                    // $scope.temp = localstoragefactory.get('sunburstData')
+                    console.log("timeOptions -> localstorage.unique_timestamps -> unique set ")
+                    console.log($scope.timeOptions)
 
-                    // takes in sliced data
+                    // Get timeoptions set at localstorage during dataprocess.processthisweek    
+                     // Set sunburst data after slicing it
+                    console.log("--> called timefactory.tsSunburst ")
+                    localstoragefactory.set('sunburstData',timefactory.tsSunburst($scope.data,$scope.processed_data,$scope.timeOptions[0]));  
+                   
+                    console.log("sunburstData -> localstorage.sunburstData -> timefactory.tsburst ")
+                    console.log("initialized only empty data");
+                    console.log(localstoragefactory.get('sunburstData'));
+            // $scope.temp = localstoragefactory.get('sunburstData')
+
+                    // takes in sliced data ------ this will have to 
                     $scope.data = chartfactory.sunburst($scope.processed_data,localstoragefactory.get('sunburstData')); // Create chart data
-                    
-                    
+                    console.log("$scope.data -> dataattached to chart object .sunburstData -> localstoragefactory.get.sunburstData ")
+                    console.log(localstoragefactory.get('sunburstData'));
+            
                 // data = timefactory.slicebyTime(localstoragefactory.get('thisWeekData'),$scope.timeOptions);
                 // console.log($scope.data);
                 // console.log($scope.data);
                
-                                  
-                    
-                   //$scope.api.refresh();
-
-                   
+        $scope.selectedItemChanged($scope.timeOptions[0]);
+   //$scope.api.refresh();
     })
     .error(function(data, status, headers, config) {
         console.log(status);    
@@ -114,16 +119,23 @@ if (true || (localstoragefactory.keys().indexOf("processedData") != 0) || (local
         $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");
 
         // process stored sunburst data which takes in processed_data
+        
+        // ->> assumes get sunburst data has unsliced full data
         $scope.data = timefactory.tsSunburst(localstoragefactory.get('sunburstData'),$scope.timeOptions[0]);
      // Populates timeOption
+        $scope.selectedItemChanged($scope.timeOptions[0]);
 
     }
 
     $scope.selectedItemChanged = function(val){
         // console.log(val);
-        timefactory.tsSunburst(localstoragefactory.get('sunburstData'),val);
+        localstoragefactory.set('sunburstData',timefactory.tsSunburst($scope.data,$scope.processed_data,val));  
+        $scope.data = chartfactory.sunburst($scope.processed_data,localstoragefactory.get('sunburstData'));
+        $scope.datax = $scope.data;
+        $scope.api.refresh();
+        console.log($scope.datax);
+        console.log("00000000000000000000000000");
     }
-    
 console.log((localstoragefactory.keys()));
 
 
