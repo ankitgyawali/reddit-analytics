@@ -20,14 +20,21 @@
     <br>
 
   </div>
-
-    Time:
   
-  <div flex="75">
-  <div>
-
+  <div flex="75">    
+  
+  <div>  
     <center><b>Sunburst chart for</b>: {{currentBlob}}</center>
-      
+  </div><br>  
+    <div id="wordsCloud">
+   <word-cloud words="words" width="width" height="height" padding="5" rotate="rotate">
+   <!--<word-cloud words="words" width="width" height="height" padding="5" rotate="rotate" on-click="wordClicked">-->
+   </word-cloud>
+</div>
+  <div>
+<!--
+      <br>
+
       </div>
       
   </div>
@@ -38,10 +45,11 @@
 
 
 
+
 </div>
 
 
-        <!--<nvd3 options='options' data='data' api="api"></nvd3>-->
+         <nvd3 options='options' data='data' api="api"></nvd3>-->
 
 <br><br>
 

@@ -6,7 +6,7 @@
    */
   angular
     .module('reddit-analytics', [
-      'ngRoute', 'nvd3','angularMoment','ngMaterial','LocalStorageModule'
+      'ngRoute', 'nvd3','angularMoment','ngMaterial','LocalStorageModule','angular-d3-word-cloud'
     ])
     .config(config)
       .constant('_', window._)

@@ -1,30 +1,11 @@
 ;
 (function() {
 
-
- /**
-  * Sample factory
-  *
-  * You can fetch here some data from API and the use them
-  * in controller
-  * 
-  */
- angular
-  .module('reddit-analytics')
-  .factory('getDataFromAPI', getDataFromAPI);
-
-
  angular
   .module('reddit-analytics')
   .factory('dataProcessor', dataProcessor);
 
-
  dataProcessor.$inject = ['CONSTANTS','moment','localStorageService'];
-
-
- getDataFromAPI.$inject = ['$http'];
-
-
  /*
             data [] } -> array of rows {} containing 
                                           -> datetime ""
@@ -61,7 +42,6 @@ function momentFormatter(post_datetime){
 return moment(new Date(post_datetime.toString())).format('MMMM Do, h:mm a ddd');
 
 }
-
 
 function categoryLabel(label){
 label = label.replace(/_/g, ' ').toLowerCase();
@@ -222,10 +202,11 @@ function getRandomArbitrary(min, max) {
 // });
 
 }
-console.log(newData.categories);
-     newData.categories = newData.categories.sort(function(a, b){
-    return parseInt(a.sorter) - parseInt(b.sorter);
-});
+// console.log(newData.categories);
+//      newData.categories = newData.categories.sort(function(a, b){
+//     return parseInt(a.label_id) > parseInt(b.label_id);
+// });
+// console.log(newData.categories);
 
 
       allData.push(newData);
@@ -286,8 +267,31 @@ return unique_ts.reverse();
 
   }
 
+function attachHidden(val){
+  return "<!-- #$%!"+ val +"$#@! -->"
+}
+
+function retrieveHidden(name){
+
+try {
+    return name.substring(name.lastIndexOf("#$%!")+1,name.lastIndexOf("$#@!"));
+  //  throw 'myException'; // generates an exception
+}
+catch (e) {
+   // statements to handle any exceptions
+  //  logMyErrors(e); // pass exception object to error handler
+  return "<!-- #$%!"+ val +"#$%! -->"
+
+}
+
+
+  // return "<!-- #$%!"+ val +"#$%! -->"
+}
+
   return { //All of the data is stored as cookie by utilizing $cookies
   createSunburst:createSunburst,
+  retrieveHidden:retrieveHidden,
+  attachHidden:attachHidden,
    processThisWeek: processThisWeek,
    interPolateSentimentColor:interPolateSentimentColor,
    rgb2hex:rgb2hex,
@@ -305,38 +309,7 @@ return unique_ts.reverse();
 
 
 
- function getDataFromAPI($http) {
 
-  return {
-   loadData: loadData
-  };
-
-
-  ////////////  function definitions
-
-
-  /**
-   * Load articles from GetPocket API
-   * @return {Object} Articles object
-   */
-  // var request = {
-  //   consumer_key: 'xxxx',
-  //   access_token: 'xxxx',
-  //   sort: 'newest',
-  //   count: 5
-  // };
-
-  // return $http({
-  //   method: 'GET',
-  //   url: API.url + 'v3/get',
-  //   params: request
-  // }).then(function(articles) {
-  //   return articles.data;
-  // })
-  // .catch(function(error) {
-  //   return error;
-  // });
- }
 
 
 })();
