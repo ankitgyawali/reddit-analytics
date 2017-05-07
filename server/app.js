@@ -3,7 +3,8 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     expressSession = require('express-session'),
-    path = require('path');
+    path = require('path'),
+    http = require('http');
    
 
 
@@ -52,5 +53,21 @@ app.use(function(err, req, res) {
     error: {}
   }));
 });
+
+
+   app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'example.com');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+    });
+
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
+
 
 module.exports = app;

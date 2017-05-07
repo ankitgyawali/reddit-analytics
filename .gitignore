@@ -14,3 +14,6 @@ client/style.min.css
 node_modules
 bower_components
 client/package.json*
+.idea
+.idea*
+

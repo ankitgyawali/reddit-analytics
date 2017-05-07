@@ -37,6 +37,23 @@
 
  function dataProcessor(CONSTANTS,moment,localStorageService) {
 
+  function entitiesSorterLabel(confidence,label){
+    
+    if(label=="pos"){
+        // return parseInt(confidence)+100;
+        return parseInt(confidence)+1000;
+    }
+    else if(label == "neg"){
+        // return parseInt(confidence)*-1;
+        return parseInt(confidence)+600;
+    }
+    else{
+        return parseInt(confidence)+800;
+        // return parseInt(confidence);
+    }
+}
+
+
 
 function momentFormatter(post_datetime){
   // console.log(post_datetime);
@@ -66,7 +83,7 @@ momentFormatter(post_datetime) + "</span>";
 
 function entitiesLabelMaker(reddit_id,post_datetime,entities,normalizedentitty,currentindex,garbage){
 
-  let returnstring = "Reddit post: reddit.com/<b>"+reddit_id;
+  let returnstring = "<b>"+normalizedentitty.normalized+"</b><br>Reddit post: reddit.com/<b>"+reddit_id;
   returnstring+="<br>Entity ("+ currentindex +"/"+ entities+"): "+ normalizedentitty.normalized;
   returnstring+=", Occurences: "+ normalizedentitty.o;
   returnstring+="<br> Entity Sentiment:";
@@ -120,7 +137,7 @@ return returnstring;
       let color = d3.scale.linear()
       .domain([0, 99])
       .interpolate(d3.interpolateHcl)
-      .range(["black", "green"]);
+      .range(["white", "green"]);
       return color(confidence);
     }
     else if(label == "neg"){
@@ -128,7 +145,7 @@ return returnstring;
         let color = d3.scale.linear()
       .domain([0, 99])
       .interpolate(d3.interpolateHcl)
-      .range(["black", "red"]);
+      .range(["white", "red"]);
       return color(confidence);
 
 
@@ -173,6 +190,7 @@ function getRandomArbitrary(min, max) {
     newData.sentiment = new Function("return " + data[k].sentiment + ";")();
     newData.entities = new Function("return " + data[k].entities + ";")();
     newData.categories = new Function("return " + data[k].catagories + ";")();
+// console.log(newData.entities);
 
     for (var i = 0; i < newData.sentiment.length; i++) {
 
@@ -184,7 +202,7 @@ function getRandomArbitrary(min, max) {
 
      newData.categories[i] = JSON.parse(newData.categories[i])
      newData.categories[i].confidence = newData.categories[i].c;
-     newData.categories[i].label_id = newData.categories[i].l;;
+     newData.categories[i].label_id = newData.categories[i].l;
      newData.categories[i].name = CONSTANTS.category_mapping[newData.categories[i].label_id - 1];
      delete newData.categories[i]["c"];
      delete newData.categories[i]["l"];
@@ -194,14 +212,20 @@ function getRandomArbitrary(min, max) {
       newData.entities[i][j].label = newData.entities[i][j].l;
       newData.entities[i][j].normalized = newData.entities[i][j].n;
       newData.entities[i][j].confidence = newData.entities[i][j].c;
-
+      newData.entities[i][j].entimentSorter =   entitiesSorterLabel(newData.entities[i][j].confidence,newData.entities[i][j].label)
       delete newData.entities[i][j]["l"];
       delete newData.entities[i][j]["c"];
       delete newData.entities[i][j]["n"];
      }
-   
-    }
+// newData.entities[i] = newData.entities[i].sort(function(a, b){
+//     return parseInt(a.entimentSorter) - parseInt(b.entimentSorter);
+// });
 
+}
+console.log(newData.categories);
+     newData.categories = newData.categories.sort(function(a, b){
+    return parseInt(a.sorter) - parseInt(b.sorter);
+});
 
 
       allData.push(newData);
@@ -210,27 +234,26 @@ function getRandomArbitrary(min, max) {
 //    console.log(JSON.stringify(allData));
 
 
-  ts =  unique_timestamps_cutter(timestamps)
+  unique_ts =  unique_timestamps_cutter(timestamps)
 
    localStorageService.set("timestamps_arrays",timestamps)
-   localStorageService.set("unique_timestamps",Array.from(ts));
+   localStorageService.set("unique_timestamps",unique_ts);
    localStorageService.set("unique_criteria","EACHDAY")
    return (allData);
   }
 
-
-
 function unique_timestamps_cutter(timestamp){
-   var ts = new Set();    
-
+   var unique_ts = new Set();    
   //  let cd =   dateFns.format(data[i].process_datetime,'MM/DD/YYYY');
-
-
-
    timestamp.map(function(eachmap) {
-     ts.add(dateFns.format(eachmap,'MM/DD/YYYY'));
+     unique_ts.add(dateFns.format(eachmap,'MM/DD/YYYY'));
    });
-return ts;
+   unique_ts = Array.from(unique_ts)
+  //  console.log(unique_ts)
+  //  console.log(unique_ts.sort(dateFns.compareDsc))
+
+// Add sot by date to unique_ts here
+return unique_ts.reverse();
 }
 
 
