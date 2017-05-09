@@ -283,10 +283,71 @@ catch (e) {
   return "<!-- #$%!"+ val +"#$%! -->"
 
 }
-
-
   // return "<!-- #$%!"+ val +"#$%! -->"
 }
+
+
+function createWordCloudWords(processed_data){
+let score = [];
+let entity = [];
+    for(let i=0;i<processed_data.length;i++){ //post
+  // console.log(localstoragefactory.get('sunburstData')[i]);
+
+          for(let j=0;j<processed_data[i].entities.length;j++){ //entities
+          //     // $scope.x.push({ name      })
+          for(let k=0;k<processed_data[i].entities[j].length;k++){ //entities
+                // console.log(localstoragefactory.get('sunburstData')[i].entities[j][k])
+
+                let check = entity.indexOf(processed_data[i].entities[j][k].normalized);
+                if(check==-1){
+
+                entity.push(processed_data[i].entities[j][k].normalized);
+                score.push({ text:processed_data[i].entities[j][k].normalized,
+                 size:processed_data[i].entities[j][k].o,
+                  color:interPolateSentimentColor(processed_data[i].entities[j][k].label,processed_data[i].entities[j][k].confidence),
+                  custom: {
+                    name: processed_data[i].entities[j][k].normalized, color: interPolateSentimentColor(processed_data[i].entities[j][k].label,processed_data[i].entities[j][k].confidence),
+                    confidence: processed_data[i].entities[j][k].confidence,label:processed_data[i].entities[j][k].label
+                  }
+                   });
+
+
+                }
+                else{
+                  score[check].size = score[check].size+ processed_data[i].entities[j][k].o;
+
+                }
+
+
+
+              // localstoragefactory.get('sunburstData')[i].entities[j]
+
+          }          
+                // console.log(localstoragefactory.get('sunburstData')[i].entities[j])
+          }
+            
+  }
+
+  return score;
+   
+}
+
+
+function cutByTimenReddit(processed_data,subreddit,time){
+  let cutData = [];
+          for(let j=0;j<processed_data.length;j++){ //entities
+            if(processed_data[j].subreddit==subreddit   &&  time == dateFns.format(processed_data[j].process_datetime,'MM/DD/YYYY')){
+            // console.log(processed_data[j].subreddit==subreddit   &&  time == dateFns.format(processed_data[j].process_datetime,'MM/DD/YYYY'));
+            
+            cutData.push(processed_data[j])
+            }
+          }
+            console.log(cutData);
+            console.log(processed_data);
+          
+return cutData;
+}
+
 
   return { //All of the data is stored as cookie by utilizing $cookies
   createSunburst:createSunburst,
@@ -299,17 +360,13 @@ catch (e) {
    sentimentLabelMaker:sentimentLabelMaker,
    entitiesLabelMaker:entitiesLabelMaker,
    momentFormatter:momentFormatter,
-   sorterLabel:sorterLabel
+   sorterLabel:sorterLabel,
+   createWordCloudWords:createWordCloudWords,
+   cutByTimenReddit:cutByTimenReddit
   };
 
 
 
  };
-
-
-
-
-
-
 
 })();

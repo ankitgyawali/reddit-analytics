@@ -54,6 +54,28 @@ function timeSlicer(processed_data,data,timestamp){
 return newArray;
 }
 
+function timeSlicerWordCloud(  data,timestamp   ){
+    var newArray = [];
+    // data = slicebyTime(processed_data,timestamp)
+    for (var i = 0 ; i < data.length;i++){ // each subreddit 
+        //  console.log(dateFns.format(data[i].process_datetime,'MM/DD/YYYY') +'___VS___'+''+timestamp);
+        // console.log(dateFns.format(data[i].process_datetime,'MM/DD/YYYY')==timestamp);
+       if(dateFns.format(data[i].process_datetime,'MM/DD/YYYY')==timestamp){
+           newArray.push(data[i]);
+    }
+
+}
+
+// newArray  
+// entity.sort(function(a, b){
+//     return parseInt(a.entimentSorter) - parseInt(b.entimentSorter);
+// });
+
+//   console.log(newArray);
+return newArray;
+}
+
+
 // function slicebyTime(data){
 // function slicebyTime(data,time){
 //     let newdata = []
@@ -93,6 +115,28 @@ function convertmoment(momentdate) {
     return moment(momentdate).format('MMMM Do, h:mm a ddd');
 }
 
+function wordcloudslice(wordclouddata, subreddit) {
+    // return wordclouddata;
+    // console.log( "wordclouddata");
+    // console.log( wordclouddata);
+    // console.log( "subreddit");
+    // console.log( subreddit);
+    
+    let newData = []
+    for(let i=0;i<wordclouddata.length;i++){
+        // console.log(wordclouddata[i].subreddit == subreddit)
+        if(wordclouddata[i].subreddit == subreddit){
+            newData.push(wordclouddata[i]);
+        }
+    }
+
+    //     console.log( "wordclouddata");
+    // console.log( newData);
+    return newData;
+    // console.log( "wordclouddata");
+    // console.log( wordclouddata);
+    // return wordclouddata;
+}
 
 return {
     // slicebyTime:slicebyTime,
@@ -100,7 +144,9 @@ return {
     convertRaw:convertRaw,
     convertmoment:convertmoment,
     getAvailableTimesFromQueryData:getAvailableTimesFromQueryData,
-    timeSlicer:timeSlicer
+    timeSlicer:timeSlicer,
+    timeSlicerWordCloud:timeSlicerWordCloud,
+    wordcloudslice:wordcloudslice
 }
 
 }

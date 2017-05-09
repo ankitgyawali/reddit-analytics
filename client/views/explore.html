@@ -6,16 +6,37 @@
 
 <div layout="row" layout-xs="column">
   <div flex="25"  class="radivider" style="padding:20px">
-    Draw Word Cloud <br> <br> 
-    Pick Current Date/Time:x <br>
-    <br>
-    <br>
-<b>
-    Sunburst Chart options </b> <br><br>
-       <md-checkbox ng-click="togglelabel()" aria-label="Show Label">Show Label
-       </md-checkbox>
-    <br>
-    <br>
+    <b> Word Cloud Options</b> <br> <br> <br> 
+
+
+    <b>Timeset Chosen:</b>  
+
+<md-select placeholder="{{timeOptions[0]}}" ng-model="currentTimeOption" md-on-open="loadTime()" style="color:black;min-width: 200px;"
+  ng-change="selectedItemChanged(currentTimeOption)" aria-label="current time">
+
+<md-option id="redditOptions{{$index}}" ng-value="timeOption" ng-repeat="timeOption in timeOptions track by $index">{{timeOption}}</md-option>
+
+</md-select>
+    
+   
+    <p class=""><b>Current Time:</b><br> {{ now }}</p>
+
+    <md-radio-group ng-model="data.group1"> 
+  <b>Subreddit:</b><br>
+  
+<!--<md-radio-button ng-class="{'md-checked':reddit == 'politics'}" required ng-click="cutbyReddit(reddit)" ng-repeat="reddit in subredditoptions"  value="{{reddit}}" class="md-primary">-->
+<md-radio-button  id="radio_{{$index}}"  required ng-click="cutbyReddit(reddit)" ng-repeat="reddit in subredditoptions"  value="{{reddit}}" class="md-primary">
+  /r/{{reddit}}</md-radio-button>
+
+<!--<md-radio-button value="{{planInfo._id}}" name="plan" class="md-primary" ng-class="{'md-checked':trues}" required>-->
+
+      <!--<md-radio-button    ng-repeat="reddit in subredditoptions"  value="Apple" class="md-primary">Apple</md-radio-button>-->
+      <!--<md-radio-button value="Banana"> Banana </md-radio-button>-->
+      <!--<md-radio-button value="Mango">Mango</md-radio-button>-->
+
+    </md-radio-group>
+
+
     <br>
     <br>
 
@@ -23,13 +44,16 @@
   
   <div flex="75">    
   
-  <div>  
-    <center><b>Sunburst chart for</b>: {{currentBlob}}</center>
-  </div><br>  
-    <div id="wordsCloud">
-   <word-cloud words="words" width="width" height="height" padding="5" rotate="rotate">
-   <!--<word-cloud words="words" width="width" height="height" padding="5" rotate="rotate" on-click="wordClicked">-->
+
+    <center><b>Word Details: </b> Name: {{worddetails.name}}, Label: {{worddetails.label}}, Confidence: {{worddetails.confidence}}</center>  <br>  <br><br>
+    <div id="wordsCloud" style="padding-left:5%;width:60%;height:90%">
+   <!--<word-cloud words="words" width="width" height="height" padding="25" rotate="rotate">-->
+   <word-cloud words="words" width="width" height="height" padding="5" rotate="rotate" on-click="wordClicked">
    </word-cloud>
+<br> <br>    <br>   
+       <center><b>Wordcloud for</b>: {{currentTime}} - /r/{{currentReddit}}</center>
+    
+
 </div>
   <div>
 <!--
@@ -49,7 +73,7 @@
 </div>
 
 
-         <nvd3 options='options' data='data' api="api"></nvd3>-->
+        <!--<nvd3 options='options' data='data' api="api"></nvd3>-->
 
 <br><br>
 

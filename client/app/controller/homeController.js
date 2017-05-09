@@ -285,46 +285,16 @@ if (true || (localstoragefactory.keys().indexOf("processedData") != 0) || (local
         $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'),localstoragefactory.get('sunburstEmpty'));
         
         
-
     // return $timeout(function() {
     //     $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'),localstoragefactory.get('sunburstEmpty'));
         
     // }, 10000);
-
 
         $scope.api.refresh();
         console.log($scope.data);
         console.log("00000000000000000000000000");
     }
 console.log((localstoragefactory.keys()));
-
-
-    // Compare dates to sort
-    // $scope.timeOption = $scope.timeOptions[0];
-
-    // Sort formed data for Chart
-    for (var z = 0; z  <$scope.data[0].children.length; z++) { // Loop through new data
-    // $scope.data[0].children[z]  =  subreddit  // console.log($scope.data[0].children[z] );
-    // var before = [];
-    // var after = [];
-    for (var x = 0; x  <$scope.data[0].children[z].children.length; x++) {
-            // before.push($scope.data[0].children[z].children[x].sorter);
-    }
-    //  $scope.data[0].children[z].children.sort(function(a,b) {return (a.sorter > b.sorter) ? 1 : ((b.sorter > a.sorter) ? -1 : 0);});
-    // $scope.data[0].children[z].children.sort(function(a, b){
-    // return a.sorter > b.sorter;
-    // });
-    for (var y = 0; y  <$scope.data[0].children[z].children.length; y++) {
-            // after.push($scope.data[0].children[z].children[y].sorter);
-    }
-    // console.log("BEFORE");
-    // console.log(before + "   :  " + $scope.data[0].children[z].name);
-    // console.log("AFTER");
-    // console.log(after + "   :  " + $scope.data[0].children[z].name);
-    }
-    // $scope.api.refresh();
-    // console.dir($scope.data[0].children) // 4 subreddits array
-
    
 }
 

@@ -6,7 +6,7 @@
    */
   angular
     .module('reddit-analytics', [
-      'ngRoute', 'nvd3','angularMoment','ngMaterial','LocalStorageModule','angular-d3-word-cloud'
+      'ngRoute', 'nvd3','angularMoment','ngMaterial','LocalStorageModule','angular-d3-word-cloud','ngAnimate', 'toastr'
     ])
     .config(config)
       .constant('_', window._)
@@ -17,8 +17,49 @@
     .setStorageType('localStorage')
     .setNotify(true, true)
 })
+
+.config(function(toastrConfig) {
+  angular.extend(toastrConfig, {
+    autoDismiss: false,
+    containerId: 'toast-container',
+    maxOpened: 0,    
+    newestOnTop: true,
+    positionClass: 'toast-bottom-right',
+    preventDuplicates: false,
+    preventOpenDuplicates: false,
+    target: 'body',
+    closeButton: true,
+    showDuration: 300,
+    hideDuration: 1000,
+    timeOut: 1000,
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+    progressBar: true
+    
+  });
+})
   // use in views, ng-repeat="x in _.range(3)"
   .run(function ($rootScope) {
+
+// {
+//   "closeButton": false,
+//   "debug": false,
+//   "newestOnTop": false,
+//   "progressBar": false,
+//   "positionClass": "toast-top-right",
+//   "preventDuplicates": false,
+//   "onclick": null,
+//   "showDuration": "300",
+//   "hideDuration": "1000",
+//   "timeOut": "5000",
+//   "extendedTimeOut": "1000",
+//   "showEasing": "swing",
+//   "hideEasing": "linear",
+//   "showMethod": "fadeIn",
+//   "hideMethod": "fadeOut"
+// }
 
  
 

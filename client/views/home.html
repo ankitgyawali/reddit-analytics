@@ -26,7 +26,7 @@
 <b>Timeset Chosen:</b>  
   <md-select placeholder="{{timeOptions[0]}}" ng-model="currentTimeOption" md-on-open="loadTime()" style="color:black;min-width: 200px;"
   ng-change="selectedItemChanged(currentTimeOption)" aria-label="current time">
-      <md-option ng-value="timeOption" ng-repeat="timeOption in timeOptions track by $index">{{timeOption}}</md-option>
+      <md-option ng-model="currentlySelected" ng-value="timeOption" ng-repeat="timeOption in timeOptions track by $index">{{timeOption}}</md-option>
     </md-select>
     
    
