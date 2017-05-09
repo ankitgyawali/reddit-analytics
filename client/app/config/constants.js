@@ -11,7 +11,9 @@
   angular
   	.module('reddit-analytics')
     .constant('CONSTANTS', {
-      'API_URL': 'http://localhost:3001',
+			'ENVIRONMENT': 'DEV',
+			// 'ENVIRONMENT': 'PROD',
+      		'API_URL': { DEV: 'http://localhost:3001', PROD: 'http://ankitgyawali.com:3049'},
 			'reddit' :  ['worldnews','politics','videos','askreddit'],
 			'color' :  ['#FFwede','blue','green','maroon','purple'],
 			'category_mapping' : [
