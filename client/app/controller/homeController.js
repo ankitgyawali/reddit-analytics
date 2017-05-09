@@ -224,7 +224,7 @@ if (true || (localstoragefactory.keys().indexOf("processedData") != 0) || (local
 { //Call Datechecker function here
                 $http({
                 method: 'POST',
-                url: CONSTANTS.API_URL+'/initialize',
+                url: CONSTANTS.API_URL[CONSTANTS.ENVIRONMENT]+'/initialize',
                 // set the headers so angular passing info as form data (not request payload)
                 headers: {
                     'Content-Type': 'application/json'

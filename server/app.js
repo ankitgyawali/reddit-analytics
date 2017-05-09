@@ -5,10 +5,6 @@ var express = require('express'),
     expressSession = require('express-session'),
     path = require('path'),
     http = require('http');
-   
-
-
-
 // create instance of express
 var app = express();
 
@@ -55,18 +51,18 @@ app.use(function(err, req, res) {
 });
 
 
-   app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'example.com');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-    });
+//    app.use(function(req, res, next) {
+//     res.header('Access-Control-Allow-Origin', 'example.com');
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type');
+//     next();
+//     });
 
-app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});
+// app.all('/*', function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   next();
+// });
 
 
 
