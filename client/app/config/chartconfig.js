@@ -19,28 +19,28 @@ angular
         // mode: 'count',
         height: 800,
 
-     sunburst: {
-                    dispatch: {
-                        chartClick: function(e) {       
-                          // console.log($scope.data)
-                            updateBreadcrumbs($scope.data.reverse(), '')
-                        },
-                        elementMouseover: function (e) {
-                            function getElementNames(obj) {
-                                var result = [obj];
-                                if (obj.parent) {
-                                    result = result.concat(getElementNames(obj.parent));
-                                }
-                                return result;
-                            }
-                            var sequenceArray = getElementNames(e.data);
-                            // $scope.data = sequenceArray;
-                        }
-                    }
-                },
+//  sunburst: {
+//                 dispatch: {
+//                     chartClick: function(e) {       
+//                       // console.log($scope.data)
+//                         updateBreadcrumbs($scope.data.reverse(), '')
+//                     },
+//                     elementMouseover: function (e) {
+//                         function getElementNames(obj) {
+//                             var result = [obj];
+//                             if (obj.parent) {
+//                                 result = result.concat(getElementNames(obj.parent));
+//                             }
+//                             return result;
+//                         }
+//                         var sequenceArray = getElementNames(e.data);
+//                         // $scope.data = sequenceArray;
+//                     }
+//                 }
+//             },
         // showLabels: true,
         // labelFormat: function (d){ return d.name;},
-        labelThreshold: 0.1,
+        // labelThreshold: 0.1,
         tooltip: {
             duration: 0,
             gravity: "w",
@@ -49,9 +49,6 @@ angular
             classes: null,
             chartContainer: null,
             enabled: true,
-            valueFormatter: function (d) {   return  '';  },
-            headerFormatter: function (d) {   return '';  },
-            //headerFormatter: function (d) {   return '<span style="font-size:80%"><b>'+ "reddit-analytics" +"</b></span>";  },
             hideDelay: 200,
             headerEnabled: true,
             fixedTop: null,
@@ -64,10 +61,6 @@ angular
             color: function(color){ return color; },
             // color: d3.scale.category20c(),
             duration: 250,
-            sort : (function (d1, d2){
-              console.log("CCCCCCCCCCCCCCCC");
-              return d1.label_id > d2.label_id; }),
-            caption:{enable:true,text:"Reddit",css:{width:"600px"}},
           styles: {
             classes: {
               "with-3d-shadow": true,

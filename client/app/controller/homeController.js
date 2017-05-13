@@ -23,177 +23,22 @@
    $scope.breadcrumbs='';
         $scope.data = {};
         $scope.elementObjects = {};
-//  $scope.options = CHARTCONFIG.SUNBURST_CHART;
-$scope.options =
-{
-        chart: {
-        type: 'sunburstChart',
-        mode: 'count',
-        // mode: 'count',
-        height: 800,
 
-     sunburst: {
-                    dispatch: {
-                        chartClick: function(e) {       
-                          console.log(($scope.data.reverse(), ''))
-                        //   console.log(e);
-                        //   console.log($scope.data.children[0].breadcrumbs);
-                            updateBreadcrumbs($scope.data.reverse(), '')
-                        },
-                        elementMouseover: function (e) {
-                            function getElementNames(obj) {
-                                var result = [obj];
-                                if (obj.parent) {
-                                    result = result.concat(getElementNames(obj.parent));
-                                }
-                                return result;
-                            }
-                            var sequenceArray = getElementNames(e.data);
-                            // $scope.data = sequenceArray;
-                        }
-                    }
-                },
-        // showLabels: true,
-        // labelFormat: function (d){ return d.name;},
-        labelThreshold: 0.1,
-        tooltip: {
-            duration: 0,
-            gravity: "w",
-            distance: 25, 
-            snapDistance: 0,
-            classes: null,
-            chartContainer: null,
-            enabled: true,
-            valueFormatter: function (d) {   return  '';  },
-            headerFormatter: function (d) {   return '';  },
-            //headerFormatter: function (d) {   return '<span style="font-size:80%"><b>'+ "reddit-analytics" +"</b></span>";  },
-            hideDelay: 200,
-            headerEnabled: true,
-            fixedTop: null,
-            hidden: true,
-            data: null,
-            id: "reddit-analytics-sunburst"
-            },
-            groupColorByParent: true,
-            scale: d3.scale.category20c(),
-            color: function(color){ return color; },
-            // color: d3.scale.category20c(),
-            duration: 250,
-            sort : (function (d1, d2){
-              console.log("CCCCCCCCCCCCCCCC");
-              return d1.label_id > d2.label_id; }),
-            caption:{enable:true,text:"Reddit",css:{width:"600px"}},
-          styles: {
-            classes: {
-              "with-3d-shadow": true,
-              "with-transitions": true,
-              gallery: false
-            },
-            css: {}
-          }    
-        },
-
-    } 
-
- 
-          // Breadcrumb dimensions: width, height, spacing, width of tip/tail.
-        var b = { w: 125, h: 30, s: 3, t: 10 };
-initializeBreadcrumbTrail()
-function initializeBreadcrumbTrail() {
-  // Add the svg area.
-  var trail = d3.select("#sequence").append("svg:svg")
-      .attr("width", 750)
-      .attr("height", 50)
-      .attr("id", "trail");
-  // Add the label at the end, for the percentage.
-  trail.append("svg:text")
-    .attr("id", "endlabel")
-    .style("fill", "#000");
-}
-
-
-// Generate a string that describes the points of a breadcrumb polygon.
-function breadcrumbPoints(d, i) {
-  var points = [];
-  points.push("0,0");
-  points.push(b.w + ",0");
-  points.push(b.w + b.t + "," + (b.h / 2));
-  points.push(b.w + "," + b.h);
-  points.push("0," + b.h);
-  if (i > 0) { // Leftmost breadcrumb; don't include 6th vertex.
-    points.push(b.t + "," + (b.h / 2));
-  }
-  return points.join(" ");
-}
-
-// Update the breadcrumb trail to show the current sequence and percentage.
-function updateBreadcrumbs(nodeArray, percentageString) {
-
-  // Data join; key function combines name and depth (= position in sequence).
-  var g = d3.select("#trail")
-      .selectAll("g")
-      .data(nodeArray, function(d) { return d.name + d.depth; });
-
-  // Add breadcrumb and label for entering nodes.
-  var entering = g.enter().append("svg:g");
-
-  entering.append("svg:polygon")
-      .attr("points", breadcrumbPoints)
-      .style("fill", function(d) { return 'blue'; });
-
-  entering.append("svg:text")
-      .attr("x", (b.w + b.t) / 2)
-      .attr("y", b.h / 2)
-      .attr("dy", "0.35em")
-      .attr("text-anchor", "middle")
-      .text(function(d) {console.log(d.name);   return d.name; });
-
-  // Set position for entering and updating nodes.
-  g.attr("transform", function(d, i) {
-    return "translate(" + i * (b.w + b.s) + ", 0)";
-  });
-
-  // Remove exiting nodes.
-  g.exit().remove();
-
-  // Now move and update the percentage at the end.
-  d3.select("#trail").select("#endlabel")
-      .attr("x", (nodeArray.length + 0.5) * (b.w + b.s))
-      .attr("y", b.h / 2)
-      .attr("dy", "0.35em")
-      .attr("text-anchor", "middle")
-      .text(percentageString);
-
-  // Make the breadcrumb trail visible, if it's hidden.
-  d3.select("#trail")
-      .style("visibility", "");
-
-}
+        
+ $scope.options = CHARTCONFIG.SUNBURST_CHART;
 
 
     $scope.$route = $route;
     $scope.currentNavItem = 'home';
     $scope.now = timefactory.initNow();
-//Time
-// Load Time
-  $scope.loadTime = function() {
 
-    // Use timeout to simulate a 650ms request.
-    // return $timeout(function() {
-    // }, 0);
-  };
 
 
 
 $scope.currentBlob = new Date();
 
     var self = this;
-   
 
-    $scope.togglelabel = function(){
-        // $scope.options.chart.showLabels = !$scope.options.chart.showLabels;
-        // $scope.api.refresh();
-    }
     $scope.createEmptyData = function(x){
         //x  = passed value
     let emptyData = [{

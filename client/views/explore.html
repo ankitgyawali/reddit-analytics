@@ -43,14 +43,38 @@
   </div>
   
   <div flex="75">    
-  
+  <!--#8B0000-->
+  <!--#006400-->
+  <md-toolbar class="md-default" style="background-color: {{worddetails.color}};height:5%">
+    <div class="md-toolbar-tools">
+      <h4 class="md-flex" style="color:white">
+Entity Name: {{worddetails.name}}, Label: 
+{{worddetails.label}}, Confidence: {{worddetails.confidence}}%
+ 
+<!--<i class="material-icons">send</i>-->
+ 
 
-    <center><b>Word Details: </b> Name: {{worddetails.name}}, Label: {{worddetails.label}}, Confidence: {{worddetails.confidence}}</center>  <br>  <br><br>
+      </h4>
+    </div>
+  </md-toolbar>
+
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button  class="linkBorder" ng-href="https://www.reddit.com/{{worddetails.reddit_id}}" target="_blank">reddit.com/{{worddetails.reddit_id}}</md-button>
+        </md-card-actions>
+  
+          
+
+        </md-card-title>
+
+      </md-card>
+
+
+
     <div id="wordsCloud" style="padding-left:5%;width:60%;height:90%">
    <!--<word-cloud words="words" width="width" height="height" padding="25" rotate="rotate">-->
    <word-cloud words="words" width="width" height="height" padding="5" rotate="rotate" on-click="wordClicked">
    </word-cloud>
-<br> <br>    <br>   
+<br> <br>    <br>    <br>   
        <center><b>Wordcloud for</b>: {{currentTime}} - /r/{{currentReddit}}</center>
     
 

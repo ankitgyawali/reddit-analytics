@@ -5,7 +5,7 @@
   .module('reddit-analytics')
   .factory('dataProcessor', dataProcessor);
 
- dataProcessor.$inject = ['CONSTANTS','moment','localStorageService'];
+ dataProcessor.$inject = ['CONSTANTS','moment','localStorageService','dataDecoratorfactory'];
  /*
             data [] } -> array of rows {} containing 
                                           -> datetime ""
@@ -16,25 +16,7 @@
 
  */
 
- function dataProcessor(CONSTANTS,moment,localStorageService) {
-
-  function entitiesSorterLabel(confidence,label){
-    
-    if(label=="pos"){
-        // return parseInt(confidence)+100;
-        return parseInt(confidence)+1000;
-    }
-    else if(label == "neg"){
-        // return parseInt(confidence)*-1;
-        return parseInt(confidence)+600;
-    }
-    else{
-        return parseInt(confidence)+800;
-        // return parseInt(confidence);
-    }
-}
-
-
+ function dataProcessor(CONSTANTS,moment,localStorageService,dataDecoratorfactory) {
 
 function momentFormatter(post_datetime){
   // console.log(post_datetime);
@@ -46,18 +28,11 @@ return moment(new Date(post_datetime.toString())).format('MMMM Do, h:mm a ddd');
 function categoryLabel(label){
 label = label.replace(/_/g, ' ').toLowerCase();
 return label.charAt(0).toUpperCase() + label.slice(1);
-
-
-// return ; 
 }
 
 function categoryLabelMaker(category_label_id,category_name,post_datetime,reddit_id,sorter)
 {
-// console.log(categoryLabel(category_name))
-// category_name = categoryLabel(category_name)
-// return category_name""
 return "Reddit post: reddit.com/<b>"+reddit_id+"<br>Category:"+category_name+"</center></b><br> " + "Sorter: " +sorter + "<br><span style='font-size:80%'>"+
-//  post_datetime.toString()
 momentFormatter(post_datetime) + "</span>";
 }
 
@@ -68,19 +43,8 @@ function entitiesLabelMaker(reddit_id,post_datetime,entities,normalizedentitty,c
   returnstring+=", Occurences: "+ normalizedentitty.o;
   returnstring+="<br> Entity Sentiment:";
   
-        if(normalizedentitty.label=="pos"){
-      returnstring += "positive";
-    }
-    else if(normalizedentitty.label == "neg"){
 
-      returnstring += "negative";
-    }
-    else{
-      returnstring += "neutral";
-    }
-
-  // returnstring+= normalizedentitty
-
+  returnstring += dataDecoratorfactory.normalizeSentimentLabel(normalizedentitty.label);
 
 
 returnstring += ", Confidence: "+normalizedentitty.confidence+"% </center></b><br><span style='font-size:80%'>";
@@ -102,53 +66,7 @@ momentFormatter(post_datetime) + "</span> <!--" +garbage+post_datetime.toString(
 return returnstring;
 
 }
-    function rgb2hex(red, green, blue) {
-        var rgb = blue | (green << 8) | (red << 16);
-        return '#' + (0x1000000 + rgb).toString(16).slice(1)
-  }
-   
 
-  function interPolateSentimentColor(label,confidence) {
-   
-
-
-      if(label=="pos"){
-
-      let color = d3.scale.linear()
-      .domain([0, 99])
-      .interpolate(d3.interpolateHcl)
-      .range(["white", "green"]);
-      return color(confidence);
-    }
-    else if(label == "neg"){
-
-        let color = d3.scale.linear()
-      .domain([0, 99])
-      .interpolate(d3.interpolateHcl)
-      .range(["white", "red"]);
-      return color(confidence);
-
-
-    }
-    else{
-      let color = d3.scale.linear()
-      .domain([0, 99])
-      .interpolate(d3.interpolateHcl)
-      .range(["black", "white"]);
-      return color(confidence);
-
-    }
-
-// console.log(label + "  - " +confidence);
-function getRandomArbitrary(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
-
-    // return color(getRandomArbitrary(-98,99));
-  
-
-  }
 
   function processThisWeek(data) {
 
@@ -192,7 +110,7 @@ function getRandomArbitrary(min, max) {
       newData.entities[i][j].label = newData.entities[i][j].l;
       newData.entities[i][j].normalized = newData.entities[i][j].n;
       newData.entities[i][j].confidence = newData.entities[i][j].c;
-      newData.entities[i][j].entimentSorter =   entitiesSorterLabel(newData.entities[i][j].confidence,newData.entities[i][j].label)
+      newData.entities[i][j].entimentSorter =   dataDecoratorfactory.normalizeConfidenceForSorting(newData.entities[i][j].confidence,newData.entities[i][j].label)
       delete newData.entities[i][j]["l"];
       delete newData.entities[i][j]["c"];
       delete newData.entities[i][j]["n"];
@@ -274,7 +192,7 @@ function attachHidden(val){
 function retrieveHidden(name){
 
 try {
-    return name.substring(name.lastIndexOf("#$%!")+1,name.lastIndexOf("$#@!"));
+    return name.substring(name.lastIndexOf("#$%!")+4,name.lastIndexOf("$#@!"));
   //  throw 'myException'; // generates an exception
 }
 catch (e) {
@@ -290,7 +208,10 @@ catch (e) {
 function createWordCloudWords(processed_data){
 let score = [];
 let entity = [];
-    for(let i=0;i<processed_data.length;i++){ //post
+// workaround for min?
+let max =1, min =100, max_index, min_index; // Find min & max so wordcloud size can be interpolated
+
+for(let i=0;i<processed_data.length;i++){ //post
   // console.log(localstoragefactory.get('sunburstData')[i]);
 
           for(let j=0;j<processed_data[i].entities.length;j++){ //entities
@@ -300,34 +221,62 @@ let entity = [];
 
                 let check = entity.indexOf(processed_data[i].entities[j][k].normalized);
                 if(check==-1){
+                  let labelTag = ''
+                  let color =''
+                if(processed_data[i].entities[j][k].label=="pos"){
+                    labelTag = "Positive";
+                    color = "#006400"
+                  }
+                  else if(processed_data[i].entities[j][k].label == "neg"){
 
+                    labelTag = "Negative";
+                    color="#8B0000"
+                  }
+                  else{
+                    labelTag = "Neutral";
+                  color = "grey";
+
+                  }
                 entity.push(processed_data[i].entities[j][k].normalized);
                 score.push({ text:processed_data[i].entities[j][k].normalized,
                  size:processed_data[i].entities[j][k].o,
-                  color:interPolateSentimentColor(processed_data[i].entities[j][k].label,processed_data[i].entities[j][k].confidence),
+                  color:dataDecoratorfactory.interPolateSentimentColor(processed_data[i].entities[j][k].label,processed_data[i].entities[j][k].confidence),
                   custom: {
-                    name: processed_data[i].entities[j][k].normalized, color: interPolateSentimentColor(processed_data[i].entities[j][k].label,processed_data[i].entities[j][k].confidence),
-                    confidence: processed_data[i].entities[j][k].confidence,label:processed_data[i].entities[j][k].label
+                    name: processed_data[i].entities[j][k].normalized, color: color,
+                    confidence: processed_data[i].entities[j][k].confidence,label:labelTag,
+                    reddit_id: processed_data[i].reddit_id[j]
                   }
                    });
-
-
+                   if(score[score.length-1].size > max ){
+                     max = score[score.length-1].size;
+                     max_index = score.length-1;
+                   }
+                  if(score[score.length-1].size < min ){
+                     min = score[score.length-1].size;
+                     min_index = score.length-1;
+                   }
+                  
                 }
                 else{
-                  score[check].size = score[check].size+ processed_data[i].entities[j][k].o;
+                  score[check].size = score[check].size + processed_data[i].entities[j][k].o;
+                  if(score[check].size > max ){
+                     max = score[check].size;
+                     max_index = check;
+                   }
+                  if(score[check].size < min ){
+                     min = score[check].size;
+                     min_index = check;
+                   }
 
                 }
 
-
-
-              // localstoragefactory.get('sunburstData')[i].entities[j]
-
-          }          
-                // console.log(localstoragefactory.get('sunburstData')[i].entities[j])
+            }          
           }
             
   }
 
+  console.log(score[max_index]);
+  console.log(score[min_index]);
   return score;
    
 }
@@ -342,8 +291,6 @@ function cutByTimenReddit(processed_data,subreddit,time){
             cutData.push(processed_data[j])
             }
           }
-            console.log(cutData);
-            console.log(processed_data);
           
 return cutData;
 }
@@ -354,8 +301,6 @@ return cutData;
   retrieveHidden:retrieveHidden,
   attachHidden:attachHidden,
    processThisWeek: processThisWeek,
-   interPolateSentimentColor:interPolateSentimentColor,
-   rgb2hex:rgb2hex,
    categoryLabelMaker:categoryLabelMaker,
    sentimentLabelMaker:sentimentLabelMaker,
    entitiesLabelMaker:entitiesLabelMaker,

@@ -14,9 +14,9 @@
   .module('reddit-analytics')
   .factory('chartfactory', chartfactory);
 
-   chartfactory.$inject = ['$timeout','CONSTANTS','moment','localStorageService','dataProcessor'];
+   chartfactory.$inject = ['$timeout','CONSTANTS','moment','localStorageService','dataProcessor','dataDecoratorfactory'];
 
- function chartfactory($timeout,CONSTANTS,moment,localStorageService,dataProcessor) {
+ function chartfactory($timeout,CONSTANTS,moment,localStorageService,dataProcessor,dataDecoratorfactory) {
 
 // Processed_data == array of cut data
 // chart data = empty data
@@ -56,7 +56,7 @@ return entity;
   entimentSorter: entitiesSorterLabel(entities[k][m].confidence,entities[k][m].label),
             name: entitiesSorterLabel(entities[k][m].confidence,entities[k][m].label) + dataProcessor.entitiesLabelMaker(reddit_id,process_datetime,entities[k].length,entities[k][m],m+1,k+m+p+s+''), 
             // name:  dataProcessor.entitiesLabelMaker(reddit_id,process_datetime,entities[k].length,entities[k][m],m+1,k+m+p+s+''), 
-            color: dataProcessor.interPolateSentimentColor(entities[k][m].label,parseInt(entities[k][m].confidence)),value: 3,children:[]})
+            color: dataDecoratorfactory.interPolateSentimentColor(entities[k][m].label,parseInt(entities[k][m].confidence)),value: 3,children:[]})
         }
        varstoReturn =  sortEntities(varstoReturn)
 
@@ -203,14 +203,14 @@ for (var i = 0; i < processed_data.length; i++) { // Loop through one select [li
             label_id: processed_data[i].categories[k].label_id,
             
             // Map to rgb array[21]                       
-            color: dataProcessor.rgb2hex(CONSTANTS.contrast_set[processed_data[i].categories[k].label_id][0],CONSTANTS.contrast_set[processed_data[i].categories[k].label_id][1],CONSTANTS.contrast_set[processed_data[i].categories[k].label_id][2]),
+            color: dataDecoratorfactory.rgb2hex(CONSTANTS.contrast_set[processed_data[i].categories[k].label_id][0],CONSTANTS.contrast_set[processed_data[i].categories[k].label_id][1],CONSTANTS.contrast_set[processed_data[i].categories[k].label_id][2]),
             
             children: // Each Sentiment Arc
                 // makesentiment(processed_data[i].reddit_id[k],processed_data[i].process_datetime,processed_data[i].sentiment[k],processed_data[i].entities,i,k)
 
     [{  name: dataProcessor.sentimentLabelMaker(processed_data[i].reddit_id[k],processed_data[i].process_datetime, processed_data[i].sentiment[k] ,i+k),
                     // Get Colo from interpolato
-                    color: dataProcessor.interPolateSentimentColor(processed_data[i].sentiment[k].label,parseInt(processed_data[i].sentiment[k].confidence)),
+                    color: dataDecoratorfactory.interPolateSentimentColor(processed_data[i].sentiment[k].label,parseInt(processed_data[i].sentiment[k].confidence)),
                     // Push entities here
                     children: makeEntities(processed_data[i].reddit_id[k],processed_data[i].process_datetime,processed_data[i].entities,i,k)
         }]

@@ -13,7 +13,7 @@
     .constant('CONSTANTS', {
 			'ENVIRONMENT': 'DEV',
 			// 'ENVIRONMENT': 'PROD',
-      		'API_URL': { DEV: 'http://localhost:3001', PROD: 'http://ankitgyawali.com:3049'},
+      		'API_URL': { DEV: 'http://localhost:3002', PROD: 'http://ankitgyawali.com:3049'},
 			'reddit' :  ['worldnews','politics','videos','askreddit'],
 			'color' :  ['#FFwede','blue','green','maroon','purple'],
 			'category_mapping' : [
