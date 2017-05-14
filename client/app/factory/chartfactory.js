@@ -98,7 +98,7 @@ for (var key in grouped) {
 
     }
 
-    console.log(key + " -> " + grouped[key]);
+    // console.log(key + " -> " + grouped[key]);
   
 groupedx.push(grouped[key][0]);
 }
@@ -110,8 +110,8 @@ for (let e = 0; e < processed_data.length; e++) {
         
 //  { id: "0", subreddit: "worldnews", process_datetime: "2017-05-07T05:07:10.000Z", 
 //reddit_id: Array[14], sentiment: Array[14], entities: Array[14], categories: Array[14] }
-console.log(processed_data[e]);
-console.log("______________________vs______________________");
+// console.log(processed_data[e]);
+// console.log("______________________vs______________________");
 
 
 let sorted  = sortByCategory(processed_data[e].reddit_id,processed_data[e].sentiment,processed_data[e].entities,processed_data[e].categories);
@@ -120,7 +120,7 @@ processed_data[e].reddit_id = sorted.reddit_id;
 processed_data[e].sentiment = sorted.sentiment;
 processed_data[e].entities = sorted.entities;
 processed_data[e].categories = sorted.categories;
-console.log(processed_data[e]);
+// console.log(processed_data[e]);
 // //1) combine the arrays:
 
 }
@@ -152,7 +152,7 @@ function sortByCategory(reddit_id, sentiment, entities, categories){
         //    console.log(a.categories.label_id);
     return parseInt(a.categories.label_id) > parseInt(b.categories.label_id);
 });
-console.log(temp);
+// console.log(temp);
 
     for (var q = 0; q < temp.length; q++) { 
         sreddit_id.push(temp[q].reddit_id);
@@ -174,9 +174,24 @@ console.log(temp);
 
 console.log(processed_data);
 console.log("pre processing of sunbusst");
-let temp = []
-console.log(groupBy(processed_data, 'subreddit'));
-
+let temp = [];
+let groupedData = groupBy(processed_data, 'subreddit');
+// temp.push();
+// console.log(groupBy(processed_data, 'subreddit'));
+// // console.log((processed_data, 'subreddit'));
+// // processed_data = groupBy(processed_data, 'subreddit');
+for (var key in groupedData) {
+  if (groupedData.hasOwnProperty(key)) {
+    //   temp.push({  subreddit:key, id:groupedData[key].id,process_datetime: groupedData[key].process_datetime,
+    //                  categories:groupedData[key].categories, entities:groupedData[key].entities,sentiment:groupedData[key].sentiment,
+    //                 reddit_id:groupedData[key].reddit_id  })
+    temp.push(groupedData[key][0]); // Multiple arrays?
+    // console.log("++++++++++++++"+key);
+    // console.log(groupedData[key]);
+  }
+}
+console.log(temp);
+processed_data = temp;
 for (var i = 0; i < processed_data.length; i++) { // Loop through one select [list of reddit_id posts]
     // console.log($scope.xdata[i].subreddit) console.log($scope.xdata[i].reddit_id) console.log($scope.xdata[i].categories)
     // $rootScope._.groupBy($scope.xdata[i].categories, [iteratee=label_id])

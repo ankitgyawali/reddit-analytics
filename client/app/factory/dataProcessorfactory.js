@@ -209,7 +209,10 @@ function createWordCloudWords(processed_data){
 let score = [];
 let entity = [];
 // workaround for min?
-let max =1, min =100, max_index, min_index; // Find min & max so wordcloud size can be interpolated
+// let max =1, min =100, max_index, min_index; 
+// Find min & max so wordcloud size can be interpolated
+                  // console.log("XXXXXXXXXXXXX");
+                  // console.log(processed_data);
 
 for(let i=0;i<processed_data.length;i++){ //post
   // console.log(localstoragefactory.get('sunburstData')[i]);
@@ -240,45 +243,51 @@ for(let i=0;i<processed_data.length;i++){ //post
                 entity.push(processed_data[i].entities[j][k].normalized);
                 score.push({ text:processed_data[i].entities[j][k].normalized,
                  size:processed_data[i].entities[j][k].o,
-                  color:dataDecoratorfactory.interPolateSentimentColor(processed_data[i].entities[j][k].label,processed_data[i].entities[j][k].confidence),
+                  color:dataDecoratorfactory.interPolateSentimentColorForWordCloud(processed_data[i].entities[j][k].label,processed_data[i].entities[j][k].confidence),
                   custom: {
                     name: processed_data[i].entities[j][k].normalized, color: color,
                     confidence: processed_data[i].entities[j][k].confidence,label:labelTag,
-                    reddit_id: processed_data[i].reddit_id[j]
+                    reddit_id: processed_data[i].reddit_id[j],
+                    occurences: processed_data[i].entities[j][k].o
                   }
                    });
-                   if(score[score.length-1].size > max ){
-                     max = score[score.length-1].size;
-                     max_index = score.length-1;
-                   }
-                  if(score[score.length-1].size < min ){
-                     min = score[score.length-1].size;
-                     min_index = score.length-1;
-                   }
-                  
                 }
                 else{
                   score[check].size = score[check].size + processed_data[i].entities[j][k].o;
-                  if(score[check].size > max ){
-                     max = score[check].size;
-                     max_index = check;
-                   }
-                  if(score[check].size < min ){
-                     min = score[check].size;
-                     min_index = check;
-                   }
-
                 }
-
             }          
           }
             
   }
+  console.log(score);
 
-  console.log(score[max_index]);
-  console.log(score[min_index]);
+score = score.sort(function(a, b){
+    return parseInt(b.size) - parseInt(a.size);
+});
+  console.log(score.length);
+if(score.length > CONSTANTS.NUMBER_OF_WORDS_IN_WORDCLOUD ){
+  score = score.slice(0,CONSTANTS.NUMBER_OF_WORDS_IN_WORDCLOUD)
+}
+
+// Normalize the entities
+let min  = score[0].size;
+let max  = score[score.length-1].size;
+// console.log(min)
+// console.log(max)
+
+function convertRange( value, r1, r2 ) { 
+    return ( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ];
+}
+
+for(let l=0;l<score.length;l++){ //post
+// console.log(score[l].size+ "___VS____ "+convertRange(score[l].size,[min,max],[125,10]))
+score[l].size = convertRange(score[l].size,[min,max],[99,10]);
+}
+
+// var i = d3.interpolateNumber(10, 20);
+// i(0.0); // 10
+  console.log(score.length);
   return score;
-   
 }
 
 

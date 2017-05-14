@@ -127,15 +127,36 @@ if (true || (localstoragefactory.keys().indexOf("processedData") != 0) || (local
     $scope.selectedItemChanged = function(val){
         // console.log(val);
         localstoragefactory.set('sunburstData',timefactory.timeSlicer($scope.data,$scope.processed_data,val));  
+        // $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'),localstoragefactory.get('sunburstEmpty'));
+        
+        
+     $timeout(function() {
         $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'),localstoragefactory.get('sunburstEmpty'));
-        
-        
-    // return $timeout(function() {
-    //     $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'),localstoragefactory.get('sunburstEmpty'));
-        
-    // }, 10000);
+        console.log($scope.data);
+        $scope.$apply();
+    $scope.api.updateWithData($scope.data);
+// console.log(nv);
+//                     if (nv && nv.graphs) {
+//                 nv.graphs.forEach(function(nvGraph) {
+//                     nvGraph.update();
+//                 });
+//             }
+
+    }, 2);
+
+    //   $scope.$watch($scope.data, function(val) {
+    // // $scope.$apply();
+    // console.log(val);
+    //     $scope.api.refresh();
+
+
+    //     });
+
+
 
         $scope.api.refresh();
+    $scope.api.updateWithData($scope.data);
+        
         console.log($scope.data);
         console.log("00000000000000000000000000");
     }

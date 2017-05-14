@@ -66,7 +66,33 @@ function interPolateSentimentColor(label,confidence) {
       let color = d3.scale.linear()
       .domain([0, 99])
       .interpolate(d3.interpolateHcl)
-      .range(["black", "white"]);
+      .range(["black", "#91AA9D"]);
+      return color(confidence);
+
+    }
+}
+
+
+function interPolateSentimentColorForWordCloud(label,confidence) {
+      if(label=="pos"){
+      let color = d3.scale.linear()
+      .domain([0, 99])
+      .interpolate(d3.interpolateHcl)
+      .range(["white", "green"]);
+      return color(confidence);
+    }
+    else if(label == "neg"){
+        let color = d3.scale.linear()
+      .domain([0, 99])
+      .interpolate(d3.interpolateHcl)
+      .range(["white", "red"]);
+      return color(confidence);
+    }
+    else{
+      let color = d3.scale.linear()
+      .domain([0, 99])
+      .interpolate(d3.interpolateHcl)
+      .range(["black", "beige"]);
       return color(confidence);
 
     }
@@ -98,7 +124,8 @@ function interPolateSentimentForWordCloud(label){
     normalizeSentimentLabel: normalizeSentimentLabel,
     interPolateSentimentColor:interPolateSentimentColor,
     rgb2hex:rgb2hex,
-    interPolateSentimentForWordCloud:interPolateSentimentForWordCloud
+    interPolateSentimentForWordCloud:interPolateSentimentForWordCloud,
+    interPolateSentimentColorForWordCloud:interPolateSentimentColorForWordCloud
   };
  }
 })();

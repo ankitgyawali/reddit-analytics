@@ -32,25 +32,68 @@ return (processed_data.map(function(eachmap)    // Loop through given data
 // processed_data === empty data
 // data == processed_data full 
 // timestamp  =time to cut
-function timeSlicer(processed_data,data,timestamp){
-
+function timeSlicer(processed_data,data,timestamp){   // GROUP BY DAY AND SORT HERE??
     var newArray = [];
     // data = slicebyTime(processed_data,timestamp)
     for (var i = 0 ; i < data.length;i++){ // each subreddit 
         //  console.log(dateFns.format(data[i].process_datetime,'MM/DD/YYYY') +'___VS___'+''+timestamp);
         // console.log(dateFns.format(data[i].process_datetime,'MM/DD/YYYY')==timestamp);
        if(dateFns.format(data[i].process_datetime,'MM/DD/YYYY')==timestamp){
+           data[i].combiner = dateFns.format(data[i].process_datetime,'MM/DD/YYYY');
            newArray.push(data[i]);
     }
-
 }
-
 // newArray  
 // entity.sort(function(a, b){
 //     return parseInt(a.entimentSorter) - parseInt(b.entimentSorter);
 // });
+    console.log("new aray");
 
-//   console.log(newArray);
+    console.log(newArray);
+
+var groupBy = function(xs, key) {
+  return xs.reduce(function(rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
+
+
+// // => {3: ["one", "two"], 5: ["three"]}
+let groupedData = groupBy(newArray, 'subreddit');
+
+console.log(groupBy(newArray, 'subreddit'))
+  let tempArray  = [];
+
+for (var key in groupedData) {
+  if (groupedData.hasOwnProperty(key)) {
+      let combined =  groupedData[key];
+      let combinedArray = [];
+      let combinedEntities = [];
+      let combinedSentiment = [];
+    //   let combinedEntities = [];
+        let newObj = {};
+        newObj.subreddit = key;
+        newObj.process_datetime = groupedData[key][0].process_datetime;
+        newObj.id = groupedData[key][0].id;
+
+        newObj.combiner = groupedData[key][0].combiner; // Comment this out later
+        // newObj.categories = ;
+          console.log(groupedData[key][0]);
+          console.log(groupedData[key]);
+          console.log(newObj);
+        
+    //   for(let a=0;a<groupedData[key][0].categories.length;a++){
+    //       console.log(a);
+          
+
+    //   }
+    
+    tempArray.push({ subreddit: key,process_datetime: groupedData[key][0].process_datetime, });
+    console.log(key + " -> " + groupedData[key]);
+  }
+}
+
 return newArray;
 }
 
@@ -71,7 +114,7 @@ function timeSlicerWordCloud(  data,timestamp   ){
 //     return parseInt(a.entimentSorter) - parseInt(b.entimentSorter);
 // });
 
-//   console.log(newArray);
+  console.log(newArray);
 return newArray;
 }
 

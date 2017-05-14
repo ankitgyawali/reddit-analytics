@@ -10,50 +10,38 @@
 
 <div layout="row" layout-xs="column">
   <div flex="25"  class="radivider" style="padding:20px">
-
-
-       
-    <br>
-    <br>
-    <br>   
-  
-<b>Timeset Chosen:</b>  
-  <md-select placeholder="{{timeOptions[0]}}" ng-model="currentTimeOption" md-on-open="loadTime()" style="color:black;min-width: 200px;"
-  ng-change="selectedItemChanged(currentTimeOption)" aria-label="current time">
-      <md-option ng-model="currentlySelected" ng-value="timeOption" ng-repeat="timeOption in timeOptions track by $index">{{timeOption}}</md-option>
-    </md-select>
-    
-   
-    <p class=""><b>Current Time:</b><br> {{ now }}</p>
-
-    <br>
-    <!--<br>{{data[0].children}}-->
-    <br>
-
+    <b>Timeset Chosen:</b>  
+    <md-select placeholder="{{timeOptions[0]}}" ng-model="currentTimeOption" md-on-open="loadTime()" style="color:black;min-width: 200px;"
+    ng-change="selectedItemChanged(currentTimeOption)" aria-label="current time">
+        <md-option ng-model="currentlySelected" ng-value="timeOption" ng-repeat="timeOption in timeOptions track by $index">{{timeOption}}</md-option>
+      </md-select>  
+      <p class=""><b>Current Time:</b><br> {{ now }}</p>
   </div>
-  <div flex="75">
-  <div >
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <div id="sequence"></div>
 
-    <nvd3 options="options"
+  <div flex="75" style="margin-top:-65px;">
+
+      <!--deepWatchOptions: true, // default: true
+    deepWatchData: true, // default: true
+    deepWatchDataDepth: 2, // default: 2
+    debounce: 10 // default: 10-->
+
+    <nvd3 id="flag" options="options"
       data="data"
-     config="{ deepWatchData: true }",
+     config="{ deepWatchData: true,deepWatchOptions: true,deepWatchDataDepth: 2, debounce: 10}" 
+     
+
+
+
+
       events="events"
       api="api"
       on-ready="callback" style="magin-bottom:-50px;border:1px solid black"></nvd3>
     <center><b>Sunburst chart for</b>: {{timeOptions[0]}}</center>
-      
-      </div>
-      
+ 
   </div>
 </div>
 
 
-<div layout="row" layout-align="center center">
-
-
-
-</div>
 
 
         <!--<nvd3 options='options' data='data' api="api"></nvd3>-->

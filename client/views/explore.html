@@ -49,7 +49,7 @@
     <div class="md-toolbar-tools">
       <h4 class="md-flex" style="color:white">
 Entity Name: {{worddetails.name}}, Label: 
-{{worddetails.label}}, Confidence: {{worddetails.confidence}}%
+{{worddetails.label}}, Confidence: {{worddetails.confidence}}%, Occurences:{{worddetails.occurences}}
  
 <!--<i class="material-icons">send</i>-->
  
@@ -70,9 +70,9 @@ Entity Name: {{worddetails.name}}, Label:
 
 
 
-    <div id="wordsCloud" style="padding-left:5%;width:60%;height:90%">
+    <div id="wordsCloud" style="padding-left:3%;width:60%;height:90%">
    <!--<word-cloud words="words" width="width" height="height" padding="25" rotate="rotate">-->
-   <word-cloud words="words" width="width" height="height" padding="5" rotate="rotate" on-click="wordClicked">
+   <word-cloud words="words" width="width" height="height" padding="0" rotate="rotate" on-click="wordClicked">
    </word-cloud>
 <br> <br>    <br>    <br>   
        <center><b>Wordcloud for</b>: {{currentTime}} - /r/{{currentReddit}}</center>

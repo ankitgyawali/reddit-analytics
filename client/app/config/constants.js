@@ -12,6 +12,7 @@
   	.module('reddit-analytics')
     .constant('CONSTANTS', {
 			'ENVIRONMENT': 'DEV',
+			'NUMBER_OF_WORDS_IN_WORDCLOUD': 50,
 			// 'ENVIRONMENT': 'PROD',
       		'API_URL': { DEV: 'http://localhost:3002', PROD: 'http://ankitgyawali.com:3049'},
 			'reddit' :  ['worldnews','politics','videos','askreddit'],

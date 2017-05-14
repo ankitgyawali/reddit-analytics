@@ -28,7 +28,7 @@ function exploreController(toastr,$timeout,timefactory,localstoragefactory,$elem
     $scope.currentReddit = $scope.subredditoptions[0];
     
     // WordCloud Options
-		$scope.height = $window.innerHeight * 0.65;   // WORD CLOUD
+		$scope.height = $window.innerHeight *  0.85 // WORD CLOUD
 		$scope.width = $element.find('#wordsCloud')[0].offsetWidth; //WORD CLOUD
     $scope.rotate =  function () {
         return ~~(Math.random() * 2) * 90;
@@ -40,6 +40,13 @@ function exploreController(toastr,$timeout,timefactory,localstoragefactory,$elem
         $scope.$apply();
       }, 0);
 		}
+
+         $scope.maxWordSize = 	$scope.width * 0.15;
+      $scope.minWordSize = 	$scope.maxWordSize / 5;
+
+         $scope.spread = $scope.maxCount - $scope.minCount;
+     if ($scope.spread <= 0) $scope.spread = 1;
+    $scope.step = ($scope.maxWordSize - $scope.minWordSize) / $scope.spread;
 
   toastr.info("Associated reddit post is linked on the top-left corner.")
   toastr.info("Click on the words to see more details.");
