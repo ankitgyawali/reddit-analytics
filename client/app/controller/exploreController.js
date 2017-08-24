@@ -23,6 +23,7 @@ function exploreController(toastr,$timeout,timefactory,localstoragefactory,$elem
  
     $scope.subredditoptions = CONSTANTS.reddit.sort();
     $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");  
+    console.log($scope.timeOptions);
     $scope.currentTime = $scope.timeOptions[0];
     $scope.now = timefactory.initNow();   
     $scope.currentReddit = $scope.subredditoptions[0];
@@ -59,18 +60,24 @@ function exploreController(toastr,$timeout,timefactory,localstoragefactory,$elem
       reddit,
       localstoragefactory.get('wcTime')
       );
+      console.log(reddit);
+
+      console.log(localstoragefactory.get('processedData'));
+      
       $scope.words = dataProcessor.createWordCloudWords($scope.newwords);
-      console.log($scope.words);
       $scope.wordClicked({custom:$scope.words[0].custom});
     }
 
     // Called after cutbReddit is defined
     // TODO: Move this out to a seperate factory
-    $scope.cutbyReddit(CONSTANTS.reddit[0]);
 
     // Do stuff once everything loads
     $timeout(function() {
     localstoragefactory.set('wcTime',$scope.timeOptions[0]);  // <--- Initialize first time
+
+    $scope.cutbyReddit(CONSTANTS.reddit[0]);
+
+    
     angular.element("#radio_0").triggerHandler('click');
     $scope.selectedItemChanged($scope.timeOptions[0]);  
       }, 0);

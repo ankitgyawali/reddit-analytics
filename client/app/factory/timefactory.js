@@ -68,32 +68,66 @@ console.log(groupBy(newArray, 'subreddit'))
 for (var key in groupedData) {
   if (groupedData.hasOwnProperty(key)) {
       let combined =  groupedData[key];
-      let combinedArray = [];
-      let combinedEntities = [];
-      let combinedSentiment = [];
-    //   let combinedEntities = [];
+
         let newObj = {};
         newObj.subreddit = key;
         newObj.process_datetime = groupedData[key][0].process_datetime;
         newObj.id = groupedData[key][0].id;
+        newObj.reddit_id = [];
+        newObj.categories = [];
+        newObj.entities = [];
+        newObj.sentiment = [];
 
         newObj.combiner = groupedData[key][0].combiner; // Comment this out later
         // newObj.categories = ;
-          console.log(groupedData[key][0]);
-          console.log(groupedData[key]);
-          console.log(newObj);
-        
-    //   for(let a=0;a<groupedData[key][0].categories.length;a++){
-    //       console.log(a);
-          
+        //   console.log(groupedData[key][0].cat);
+        //   console.log(groupedData[key]);
+        //   console.log(newObj);        
+      for(let a=0;a<groupedData[key].length;a++){
+            for(b=0;b<groupedData[key][a].reddit_id.length;b++){
+                          newObj.reddit_id.push(groupedData[key][a].reddit_id[b])
+                          newObj.categories.push(groupedData[key][a].categories[b])
+                          newObj.entities.push(groupedData[key][a].entities[b])
+                          newObj.sentiment.push(groupedData[key][a].sentiment[b])
+            }
 
-    //   }
+        //   console.log(a);
+      }
     
-    tempArray.push({ subreddit: key,process_datetime: groupedData[key][0].process_datetime, });
-    console.log(key + " -> " + groupedData[key]);
+    tempArray.push(newObj);
+    // console.log(key + " -> " + groupedData[key]);
   }
 }
+console.log(tempArray);
+      for(let w=0;w<tempArray.length;w++){
+        var list = []
 
+          for(let x=0;x<tempArray[w].reddit_id.length;x++){
+            list.push({ reddit_id:  tempArray[w].reddit_id[x],        sentiment:  tempArray[w].sentiment[x],
+             entities:  tempArray[w].entities[x], categories:  tempArray[w].categories[x],           })
+      }
+
+      list.sort(function(a, b) {
+    return ((a.categories.label_id < b.categories.label_id) ? -1 : ((a.categories.label_id == b.categories.label_id) ? 0 : 1));
+        });
+   tempArray[w].reddit_id=[]
+   tempArray[w].categories=[]
+   tempArray[w].sentiment=[]
+   tempArray[w].entities=[]
+
+        for (var k = 0; k < list.length; k++) {
+
+            tempArray[w].reddit_id.push(list[k].reddit_id)
+            tempArray[w].categories.push(list[k].categories)
+            tempArray[w].sentiment.push(list[k].sentiment)
+            tempArray[w].entities.push(list[k].entities)
+
+        }
+
+
+    }
+console.log(tempArray);
+newArray = tempArray;
 return newArray;
 }
 

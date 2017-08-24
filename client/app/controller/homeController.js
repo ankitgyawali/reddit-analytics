@@ -26,14 +26,11 @@
 
         
  $scope.options = CHARTCONFIG.SUNBURST_CHART;
-
+console.log($scope.options)
 
     $scope.$route = $route;
     $scope.currentNavItem = 'home';
     $scope.now = timefactory.initNow();
-
-
-
 
 $scope.currentBlob = new Date();
 
@@ -90,10 +87,17 @@ if (true || (localstoragefactory.keys().indexOf("processedData") != 0) || (local
                     localstoragefactory.set('sunburstData',timefactory.timeSlicer(localstoragefactory.get("sunburstEmpty"),$scope.processed_data,$scope.timeOptions[0]));  
                 
                     // Set snuburst chart data
-                    $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'), $scope.createEmptyData("1")); // Create chart data
+                    // $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'), $scope.createEmptyData("1")); // Create chart data
                     // $scope.data = chartfactory.sunburst($scope.processed_data,localstoragefactory.get('sunburstData')); // Create chart data
                     
                     
+                            
+     $timeout(function() {
+console.log("OK");
+$scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'), $scope.createEmptyData("1")); // Create chart data
+    }, 2);
+
+
                 // console.log($scope.data);
                     // console.log(('sunburstData'));
                 // data = timefactory.slicebyTime(localstoragefactory.get('thisWeekData'),$scope.timeOptions);
@@ -117,8 +121,14 @@ if (true || (localstoragefactory.keys().indexOf("processedData") != 0) || (local
         
         // ->> assumes get sunburst data has unsliced full data
         // $scope.data = timefactory.timeSlicer(localstoragefactory.get('sunburstData'),$scope.timeOptions[0]);
+
+
+// $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'), $scope.createEmptyData("1")); // Create chart data
+             $timeout(function() {
         $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'), $scope.createEmptyData("1")); // Create chart data
-        
+    }, 2);
+
+
      // Populates timeOption
         $scope.selectedItemChanged($scope.timeOptions[0]);
 
@@ -135,12 +145,7 @@ if (true || (localstoragefactory.keys().indexOf("processedData") != 0) || (local
         console.log($scope.data);
         $scope.$apply();
     $scope.api.updateWithData($scope.data);
-// console.log(nv);
-//                     if (nv && nv.graphs) {
-//                 nv.graphs.forEach(function(nvGraph) {
-//                     nvGraph.update();
-//                 });
-//             }
+
 
     }, 2);
 

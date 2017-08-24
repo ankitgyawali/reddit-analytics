@@ -81,6 +81,7 @@ return returnstring;
     newData.subreddit = CONSTANTS.reddit[data[k].id]
 
     newData.process_datetime = new Date(data[k].process_datetime)
+    newData.combinelabel =   dateFns.format(newData.process_datetime,'MM/DD/YYYY')
     timestamps.push(newData.process_datetime);
 
 
@@ -121,16 +122,101 @@ return returnstring;
 
 }
 // console.log(newData.categories);
-//      newData.categories = newData.categories.sort(function(a, b){
-//     return parseInt(a.label_id) > parseInt(b.label_id);
-// });
+     newData.categories = newData.categories.sort(function(a, b){
+    return parseInt(a.label_id) > parseInt(b.label_id);
+});
 // console.log(newData.categories);
 
 
       allData.push(newData);
     // console.log(allData);
    }
-//    console.log(JSON.stringify(allData));
+
+
+   var groupBy = function(xs, key) {
+  return xs.reduce(function(rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
+
+
+   console.log((allData));
+let groupedData = groupBy(allData, 'subreddit');
+
+let sortedData = []; //Hold 4 objects here  
+   console.log(groupedData);
+// ARRAY OF OBJECTS started
+for (var key in groupedData) {
+  if (groupedData.hasOwnProperty(key)) {
+        
+        groupedData[key] = groupBy(groupedData[key], 'combinelabel')
+                        console.log(groupedData[key]);
+                  
+        for (var childKey in groupedData[key]) {
+              if (groupedData[key].hasOwnProperty(childKey)) {
+                    let add = {};
+                    add.combinelabel = groupedData[key][childKey][0].combinelabel;
+                    add.combiner = groupedData[key][childKey][0].combinelabel;
+                    add.id = groupedData[key][childKey][0].id;
+                    add.process_datetime = groupedData[key][childKey][0].process_datetime;
+                    add.subreddit = groupedData[key][childKey][0].subreddit;
+                    add.reddit_id = [];
+                    add.entities = [];
+                    add.sentiment = [];
+                    add.categories = [];
+                    for (let r = 0; r < groupedData[key][childKey].length; r++) {
+                          for (let s = 0; s < groupedData[key][childKey][r].reddit_id.length; s++) {
+                                    //  console.log(groupedData[key][childKey][r].reddit_id[s]);                      
+                    add.reddit_id.push(groupedData[key][childKey][r].reddit_id[s]);
+                    add.entities.push(groupedData[key][childKey][r].entities[s]);
+                    add.sentiment.push(groupedData[key][childKey][r].sentiment[s]);
+                    add.categories.push(groupedData[key][childKey][r].categories[s]);
+                          }
+                        }                
+
+                                          // console.log(add);
+                    // console.log(groupedData[key][childKey]);    
+
+                         sortedData.push(add);
+              }
+            }
+  }
+}
+
+
+console.log(sortedData);
+
+let tempArray = sortedData;
+console.log(tempArray);
+      for(let w=0;w<tempArray.length;w++){
+        var list = []
+          for(let x=0;x<tempArray[w].reddit_id.length;x++){
+            list.push({ reddit_id:  tempArray[w].reddit_id[x],        sentiment:  tempArray[w].sentiment[x],
+             entities:  tempArray[w].entities[x], categories:  tempArray[w].categories[x],           })
+      }
+
+      list.sort(function(a, b) {
+    return ((a.categories.label_id < b.categories.label_id) ? -1 : ((a.categories.label_id == b.categories.label_id) ? 0 : 1));
+        });
+   tempArray[w].reddit_id=[]
+   tempArray[w].categories=[]
+   tempArray[w].sentiment=[]
+   tempArray[w].entities=[]
+
+        for (var k = 0; k < list.length; k++) {
+
+            tempArray[w].reddit_id.push(list[k].reddit_id)
+            tempArray[w].categories.push(list[k].categories)
+            tempArray[w].sentiment.push(list[k].sentiment)
+            tempArray[w].entities.push(list[k].entities)
+
+        }
+
+
+    }
+console.log(tempArray);
+allData = tempArray;
 
 
   unique_ts =  unique_timestamps_cutter(timestamps)
@@ -139,6 +225,7 @@ return returnstring;
    localStorageService.set("unique_timestamps",unique_ts);
    localStorageService.set("unique_criteria","EACHDAY")
    return (allData);
+  //  return [allData[0]];
   }
 
 function unique_timestamps_cutter(timestamp){
@@ -206,6 +293,8 @@ catch (e) {
 
 
 function createWordCloudWords(processed_data){
+  console.log(processed_data);
+  
 let score = [];
 let entity = [];
 // workaround for min?
@@ -259,7 +348,6 @@ for(let i=0;i<processed_data.length;i++){ //post
           }
             
   }
-  console.log(score);
 
 score = score.sort(function(a, b){
     return parseInt(b.size) - parseInt(a.size);
@@ -294,12 +382,15 @@ score[l].size = convertRange(score[l].size,[min,max],[99,10]);
 function cutByTimenReddit(processed_data,subreddit,time){
   let cutData = [];
           for(let j=0;j<processed_data.length;j++){ //entities
+            console.log(time + " vs " + dateFns.format(processed_data[j].process_datetime,'MM/DD/YYYY'));
             if(processed_data[j].subreddit==subreddit   &&  time == dateFns.format(processed_data[j].process_datetime,'MM/DD/YYYY')){
             // console.log(processed_data[j].subreddit==subreddit   &&  time == dateFns.format(processed_data[j].process_datetime,'MM/DD/YYYY'));
             
             cutData.push(processed_data[j])
             }
           }
+
+          console.log(cutData)
           
 return cutData;
 }
