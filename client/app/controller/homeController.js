@@ -12,12 +12,12 @@
     .controller('homeController', homeController);
 
   homeController.$inject = ['$timeout','QueryService','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment'
-  ,'$route','localstoragefactory','CHARTCONFIG','chartfactory','timefactory',];
+  ,'$route','localstoragefactory','CHARTCONFIG','chartfactory','timefactory','lodash'];
 
 
 
   function homeController($timeout,QueryService,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,
-  $route,localstoragefactory,CHARTCONFIG,chartfactory,timefactory) {
+  $route,localstoragefactory,CHARTCONFIG,chartfactory,timefactory,_) {
 
 
    $scope.breadcrumbs='';
@@ -26,7 +26,6 @@
 
         
  $scope.options = CHARTCONFIG.SUNBURST_CHART;
-console.log($scope.options)
 
     $scope.$route = $route;
     $scope.currentNavItem = 'home';
@@ -46,9 +45,13 @@ $scope.currentBlob = new Date();
     // size: 4,
     color: "grey",
     children: []}];
-    CONSTANTS.reddit.forEach(function(element,index) {
-        emptyData[0].children.push({ name: "/r/"+element + dataProcessor.attachHidden("Reddit"), color:CONSTANTS.color[index],children:[]})
-    }, this);
+    // CONSTANTS.reddit.forEach(function(element,index) {
+    //     emptyData[0].children.push({ name: "/r/"+element + dataProcessor.attachHidden("Reddit"), color:CONSTANTS.color[index],children:[]})
+    // }, this);
+
+    _.forEach(CONSTANTS.reddit, function(element, index){
+        emptyData[0].children.push({ name: "/r/"+element + dataProcessor.attachHidden("Reddit"), color:CONSTANTS.color[index],children:[]})        
+    })
     return emptyData;
     } 
   

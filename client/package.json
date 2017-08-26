@@ -7,14 +7,24 @@
     "angular": "1.5.5",
     "angular-animate": "1.5.5",
     "angular-aria": "1.5.5",
+    "angular-d3-word-cloud": "^0.4.0",
     "angular-local-storage": "^0.5.2",
     "angular-material": "^1.1.4",
     "angular-messages": "1.5.5",
+    "angular-moment": "^1.0.1",
+    "angular-nvd3": "^1.0.9",
+    "angular-route": "^1.5.5",
+    "angular-sanitize": "1.5.5",
     "angular-toastr": "^2.1.1",
     "angularjs-toaster": "^2.1.0",
-    "date-fns": "^1.28.4",
+    "d3": "^3.5.17",
+    "date-fns": "^1.28.5",
     "gulp-imagemin": "^3.2.0",
-    "gulp-sass": "^3.1.0"
+    "gulp-sass": "^3.1.0",
+    "jquery": "^3.2.1",
+    "moment": "^2.18.1",
+    "ng-lodash": "^0.2.3",
+    "nvd3": "^1.8.6"
   },
   "devDependencies": {
     "watch": "^0.13.0"

@@ -5,7 +5,7 @@
   .module('reddit-analytics')
   .factory('dataProcessor', dataProcessor);
 
- dataProcessor.$inject = ['CONSTANTS','moment','localStorageService','dataDecoratorfactory'];
+ dataProcessor.$inject = ['CONSTANTS','moment','localStorageService','dataDecoratorfactory','lodash'];
  /*
             data [] } -> array of rows {} containing 
                                           -> datetime ""
@@ -16,7 +16,7 @@
 
  */
 
- function dataProcessor(CONSTANTS,moment,localStorageService,dataDecoratorfactory) {
+ function dataProcessor(CONSTANTS,moment,localStorageService,dataDecoratorfactory,_) {
 
 function momentFormatter(post_datetime){
   // console.log(post_datetime);
@@ -43,13 +43,11 @@ function entitiesLabelMaker(reddit_id,post_datetime,entities,normalizedentitty,c
   returnstring+=", Occurences: "+ normalizedentitty.o;
   returnstring+="<br> Entity Sentiment:";
   
-
   returnstring += dataDecoratorfactory.normalizeSentimentLabel(normalizedentitty.label);
 
-
-returnstring += ", Confidence: "+normalizedentitty.confidence+"% </center></b><br><span style='font-size:80%'>";
-returnstring += momentFormatter(post_datetime) +"</span> <!--" +garbage+post_datetime.toString()+"-->";
-return returnstring;
+  returnstring += ", Confidence: "+normalizedentitty.confidence+"% </center></b><br><span style='font-size:80%'>";
+  returnstring += momentFormatter(post_datetime) +"</span> <!--" +garbage+post_datetime.toString()+"-->";
+  return returnstring;
 }
 
 function sentimentLabelMaker(reddit_id,post_datetime,sentiment,garbage)
