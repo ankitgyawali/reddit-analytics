@@ -56,7 +56,7 @@ def processASubmission(submission):
         singleComment.append(comment.body)
     commentToReturn = ' '.join(singleComment)
     commentToReturn = commentToReturn.rstrip('\r\n')
-    return commentToReturn[:49950]
+    return commentToReturn[:48950]
     # return singleComment
 # logging.info(api.categories(params))
 
@@ -74,11 +74,15 @@ def processASubReddit(subreddit,params):
     for submission in submissions: #sleep 3 sec here #Returns a single post for each submission
         try:
             params['content'] = processASubmission(submission)
-            cat = api.categories(params)['categories']
-            cats = []
-            for c in cat:
-                cats.append(json.dumps({'l': categoryMapper(c['label']), 'c': str(c['confidence'])[2:4]}))
-            catagories.append(cats)
+            try:
+                cat = api.categories(params)['categories']
+                cats = []
+                for c in cat:
+                    cats.append(json.dumps({'l': categoryMapper(c['label']), 'c': str(c['confidence'])[2:4]}))
+                catagories.append(cats)
+            except Exception as e:
+                logging.info('Sleeping between submission ['+submission.id+'] on category api because: '+ str(e))                
+                time.sleep(int(config.get('SLEEPTIME', 'SLEEP_BETWEEN_API_CALLS')))
             time.sleep(int(config.get('SLEEPTIME', 'ROSETTE_SLEEP')))
             sentities = api.sentiment(params)
             sentis = sentities['document']
@@ -91,7 +95,10 @@ def processASubReddit(subreddit,params):
             reddit_id.append(submission.id)
         except Exception as e:
             logging.info('Error for submission ['+submission.id+'] while calling rosette API: '+ str(e))
-            return [[],True]
+            logging.info('Sleeping Extra sec: '+ str(config.get('SLEEPTIME', 'ROSETTE_SLEEP')))
+            time.sleep(int(config.get('SLEEPTIME', 'ERROR_SLEEP')))
+            continue
+            # return [[],True]
         time.sleep(int(config.get('SLEEPTIME', 'ROSETTE_SLEEP')))
     return [[subreddit,reddit_id,sentiment,entities,catagories],None]
 
