@@ -26,14 +26,18 @@ function categoryController(toastr,$timeout, dataDecoratorfactory, timefactory,l
 
   $scope.options = CHARTCONFIG.CATEGORY_PIE_CHART
   
-  // $scope.options.chart.pie = {
-  //   dispatch: {
-  //     elementClick: function (t){
-  //       console.log(t);
-  //       $scope.reddit_mappings = t.data.reddit_id;
-  //     }
-  //   }
-  // };
+  $scope.options.chart.pie = {
+    dispatch: {
+      elementClick: function (t){
+        $scope.updateView(t.data.reddit_id);
+      }
+    }
+  };
+
+  $scope.updateView = function(ids){
+    $scope.reddit_hrefs = ids;
+    $timeout(function() { $scope.$apply(); }, 1); // Doing inside a timeout to be safe
+  }
 
   $scope.nvCompatibleData = function(data){
     let tempData = {};
@@ -71,7 +75,9 @@ function categoryController(toastr,$timeout, dataDecoratorfactory, timefactory,l
     localstoragefactory.set('catTime',$scope.timeOptions[0]);  // <--- Initialize first time
   $scope.cutbyReddit(CONSTANTS.reddit[0]);
 
-  angular.element("#radio_cat_0").triggerHandler('click');
+  // angular.element("#test_test").trigger('click');
+  angular.element("#radio_cat_0").click();
+  console.log(  angular.element("#radio_cat_0"))
   $scope.selectedItemChanged($scope.timeOptions[0]);  
   
 }, 0);

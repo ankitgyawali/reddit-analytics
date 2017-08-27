@@ -111,6 +111,13 @@
         // activetab: 'documentation'
         
       })
+      .when('/sentiment', {
+        templateUrl: 'views/sentiment.html',
+        controller: 'MainController',
+        controllerAs: 'main'
+        // activetab: 'documentation'
+        
+      })
       .otherwise({
         redirectTo: '/'
       });
