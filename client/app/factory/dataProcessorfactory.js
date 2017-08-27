@@ -134,7 +134,7 @@ flattened_posts = (flattened_posts.sort(
     return post.categories.label_id; })
   // .thenBy("process_datetime")
   // .thenBy("categories.label_id")
-  // .thenBy("entities.entimentSorter")
+  .thenBy("entities.entimentSorter")
 ));
 
 _.forEach(flattened_posts, function(val){
@@ -230,13 +230,8 @@ let entity = [];
                   // console.log(processed_data);
 
 for(let i=0;i<processed_data.length;i++){ //post
-  // console.log(localstoragefactory.get('sunburstData')[i]);
 
           for(let j=0;j<processed_data[i].entities.length;j++){ //entities
-          //     // $scope.x.push({ name      })
-          // for(let k=0;k<processed_data[i].entities[j].length;k++){ //entities
-                // console.log(localstoragefactory.get('sunburstData')[i].entities[j][k])
-
                 let check = entity.indexOf(processed_data[i].entities[j].normalized);
                 if(check==-1){
                   let labelTag = ''
@@ -262,7 +257,7 @@ for(let i=0;i<processed_data.length;i++){ //post
                   custom: {
                     name: processed_data[i].entities[j].normalized, color: color,
                     confidence: processed_data[i].entities[j].confidence,label:labelTag,
-                    reddit_id: processed_data[i].reddit_id[j],
+                    reddit_id: processed_data[i].reddit_id,
                     occurences: processed_data[i].entities[j].o
                   }
                    });

@@ -16,6 +16,13 @@
         <md-option ng-model="currentlySelected" ng-value="timeOption" ng-repeat="timeOption in timeOptions track by $index">{{timeOption}}</md-option>
       </md-select>  
       <p class=""><b>Current Time:</b><br> {{ now }}</p>
+
+      <u>Category Labels:</u>
+      <br>
+      <br>
+       <span ng-repeat="name in chartLabels.name track by $index">
+        <div class="labelbox" style="background:{{chartLabels.mapping[$index]}}"></div> &nbsp;&nbsp;{{name}} <br>
+      </span>
   </div>
 
   <div flex="75" style="margin-top:-65px;">
@@ -27,7 +34,7 @@
 
     <nvd3 id="flag" options="options"
       data="data"
-     config="{ deepWatchData: true,deepWatchOptions: true,deepWatchDataDepth: 2, debounce: 10}" 
+      config="{ deepWatchData: true,deepWatchOptions: true,deepWatchDataDepth: 2, debounce: 10}" 
       events="events"
       api="api"
       on-ready="callback" style="magin-bottom:-50px;border:1px solid black"></nvd3>

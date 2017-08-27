@@ -14,9 +14,9 @@
   .module('reddit-analytics')
   .factory('chartfactory', chartfactory);
 
-   chartfactory.$inject = ['$timeout','CONSTANTS','moment','localStorageService','dataProcessor','dataDecoratorfactory'];
+   chartfactory.$inject = ['$timeout','CONSTANTS','moment','localStorageService','dataProcessor','dataDecoratorfactory','lodash'];
 
- function chartfactory($timeout,CONSTANTS,moment,localStorageService,dataProcessor,dataDecoratorfactory) {
+ function chartfactory($timeout,CONSTANTS,moment,localStorageService,dataProcessor,dataDecoratorfactory,_) {
 
 // Processed_data == array of cut data
 // chart data = empty data
@@ -43,19 +43,22 @@ function sunburst(processed_data,chart_data){
     return varstoReturn;
     } 
 
+
 for (var i = 0; i < processed_data.length; i++) { // Loop through one select [list of reddit_id posts]
 
-    if(processed_data[i].id == 0){
+    if(processed_data[i].id == 3){
         console.log(processed_data[i].subreddit + processed_data[i].categories.label_id)
+        
     }
-            chart_data[0].children[processed_data[i].id].children.push // push to sunburst format
+    
+    chart_data[0].children[_.findIndex(chart_data[0].children, function(o) { return o.index == processed_data[i].id; })].children.push // push to sunburst format
             ({
             // sort: function(){ console.log("XX"); return "x"; },            
             // Create Label ids to sort later
             // sorter:  dataProcessor.sorterLabel(processed_data[i].categories[k].label_id,processed_data[i].sentiment[k].confidence,processed_data[i].sentiment[k].label),
             
             process_datetime: processed_data[i].process_datetime,
-            
+            subreddit: processed_data[i].subreddit,
             // Create Name for categories
             name:  dataProcessor.categoryLabelMaker(
             processed_data[i].categories.label_id,processed_data[i].categories.name,
@@ -84,6 +87,8 @@ for (var i = 0; i < processed_data.length; i++) { // Loop through one select [li
 
 // setItem("thisWeekData",value);
 console.log("sort by category");
+console.log(chart_data[0].children[_.findIndex(chart_data[0].children, function(o) { return o.index == 3; })].children)
+
     console.log(chart_data[0].children[0]);
 
 return chart_data;

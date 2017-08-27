@@ -74,3 +74,13 @@ border-bottom:2px solid blue;
 .linkBorder{
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
+
+
+.labelbox {
+  float: left;
+  margin-top:2px;
+  width: 15px;
+  height: 15px;
+  /* margin: 5px; */
+  border: 1px solid rgba(0, 0, 0, .2);
+}

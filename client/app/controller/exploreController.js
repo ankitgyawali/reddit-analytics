@@ -23,7 +23,6 @@ function exploreController(toastr,$timeout,timefactory,localstoragefactory,$elem
  
     $scope.subredditoptions = CONSTANTS.reddit.sort();
     $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");  
-    console.log($scope.timeOptions);
     $scope.currentTime = $scope.timeOptions[0];
     $scope.now = timefactory.initNow();   
     $scope.currentReddit = $scope.subredditoptions[0];
@@ -60,9 +59,6 @@ function exploreController(toastr,$timeout,timefactory,localstoragefactory,$elem
       reddit,
       localstoragefactory.get('wcTime')
       );
-      console.log(reddit);
-
-      console.log(localstoragefactory.get('processedData'));
       
       $scope.words = dataProcessor.createWordCloudWords($scope.newwords);
       $scope.wordClicked({custom:$scope.words[0].custom});
@@ -89,7 +85,7 @@ function exploreController(toastr,$timeout,timefactory,localstoragefactory,$elem
       localstoragefactory.get('wcReddit'),
       val
       );
-      localstoragefactory.set('sunburstData',timefactory.timeSlicerWordCloud(localstoragefactory.get('processedData'),val));   // BY TIME
+      localstoragefactory.set('wcData',timefactory.timeSlicerWordCloud(localstoragefactory.get('processedData'),val));   // BY TIME
       $scope.words = dataProcessor.createWordCloudWords($scope.newwordss);
       $scope.wordClicked({custom:$scope.words[0].custom});
     }

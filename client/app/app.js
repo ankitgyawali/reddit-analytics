@@ -104,8 +104,8 @@
         // activetab: 'explore'
         
       })
-      .when('/documentation', {
-        templateUrl: 'views/documentation.html',
+      .when('/categories', {
+        templateUrl: 'views/categories.html',
         controller: 'MainController',
         controllerAs: 'main'
         // activetab: 'documentation'

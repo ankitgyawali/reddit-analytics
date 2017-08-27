@@ -33,7 +33,7 @@ angular
             data: null,
             id: "reddit-analytics-sunburst"
             },
-            // groupColorByParent: true,
+            groupColorByParent: true,
             // scale: d3.scale.category20c(),
             color: function(color){ return color; },
             // color: d3.scale.category20c(),

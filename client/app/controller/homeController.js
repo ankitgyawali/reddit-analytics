@@ -12,16 +12,21 @@
     .controller('homeController', homeController);
 
   homeController.$inject = ['$timeout','QueryService','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment'
-  ,'$route','localstoragefactory','CHARTCONFIG','chartfactory','timefactory','lodash'];
+  ,'$route','localstoragefactory','CHARTCONFIG','chartfactory','timefactory','lodash','dataDecoratorfactory'];
 
 
 
   function homeController($timeout,QueryService,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,
-  $route,localstoragefactory,CHARTCONFIG,chartfactory,timefactory,_) {
+  $route,localstoragefactory,CHARTCONFIG,chartfactory,timefactory,_,dataDecoratorfactory) {
 
     $scope.data = {};
     $scope.elementObjects = {};
-
+    $scope.chartLabels = {
+        name: CONSTANTS.category_mapping,
+        mapping: _.map(CONSTANTS.contrast_set, function(o){
+            return dataDecoratorfactory.rgb2hex(o[0],o[1],o[2])
+        })
+    }
     $scope.options = CHARTCONFIG.SUNBURST_CHART;
 
     $scope.$route = $route;
@@ -42,7 +47,11 @@
     children: []}];
 
     _.forEach(CONSTANTS.reddit, function(element, index){
-        emptyData[0].children.push({ name: "/r/"+element + dataProcessor.attachHidden("Reddit"), color:CONSTANTS.color[index],children:[]})        
+        emptyData[0].children.push({ 
+            name: "/r/"+element + dataProcessor.attachHidden("Reddit"),
+            index: index,
+            color:CONSTANTS.color[index],
+            children:[]})        
     })
     return emptyData;
     } 
@@ -133,9 +142,7 @@ $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'), $sc
         $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'),localstoragefactory.get('sunburstEmpty'));
         console.log($scope.data);
         $scope.$apply();
-    $scope.api.updateWithData($scope.data);
-
-
+        $scope.api.updateWithData($scope.data);
     }, 2);
 
     //   $scope.$watch($scope.data, function(val) {
