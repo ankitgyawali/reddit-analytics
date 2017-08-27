@@ -1,6 +1,8 @@
 stuff left to implement:
 
 
+sentiment ana
+
 ---
 1 hour ->
 

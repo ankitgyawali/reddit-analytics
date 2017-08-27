@@ -68,28 +68,24 @@ return returnstring;
 
   function processThisWeek(data) {
 
-   var allData = [];
+   var flattened_posts = [];
    var timestamps = [];
+   
+   for (var k = 0; k < data.length; k++) {  // Loop contains each object with multiple posts
+    var newData = {
+      id: data[k].id,
+      subreddit: CONSTANTS.reddit[data[k].id],
+      process_datetime: new Date(data[k].process_datetime),
+      combinelabel: dateFns.format(new Date(data[k].process_datetime),'MM/DD/YYYY'),
+      reddit_id: new Function("return " + data[k].reddit_id + ";")(), // Convert string to array of objects
+      sentiment: new Function("return " + data[k].sentiment + ";")(),
+      entities: new Function("return " + data[k].entities + ";")(),
+      categories: new Function("return " + data[k].catagories + ";")()
+    }
 
-   for (var k = 0; k < data.length; k++) {
-    var newData = {}
-
-    newData.id = data[k].id
-
-    newData.subreddit = CONSTANTS.reddit[data[k].id]
-
-    newData.process_datetime = new Date(data[k].process_datetime)
-    newData.combinelabel =   dateFns.format(newData.process_datetime,'MM/DD/YYYY')
     timestamps.push(newData.process_datetime);
-
-
-    newData.reddit_id = new Function("return " + data[k].reddit_id + ";")();
-    newData.sentiment = new Function("return " + data[k].sentiment + ";")();
-    newData.entities = new Function("return " + data[k].entities + ";")();
-    newData.categories = new Function("return " + data[k].catagories + ";")();
-// console.log(newData.entities);
-
-    for (var i = 0; i < newData.sentiment.length; i++) {
+    // For each post within that object
+    for (var i = 0; i < newData.sentiment.length; i++) {  // Sentiment & Categories will be of same length.
 
      newData.sentiment[i] = JSON.parse(newData.sentiment[i]);
      newData.sentiment[i].label = newData.sentiment[i].l;
@@ -109,122 +105,55 @@ return returnstring;
       newData.entities[i][j].label = newData.entities[i][j].l;
       newData.entities[i][j].normalized = newData.entities[i][j].n;
       newData.entities[i][j].confidence = newData.entities[i][j].c;
-      newData.entities[i][j].entimentSorter =   dataDecoratorfactory.normalizeConfidenceForSorting(newData.entities[i][j].confidence,newData.entities[i][j].label)
+      newData.entities[i][j].entimentSorter = dataDecoratorfactory.normalizeConfidenceForSorting(newData.entities[i][j].confidence,newData.entities[i][j].label)
       delete newData.entities[i][j]["l"];
       delete newData.entities[i][j]["c"];
       delete newData.entities[i][j]["n"];
      }
-// newData.entities[i] = newData.entities[i].sort(function(a, b){
-//     return parseInt(a.entimentSorter) - parseInt(b.entimentSorter);
-// });
 
-}
-// console.log(newData.categories);
-     newData.categories = newData.categories.sort(function(a, b){
-    return parseInt(a.label_id) > parseInt(b.label_id);
-});
-// console.log(newData.categories);
-
-
-      allData.push(newData);
-    // console.log(allData);
-   }
-
-
-   var groupBy = function(xs, key) {
-  return xs.reduce(function(rv, x) {
-    (rv[x[key]] = rv[x[key]] || []).push(x);
-    return rv;
-  }, {});
-};
-
-
-   console.log((allData));
-let groupedData = groupBy(allData, 'subreddit');
-
-let sortedData = []; //Hold 4 objects here  
-   console.log(groupedData);
-// ARRAY OF OBJECTS started
-for (var key in groupedData) {
-  if (groupedData.hasOwnProperty(key)) {
-        
-        groupedData[key] = groupBy(groupedData[key], 'combinelabel')
-                        console.log(groupedData[key]);
-                  
-        for (var childKey in groupedData[key]) {
-              if (groupedData[key].hasOwnProperty(childKey)) {
-                    let add = {};
-                    add.combinelabel = groupedData[key][childKey][0].combinelabel;
-                    add.combiner = groupedData[key][childKey][0].combinelabel;
-                    add.id = groupedData[key][childKey][0].id;
-                    add.process_datetime = groupedData[key][childKey][0].process_datetime;
-                    add.subreddit = groupedData[key][childKey][0].subreddit;
-                    add.reddit_id = [];
-                    add.entities = [];
-                    add.sentiment = [];
-                    add.categories = [];
-                    for (let r = 0; r < groupedData[key][childKey].length; r++) {
-                          for (let s = 0; s < groupedData[key][childKey][r].reddit_id.length; s++) {
-                                    //  console.log(groupedData[key][childKey][r].reddit_id[s]);                      
-                    add.reddit_id.push(groupedData[key][childKey][r].reddit_id[s]);
-                    add.entities.push(groupedData[key][childKey][r].entities[s]);
-                    add.sentiment.push(groupedData[key][childKey][r].sentiment[s]);
-                    add.categories.push(groupedData[key][childKey][r].categories[s]);
-                          }
-                        }                
-
-                                          // console.log(add);
-                    // console.log(groupedData[key][childKey]);    
-
-                         sortedData.push(add);
-              }
-            }
+     let singlePost = {
+       sentiment: newData.sentiment[i],
+       categories: newData.categories[i],
+       entities: newData.entities[i],
+       reddit_id: newData.reddit_id[i],
+       id: data[k].id,
+       subreddit: CONSTANTS.reddit[data[k].id],
+       process_datetime: new Date(data[k].process_datetime),
+       combinelabel: dateFns.format(new Date(data[k].process_datetime),'MM/DD/YYYY')
+     };
+     flattened_posts.push(singlePost);
   }
 }
 
 
-console.log(sortedData);
+// console.log(flattened_posts.length);
 
-let tempArray = sortedData;
-console.log(tempArray);
-      for(let w=0;w<tempArray.length;w++){
-        var list = []
-          for(let x=0;x<tempArray[w].reddit_id.length;x++){
-            list.push({ reddit_id:  tempArray[w].reddit_id[x],        sentiment:  tempArray[w].sentiment[x],
-             entities:  tempArray[w].entities[x], categories:  tempArray[w].categories[x],           })
-      }
+flattened_posts = (flattened_posts.sort(
+  firstBy(function (post) { 
+    // console.log(post.categories.label_id);
+    return post.categories.label_id; })
+  // .thenBy("process_datetime")
+  // .thenBy("categories.label_id")
+  // .thenBy("entities.entimentSorter")
+));
 
-      list.sort(function(a, b) {
-    return ((a.categories.label_id < b.categories.label_id) ? -1 : ((a.categories.label_id == b.categories.label_id) ? 0 : 1));
-        });
-   tempArray[w].reddit_id=[]
-   tempArray[w].categories=[]
-   tempArray[w].sentiment=[]
-   tempArray[w].entities=[]
-
-        for (var k = 0; k < list.length; k++) {
-
-            tempArray[w].reddit_id.push(list[k].reddit_id)
-            tempArray[w].categories.push(list[k].categories)
-            tempArray[w].sentiment.push(list[k].sentiment)
-            tempArray[w].entities.push(list[k].entities)
-
-        }
+_.forEach(flattened_posts, function(val){
+  console.log(val.categories.label_id)
+  
+  // if(val.id==0){
+  // console.log("FOR 0: "+ val.categories.label_id)
+  // }
 
 
-    }
-console.log(tempArray);
-allData = tempArray;
+})
 
-
-  unique_ts =  unique_timestamps_cutter(timestamps)
+   unique_ts =  unique_timestamps_cutter(timestamps)
 
    localStorageService.set("timestamps_arrays",timestamps)
    localStorageService.set("unique_timestamps",unique_ts);
    localStorageService.set("unique_criteria","EACHDAY")
-   return (allData);
-  //  return [allData[0]];
-  }
+   return flattened_posts;
+}
 
 function unique_timestamps_cutter(timestamp){
    var unique_ts = new Set();    
@@ -291,7 +220,6 @@ catch (e) {
 
 
 function createWordCloudWords(processed_data){
-  console.log(processed_data);
   
 let score = [];
 let entity = [];
@@ -306,18 +234,18 @@ for(let i=0;i<processed_data.length;i++){ //post
 
           for(let j=0;j<processed_data[i].entities.length;j++){ //entities
           //     // $scope.x.push({ name      })
-          for(let k=0;k<processed_data[i].entities[j].length;k++){ //entities
+          // for(let k=0;k<processed_data[i].entities[j].length;k++){ //entities
                 // console.log(localstoragefactory.get('sunburstData')[i].entities[j][k])
 
-                let check = entity.indexOf(processed_data[i].entities[j][k].normalized);
+                let check = entity.indexOf(processed_data[i].entities[j].normalized);
                 if(check==-1){
                   let labelTag = ''
                   let color =''
-                if(processed_data[i].entities[j][k].label=="pos"){
+                if(processed_data[i].entities[j].label=="pos"){
                     labelTag = "Positive";
                     color = "#006400"
                   }
-                  else if(processed_data[i].entities[j][k].label == "neg"){
+                  else if(processed_data[i].entities[j].label == "neg"){
 
                     labelTag = "Negative";
                     color="#8B0000"
@@ -327,22 +255,22 @@ for(let i=0;i<processed_data.length;i++){ //post
                   color = "grey";
 
                   }
-                entity.push(processed_data[i].entities[j][k].normalized);
-                score.push({ text:processed_data[i].entities[j][k].normalized,
-                 size:processed_data[i].entities[j][k].o,
-                  color:dataDecoratorfactory.interPolateSentimentColorForWordCloud(processed_data[i].entities[j][k].label,processed_data[i].entities[j][k].confidence),
+                entity.push(processed_data[i].entities[j].normalized);
+                score.push({ text:processed_data[i].entities[j].normalized,
+                 size:processed_data[i].entities[j].o,
+                  color:dataDecoratorfactory.interPolateSentimentColorForWordCloud(processed_data[i].entities[j].label,processed_data[i].entities[j].confidence),
                   custom: {
-                    name: processed_data[i].entities[j][k].normalized, color: color,
-                    confidence: processed_data[i].entities[j][k].confidence,label:labelTag,
+                    name: processed_data[i].entities[j].normalized, color: color,
+                    confidence: processed_data[i].entities[j].confidence,label:labelTag,
                     reddit_id: processed_data[i].reddit_id[j],
-                    occurences: processed_data[i].entities[j][k].o
+                    occurences: processed_data[i].entities[j].o
                   }
                    });
                 }
                 else{
-                  score[check].size = score[check].size + processed_data[i].entities[j][k].o;
+                  score[check].size = score[check].size + processed_data[i].entities[j].o;
                 }
-            }          
+            // }          
           }
             
   }
@@ -350,7 +278,7 @@ for(let i=0;i<processed_data.length;i++){ //post
 score = score.sort(function(a, b){
     return parseInt(b.size) - parseInt(a.size);
 });
-  console.log(score.length);
+
 if(score.length > CONSTANTS.NUMBER_OF_WORDS_IN_WORDCLOUD ){
   score = score.slice(0,CONSTANTS.NUMBER_OF_WORDS_IN_WORDCLOUD)
 }
@@ -369,13 +297,11 @@ for(let l=0;l<score.length;l++){ //post
 // console.log(score[l].size+ "___VS____ "+convertRange(score[l].size,[min,max],[125,10]))
 score[l].size = convertRange(score[l].size,[min,max],[99,10]);
 }
-
 // var i = d3.interpolateNumber(10, 20);
 // i(0.0); // 10
   console.log(score.length);
   return score;
 }
-
 
 function cutByTimenReddit(processed_data,subreddit,time){
   let cutData = [];

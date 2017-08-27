@@ -74,15 +74,15 @@ def processASubReddit(subreddit,params):
     for submission in submissions: #sleep 3 sec here #Returns a single post for each submission
         try:
             params['content'] = processASubmission(submission)
-            try:
-                cat = api.categories(params)['categories']
-                cats = []
-                for c in cat:
-                    cats.append(json.dumps({'l': categoryMapper(c['label']), 'c': str(c['confidence'])[2:4]}))
-                catagories.append(cats)
-            except Exception as e:
-                logging.info('Sleeping between submission ['+submission.id+'] on category api because: '+ str(e))                
-                time.sleep(int(config.get('SLEEPTIME', 'SLEEP_BETWEEN_API_CALLS')))
+            # try:
+            cat = api.categories(params)['categories']
+            cats = []
+            for c in cat:
+                cats.append(json.dumps({'l': categoryMapper(c['label']), 'c': str(c['confidence'])[2:4]}))
+            catagories.append(cats)
+            # except Exception as e:
+            #     logging.info('Sleeping between submission ['+submission.id+'] on category api because: '+ str(e))                
+            #     time.sleep(int(config.get('SLEEPTIME', 'SLEEP_BETWEEN_API_CALLS')))
             time.sleep(int(config.get('SLEEPTIME', 'ROSETTE_SLEEP')))
             sentities = api.sentiment(params)
             sentis = sentities['document']

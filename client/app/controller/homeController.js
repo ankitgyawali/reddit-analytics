@@ -19,24 +19,19 @@
   function homeController($timeout,QueryService,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,
   $route,localstoragefactory,CHARTCONFIG,chartfactory,timefactory,_) {
 
+    $scope.data = {};
+    $scope.elementObjects = {};
 
-   $scope.breadcrumbs='';
-        $scope.data = {};
-        $scope.elementObjects = {};
-
-        
- $scope.options = CHARTCONFIG.SUNBURST_CHART;
+    $scope.options = CHARTCONFIG.SUNBURST_CHART;
 
     $scope.$route = $route;
     $scope.currentNavItem = 'home';
     $scope.now = timefactory.initNow();
 
-$scope.currentBlob = new Date();
+    $scope.currentBlob = new Date();
 
-    var self = this;
-
-    $scope.createEmptyData = function(x){
-        //x  = passed value
+    // Sun burst chart empty data goes here
+    $scope.createEmptyData = function(){
     let emptyData = [{
     name: "<b>Reddit</b><br><span style='font-size:80%'> Current Time:<br>" + dataProcessor.momentFormatter(new Date())+ "</span>"
     + dataProcessor.attachHidden("Reddit"),
@@ -45,27 +40,18 @@ $scope.currentBlob = new Date();
     // size: 4,
     color: "grey",
     children: []}];
-    // CONSTANTS.reddit.forEach(function(element,index) {
-    //     emptyData[0].children.push({ name: "/r/"+element + dataProcessor.attachHidden("Reddit"), color:CONSTANTS.color[index],children:[]})
-    // }, this);
 
     _.forEach(CONSTANTS.reddit, function(element, index){
         emptyData[0].children.push({ name: "/r/"+element + dataProcessor.attachHidden("Reddit"), color:CONSTANTS.color[index],children:[]})        
     })
     return emptyData;
     } 
-  
 
-
-    // CONSTANTS.reddit.forEach(function(element,index) {
-    //     $scope.data[0].children.push({ name: "/r/"+element, color:CONSTANTS.color[index],children:[]})
-    // }, this);
-    localstoragefactory.set("sunburstEmpty",  $scope.createEmptyData("1") );
-    $scope.data =    localstoragefactory.get("sunburstEmpty");
-//);
-
-
-if (true || (localstoragefactory.keys().indexOf("processedData") != 0) || (localstoragefactory.get('processedData').length < 10)) // ADD OR FOR NOT UP TO DATE TIME CALCS
+    localstoragefactory.set("sunburstEmpty",  $scope.createEmptyData() );
+    $scope.data = localstoragefactory.get("sunburstEmpty");
+    
+// ADD OR FOR NOT UP TO DATE TIME CALCS
+if (true || (localstoragefactory.keys().indexOf("processedData") != 0) || (localstoragefactory.get('processedData').length < 10)) 
 { //Call Datechecker function here
                 $http({
                 method: 'POST',
@@ -97,7 +83,7 @@ if (true || (localstoragefactory.keys().indexOf("processedData") != 0) || (local
                             
      $timeout(function() {
 console.log("OK");
-$scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'), $scope.createEmptyData("1")); // Create chart data
+$scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'), $scope.createEmptyData()); // Create chart data
     }, 2);
 
 
@@ -128,7 +114,7 @@ $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'), $sc
 
 // $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'), $scope.createEmptyData("1")); // Create chart data
              $timeout(function() {
-        $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'), $scope.createEmptyData("1")); // Create chart data
+        $scope.data = chartfactory.sunburst(localstoragefactory.get('sunburstData'), $scope.createEmptyData()); // Create chart data
     }, 2);
 
 
