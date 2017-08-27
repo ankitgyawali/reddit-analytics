@@ -294,23 +294,16 @@ score[l].size = convertRange(score[l].size,[min,max],[99,10]);
 }
 // var i = d3.interpolateNumber(10, 20);
 // i(0.0); // 10
-  console.log(score.length);
   return score;
 }
 
 function cutByTimenReddit(processed_data,subreddit,time){
   let cutData = [];
           for(let j=0;j<processed_data.length;j++){ //entities
-            console.log(time + " vs " + dateFns.format(processed_data[j].process_datetime,'MM/DD/YYYY'));
             if(processed_data[j].subreddit==subreddit   &&  time == dateFns.format(processed_data[j].process_datetime,'MM/DD/YYYY')){
-            // console.log(processed_data[j].subreddit==subreddit   &&  time == dateFns.format(processed_data[j].process_datetime,'MM/DD/YYYY'));
-            
             cutData.push(processed_data[j])
             }
           }
-
-          console.log(cutData)
-          
 return cutData;
 }
 

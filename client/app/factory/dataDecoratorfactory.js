@@ -117,7 +117,10 @@ function interPolateSentimentForWordCloud(label){
   return { labelTag:labelTag, color:color }
 }
 
-
+// Convert 'ARTS_AND_ENTERTAINMENT' to 'Arts & Entertainment'
+function categoryPrettify(label){
+  return label.replace(/_AND_/g, '_&_').replace(/_/g, ' ').toLowerCase().replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
 
   return { //All of the data is stored as cookie by utilizing $cookies
     normalizeConfidenceForSorting:normalizeConfidenceForSorting,
@@ -125,7 +128,8 @@ function interPolateSentimentForWordCloud(label){
     interPolateSentimentColor:interPolateSentimentColor,
     rgb2hex:rgb2hex,
     interPolateSentimentForWordCloud:interPolateSentimentForWordCloud,
-    interPolateSentimentColorForWordCloud:interPolateSentimentColorForWordCloud
+    interPolateSentimentColorForWordCloud:interPolateSentimentColorForWordCloud,
+    categoryPrettify:categoryPrettify
   };
  }
 })();

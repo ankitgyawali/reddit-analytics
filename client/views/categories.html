@@ -1,7 +1,7 @@
 <div class="container cf" ng-controller ="categoryController">
         <div layout="row" layout-xs="column">
           <div flex="25"  class="radivider" style="padding:20px">
-            <b> Category Graph Options</b> <br> <br> <br> 
+            <b> Category Pie Chart</b> <br> <br> <br> 
         
             <b>Timeset Chosen:</b>  
         <md-select placeholder="{{timeOptions[0]}}" ng-model="currentTimeOption" md-on-open="loadTime()" style="color:black;min-width: 200px;"
@@ -14,7 +14,7 @@
             <md-radio-group ng-model="data.group1"> 
           <b>Subreddit:</b><br>
         <!--<md-radio-button ng-class="{'md-checked':reddit == 'politics'}" required ng-click="cutbyReddit(reddit)" ng-repeat="reddit in subredditoptions"  value="{{reddit}}" class="md-primary">-->
-        <md-radio-button  id="radio_{{$index}}"  required ng-click="cutbyReddit(reddit)" ng-repeat="reddit in subredditoptions"  value="{{reddit}}" class="md-primary">
+        <md-radio-button  id="radio_cat_{{$index}}"  required ng-click="cutbyReddit(reddit)" ng-repeat="reddit in subredditoptions"  value="{{reddit}}" class="md-primary">
           /r/{{reddit}}</md-radio-button>
         
             </md-radio-group>
@@ -37,10 +37,10 @@
             </div>
           </md-toolbar>
         
-                <md-card-actions layout="row" layout-align="end center">
-                  <md-button  class="linkBorder" ng-href="https://www.reddit.com/{{worddetails.reddit_id}}" target="_blank">reddit.com/{{worddetails.reddit_id}}</md-button>
+                <md-card-actions layout="row" layout-align="end center" ng-if="reddit_mappings">
+                  <md-button  class="linkBorder" ng-href="https://www.reddit.com/{{worddetails.reddit_id}}" target="_blank" ng-repeat="id in reddit_mappings">reddit.com/{{id}}</md-button>
                 </md-card-actions>
-          
+         
                   
         
                 </md-card-title>
@@ -49,15 +49,13 @@
         
         
         
-            <div id="wordsCloud" style="padding-left:3%;width:60%;height:90%">
-         
-         
-                <!-- <word-cloud words="words" width="width" height="height" padding="0" rotate="rotate" on-click="wordClicked">
-           </word-cloud> -->
+            <div id="wordsCloud" style="padding-left:10%;width:65%;height:90%">
+                    <nvd3 options="options" data="data"></nvd3>
+     
 
 
         <br> <br>    <br>    <br>   
-               <center><b>Wordcloud for</b>: {{currentTime}} - /r/{{currentReddit}}</center>
+               <center><b>Category Pie Chart for</b>: {{currentTime}} - /r/{{currentReddit}}</center>
             
         
         </div>
