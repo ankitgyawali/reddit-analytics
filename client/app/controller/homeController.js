@@ -22,9 +22,11 @@
     $scope.data = {};
     $scope.elementObjects = {};
     $scope.chartLabels = {
-        name: CONSTANTS.category_mapping,
-        mapping: _.map(CONSTANTS.contrast_set, function(o){
-            return dataDecoratorfactory.rgb2hex(o[0],o[1],o[2])
+        name: _.map(CONSTANTS.category_mapping, function(category){
+            return dataDecoratorfactory.categoryPrettify(category);
+        }),
+        mapping: _.map(CONSTANTS.contrast_set, function(rgb){
+            return dataDecoratorfactory.rgb2hex(rgb[0],rgb[1],rgb[2])
         })
     }
     $scope.options = CHARTCONFIG.SUNBURST_CHART;

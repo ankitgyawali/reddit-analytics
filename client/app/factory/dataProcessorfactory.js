@@ -298,15 +298,12 @@ score[l].size = convertRange(score[l].size,[min,max],[99,10]);
 }
 
 function cutByTimenReddit(processed_data,subreddit,time){
-  let cutData = [];
-          for(let j=0;j<processed_data.length;j++){ //entities
-            if(processed_data[j].subreddit==subreddit   &&  time == dateFns.format(processed_data[j].process_datetime,'MM/DD/YYYY')){
-            cutData.push(processed_data[j])
-            }
-          }
-return cutData;
+  return _.filter(processed_data, function(reddit_post) { return (reddit_post.subreddit==subreddit) && (time == dateFns.format(reddit_post.process_datetime,'MM/DD/YYYY')); });
 }
 
+function sliceByReddit(processed_data,subreddit){
+  return _.filter(processed_data, function(reddit_post) { return reddit_post.subreddit==subreddit; });
+}
 
   return { //All of the data is stored as cookie by utilizing $cookies
   createSunburst:createSunburst,
@@ -319,7 +316,8 @@ return cutData;
    momentFormatter:momentFormatter,
    sorterLabel:sorterLabel,
    createWordCloudWords:createWordCloudWords,
-   cutByTimenReddit:cutByTimenReddit
+   cutByTimenReddit:cutByTimenReddit,
+   sliceByReddit:sliceByReddit
   };
 
 

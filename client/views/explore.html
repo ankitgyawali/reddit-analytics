@@ -26,7 +26,7 @@
   
 <!--<md-radio-button ng-class="{'md-checked':reddit == 'politics'}" required ng-click="cutbyReddit(reddit)" ng-repeat="reddit in subredditoptions"  value="{{reddit}}" class="md-primary">-->
 <md-radio-button  id="radio_{{$index}}"  required ng-click="cutbyReddit(reddit)" ng-repeat="reddit in subredditoptions"  value="{{reddit}}" class="md-primary">
-  /r/{{reddit}}   <md-tooltip>Follow associated Reddit post for selected enitity</md-tooltip>
+  /r/{{reddit}} 
 </md-radio-button>
 
 <!--<md-radio-button value="{{planInfo._id}}" name="plan" class="md-primary" ng-class="{'md-checked':trues}" required>-->
@@ -60,7 +60,10 @@ Entity Name: {{worddetails.name}}, Label:
   </md-toolbar>
 
         <md-card-actions layout="row" layout-align="end center">
-          <md-button  class="linkBorder" ng-href="https://www.reddit.com/{{worddetails.reddit_id}}" target="_blank">reddit.com/{{worddetails.reddit_id}}</md-button>
+          
+          <md-button  class="linkBorder" ng-href="https://www.reddit.com/{{worddetails.reddit_id}}" target="_blank">reddit.com/{{worddetails.reddit_id}}
+            <md-tooltip>Follow associated Reddit post for the selected enitity</md-tooltip>
+          </md-button>
         </md-card-actions>
   
           

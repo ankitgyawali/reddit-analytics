@@ -40,7 +40,7 @@
           </md-toolbar> -->
         
           <ul style="float: right;padding-right:5%" layout-align="end center" ng-if="reddit_hrefs"> Associated Reddit Posts:
-            <li ng-href="https://www.reddit.com/{{id}}" style="padding-left:5%" target="_blank" ng-repeat="id in reddit_hrefs track by $index">reddit.com/{{id}}<br></li>
+            <li style="padding-left:5%" ng-repeat="id in reddit_hrefs track by $index"> <a target="_blank" href="http://www.reddit.com/{{id}}"> reddit.com/{{id}}</a><br></li>
           </ul>
 
       <!-- <md-card-actions layout="row" layout-align="end center">

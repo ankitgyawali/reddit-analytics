@@ -3,6 +3,9 @@ stuff left to implement:
 
 sentiment ana
 
+
+scatter char for entities
+
 ---
 1 hour ->
 

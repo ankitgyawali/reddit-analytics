@@ -76,8 +76,8 @@ function categoryController(toastr,$timeout, dataDecoratorfactory, timefactory,l
   $scope.cutbyReddit(CONSTANTS.reddit[0]);
 
   // angular.element("#test_test").trigger('click');
-  angular.element("#radio_cat_0").click();
-  console.log(  angular.element("#radio_cat_0"))
+  // angular.element("#radio_cat_0").click();
+  // console.log(  angular.element("#radio_cat_0"))
   $scope.selectedItemChanged($scope.timeOptions[0]);  
   
 }, 0);

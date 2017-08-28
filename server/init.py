@@ -36,7 +36,7 @@ try:
 except:
     logging.info("Cannot login into reddit")
 
-api = API("e4897f0ec498c64935cf0b022fc3eef4")
+api = API(config.get('ROSETTE', 'ROSSETE_API_KEY'))
 params = DocumentParameters()
 
 def classifyComment(comment):

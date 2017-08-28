@@ -2,13 +2,21 @@
     <div layout="row" layout-xs="column">
       <div flex="25"  class="radivider" style="padding:20px">
         <b> Category Pie Chart</b> <br> <br> <br> 
+    
+    
+<!--     
+
         <b>Timeset Chosen:</b>  
-    <md-select placeholder="{{timeOptions[0]}}" ng-model="currentTimeOption" md-on-open="loadTime()" style="color:black;min-width: 200px;"
+    
+        <md-select placeholder="{{timeOptions[0]}}" ng-model="currentTimeOption" md-on-open="loadTime()" style="color:black;min-width: 200px;"
       ng-change="selectedItemChanged(currentTimeOption)" aria-label="current time">
     <md-option id="redditOptions{{$index}}" ng-value="timeOption" ng-repeat="timeOption in timeOptions track by $index">{{timeOption}}</md-option>
     
-    </md-select>
-        <p class=""><b>Current Time:</b><br> {{ now }}</p>
+    </md-select> -->
+
+
+
+    <p class=""><b>Current Time:</b><br> {{ now }}</p>
     
         <md-radio-group ng-model="currentReddit"> 
       <b>Subreddit:</b><br>
@@ -55,12 +63,11 @@
     
     
         <div id="wordsCloud" style="padding-left:10%;width:65%;height:90%">
-                <!-- <nvd3 options="options" data="data"></nvd3> -->
+            <nvd3 options="options" data="data"></nvd3>
  
 
-
     <br> <br>    <br>    <br>   
-           <center><b>Sentiment</b>: {{currentTime}} - /r/{{currentReddit}}</center>
+           <center><b>Sentiment Analysis Timeline for</b> /r/{{currentReddit}}</center>
         
     
     </div>
