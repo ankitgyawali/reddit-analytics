@@ -41,15 +41,15 @@ function exploreController(toastr,$timeout,timefactory,localstoragefactory,$elem
       }, 0);
 		}
 
-         $scope.maxWordSize = 	$scope.width * 0.15;
+      $scope.maxWordSize = 	$scope.width * 0.15;
       $scope.minWordSize = 	$scope.maxWordSize / 5;
 
-         $scope.spread = $scope.maxCount - $scope.minCount;
-     if ($scope.spread <= 0) $scope.spread = 1;
-    $scope.step = ($scope.maxWordSize - $scope.minWordSize) / $scope.spread;
+      $scope.spread = $scope.maxCount - $scope.minCount;
+      if ($scope.spread <= 0) $scope.spread = 1;
+      $scope.step = ($scope.maxWordSize - $scope.minWordSize) / $scope.spread;
 
-  toastr.info("Associated reddit post is linked on the top-left corner.")
-  toastr.info("Click on the words to see more details.");
+    toastr.info("Associated reddit post is linked on the top-left corner.")
+    toastr.info("Click on the words to see more details.");
 
     // Cut by reddit on intialization which since initial time has already been set on localstorage
     $scope.cutbyReddit = function(reddit){
@@ -59,9 +59,16 @@ function exploreController(toastr,$timeout,timefactory,localstoragefactory,$elem
       reddit,
       localstoragefactory.get('wcTime')
       );
-      
-      $scope.words = dataProcessor.createWordCloudWords($scope.newwords);
-      $scope.wordClicked({custom:$scope.words[0].custom});
+      // console.log($scope.newwords);
+      // console.log($scope.words[0].custom)
+      $timeout(function() {
+        $scope.words = dataProcessor.createWordCloudWords($scope.newwords);
+        $scope.wordClicked({custom:$scope.words[0].custom});
+        console.log($scope.words[0].custom)
+        console.log($scope.newwords)
+        $scope.$apply();
+      }, 1);
+
     }
 
     // Called after cutbReddit is defined
@@ -71,7 +78,7 @@ function exploreController(toastr,$timeout,timefactory,localstoragefactory,$elem
     $timeout(function() {
     localstoragefactory.set('wcTime',$scope.timeOptions[0]);  // <--- Initialize first time
 
-    $scope.cutbyReddit(CONSTANTS.reddit[0]);
+    // $scope.cutbyReddit(CONSTANTS.reddit[0]);
 
     
     angular.element("#radio_0").triggerHandler('click');
@@ -83,9 +90,9 @@ function exploreController(toastr,$timeout,timefactory,localstoragefactory,$elem
       localstoragefactory.set('wcTime',val); // GET SELECTED TIMEOPTIONS
       $scope.newwordss = dataProcessor.cutByTimenReddit(localstoragefactory.get('processedData'),
       localstoragefactory.get('wcReddit'),
-      val
-      );
-      localstoragefactory.set('wcData',timefactory.timeSlicerWordCloud(localstoragefactory.get('processedData'),val));   // BY TIME
+      val);
+
+      // localstoragefactory.set('wcData',timefactory.timeSlicerWordCloud(localstoragefactory.get('processedData'),val));   // BY TIME
       $scope.words = dataProcessor.createWordCloudWords($scope.newwordss);
       $scope.wordClicked({custom:$scope.words[0].custom});
     }

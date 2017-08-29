@@ -46,11 +46,6 @@ function sunburst(processed_data,chart_data){
 
 for (var i = 0; i < processed_data.length; i++) { // Loop through one select [list of reddit_id posts]
 
-    if(processed_data[i].id == 3){
-        console.log(processed_data[i].subreddit + processed_data[i].categories.label_id)
-        
-    }
-    
     chart_data[0].children[_.findIndex(chart_data[0].children, function(o) { return o.index == processed_data[i].id; })].children.push // push to sunburst format
             ({
             // sort: function(){ console.log("XX"); return "x"; },            

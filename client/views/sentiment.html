@@ -1,8 +1,8 @@
 <div class="container cf" ng-controller ="sentimentController">
     <div layout="row" layout-xs="column">
       <div flex="25"  class="radivider" style="padding:20px">
-        <b> Category Pie Chart</b> <br> <br> <br> 
-    
+        <b> Sentiment Graph</b> <br>
+
     
 <!--     
 
@@ -48,8 +48,9 @@
       </md-toolbar> -->
     
       <ul style="float: right;padding-right:5%" layout-align="end center" ng-if="reddit_hrefs"> Associated Reddit Posts:
-        <li ng-href="https://www.reddit.com/{{id}}" style="padding-left:5%" target="_blank" ng-repeat="id in reddit_hrefs track by $index">reddit.com/{{id}}<br></li>
-      </ul>
+          <li style="padding-left:5%" ng-repeat="id in reddit_hrefs track by $index"> <a target="_blank" href="http://www.reddit.com/{{id}}"> reddit.com/{{id}}</a><br></li>
+        </ul>
+
 
   <!-- <md-card-actions layout="row" layout-align="end center">
     <md-button  class="linkBorder" ng-href="https://www.reddit.com/{{id}}" target="_blank" ng-repeat="id in hrefs track by $index">reddit.com/{{id}}</md-button>
@@ -62,8 +63,9 @@
     
     
     
-        <div id="wordsCloud" style="padding-left:10%;width:65%;height:90%">
-            <nvd3 options="options" data="data"></nvd3>
+        <div id="wordsCloud" style="padding-left:5%;width:70%;height:90%">
+
+            <nvd3 options="options" data="data" style="width:100%"></nvd3>
  
 
     <br> <br>    <br>    <br>   

@@ -121,6 +121,16 @@ return returnstring;
        process_datetime: new Date(data[k].process_datetime),
        combinelabel: dateFns.format(new Date(data[k].process_datetime),'MM/DD/YYYY')
      };
+
+
+    //  if(singlePost.subreddit == "askreddit") {
+    //     console.log(singlePost.reddit_id);
+    //     console.log(singlePost.id)
+    //     console.log(CONSTANTS.reddit[singlePost.id])
+    //     console.log(CONSTANTS.reddit)
+    //  }
+
+
      flattened_posts.push(singlePost);
   }
 }
@@ -137,15 +147,7 @@ flattened_posts = (flattened_posts.sort(
   .thenBy("entities.entimentSorter")
 ));
 
-_.forEach(flattened_posts, function(val){
-  console.log(val.categories.label_id)
-  
-  // if(val.id==0){
-  // console.log("FOR 0: "+ val.categories.label_id)
-  // }
 
-
-})
 
    unique_ts =  unique_timestamps_cutter(timestamps)
 
@@ -298,7 +300,10 @@ score[l].size = convertRange(score[l].size,[min,max],[99,10]);
 }
 
 function cutByTimenReddit(processed_data,subreddit,time){
-  return _.filter(processed_data, function(reddit_post) { return (reddit_post.subreddit==subreddit) && (time == dateFns.format(reddit_post.process_datetime,'MM/DD/YYYY')); });
+  return _.filter(processed_data, function(reddit_post) { 
+    // reddit_post.subreddit==subreddit && console.log(reddit_post)
+    return (reddit_post.subreddit==subreddit) && (time == dateFns.format(reddit_post.process_datetime,'MM/DD/YYYY'));
+   });
 }
 
 function sliceByReddit(processed_data,subreddit){

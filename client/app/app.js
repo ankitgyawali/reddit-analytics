@@ -118,6 +118,13 @@
         // activetab: 'documentation'
         
       })
+      .when('/entity', {
+        templateUrl: 'views/entity.html',
+        controller: 'MainController',
+        controllerAs: 'main'
+        // activetab: 'documentation'
+        
+      })
       .otherwise({
         redirectTo: '/'
       });
