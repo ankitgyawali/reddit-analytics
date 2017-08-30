@@ -26,7 +26,15 @@
           </div>
           
           <div flex="75">    
-    
+    <span ng-if="selectedPoint.reddit_id" class="entityborder">
+        Entity: {{selectedPoint.name}}<br>
+        Occurences: {{selectedPoint.y}} <br>
+        Label: {{selectedPoint.label}} <br>
+        Confidence: {{selectedPoint.confidence}}%<br>
+        Link: <a  href="http://www.reddit.com/{{selectedPoint.reddit_id}}" target="_blank">reddit.com/{{selectedPoint.reddit_id}} </a> <br>
+        <!-- Date of Post: {{selectedPoint.date}} -->
+      
+    </span>
           <!-- <md-toolbar class="md-default" style="background-color: {{worddetails.color}};height:5%">
             <div class="md-toolbar-tools">
               <h4 class="md-flex" style="color:white">
@@ -48,7 +56,7 @@
         
         
         
-            <div id="wordsCloud" style="padding-left:5%;width:70%;height:90%">
+            <div id="wordsCloud" style="padding-left:1%;width:70%;height:90%">
     
                 <nvd3 options="options" data="data" style="width:100%"></nvd3>
      

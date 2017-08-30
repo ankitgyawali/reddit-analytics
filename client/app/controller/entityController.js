@@ -24,13 +24,37 @@ function entityController(toastr,$timeout, dataDecoratorfactory, timefactory,loc
   $scope.now = timefactory.initNow();   
   $scope.currentReddit = $scope.subredditoptions[0];
 
+  $scope.selectedPoint = {};
+
   $scope.options = {
     chart: {
+        tooltip: {
+            valueFormatter: function (d, i) {
+                return d;
+            },
+            keyFormatter: function (d, i) {
+                return d + " occurences - ";
+            }
+        },
+        legend: {
+            dispatch:{
+                // legendClick: function(d) { console.log(d); return d; }
+            }
+        },
         type: 'scatterChart',
-        height: 450,
-        color: d3.scale.category10().range(),
+        height: 500,
+        width: 800,
         scatter: {
-            onlyCircles: false
+            dispatch: {
+                elementClick:function (data)
+                {
+                    $scope.selectedPoint = data.point;
+                    console.log($scope.selectedPoint)
+                    $timeout(function() { $scope.$apply(); }, 1);
+                    // console.log(data.point);
+                }
+            
+            }
         },
         showDistX: true,
         showDistY: true,
@@ -39,13 +63,14 @@ function entityController(toastr,$timeout, dataDecoratorfactory, timefactory,loc
         },
         duration: 350,
         xAxis: {
-            axisLabel: 'Count',
+            axisLabel: 'Date',
             tickFormat: function(d){
-                return d;
+                // return d;
+                return $scope.unique_dates[parseInt(d/100)];
             }
         },
         yAxis: {
-            axisLabel: 'Date',
+            axisLabel: 'Count',
             tickFormat: function(d){
                 return d;
             },
@@ -71,39 +96,93 @@ $scope.updateView = function(ids){
     $timeout(function() { $scope.$apply(); }, 1); // Doing inside a timeout to be safe
   }
 
-$scope.convertToGraph = function(data){
-    console.log(data)
-    let groups = 4;
-    let points = 40;
-    var data = [],
-    shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
-    random = d3.random.normal();
 
-    let  test = 1;
-for (var i = 0; i < groups; i++) {
-    test = test + 2
-    data.push({
-        key: 'Group ' + i,
+$scope.convertToGraph = function(processed_data){
+    let new_data = [];
+    $scope.pos = {
+        key: "Positive",
+        color: "green",
         values: []
+        };
+
+    $scope.neg = {
+        key: "Negative",
+        color: "red",
+        values: []
+        };
+
+    $scope.neu = {
+        key: "Neutral",
+        color: "grey",        
+        values: []
+        };
+
+    let label_symbol_mapping = {
+        pos: "triangle-up",
+        neg: "triangle-down",
+        neu: "diamond"
+    }
+
+    let label_full_mapping = {
+        pos: "Positive",
+        neg: "Negative",
+        neu: "Neutral"
+    }
+
+    let x_val = 1;
+        // console.log(neu);
+    $scope.unique_dates = [];
+    _.forEach(processed_data, function(post){
+        $scope.unique_dates.push(dateFns.format(new Date(post.process_datetime),'MM/DD/YYYY'));
+        // console.log(post)
+    });
+
+    $scope.unique_dates = $scope.unique_dates.filter(function(item, pos) {
+        return $scope.unique_dates.indexOf(item) == pos;
     });
     
-    for (var j = 0; j < points; j++) {
-    test = test + 2
-    
-        data[i].values.push({
-              x: test, 
-              y: random(),
-              size: Math.random(),
-              shape: shapes[j % 6]
-        });
-        // console.log(da)
-    }
-}
-return data;
+    // Show graph in reverse format
+    // $scope.unique_dates.reverse();
+
+    let x_mappings = {}
+    let start = 0;
+
+    _.forEach($scope.unique_dates, function(date){
+        x_mappings[date] = start;
+        start += 100;
+    });
+
+    _.forEach(processed_data, function(post){
+        
+        _.forEach(post.entities, function(entity){
+
+        x_mappings[dateFns.format(new Date(post.process_datetime),'MM/DD/YYYY')] += 4;
+        
+        // console.log($scope.getshapes(entity.o));
+        $scope[entity.label].values.push(
+            {
+                        x: x_mappings[dateFns.format(new Date(post.process_datetime),'MM/DD/YYYY')],
+                        y: entity.o,
+                        size: parseInt(entity.confidence)/100,
+                        shape: label_symbol_mapping[entity.label],
+                        reddit_id: post.reddit_id,
+                        name: entity.normalized,
+                        label: label_full_mapping[entity.label],
+                        confidence: entity.confidence,
+                        date: post.process_datetime
+            }
+        );
+
+            // console.log(entity);
+        })
+    });
+
+return [$scope.pos, $scope.neg, $scope.neu];
 
 }
 
   $scope.cutbyReddit = function(reddit){
+    $scope.selectedPoint = {};
     $scope.currentReddit = reddit;
     localstoragefactory.set('senTimentReddit',reddit);  // <<-- Initialized current reddit 1
     $scope.cut_posts = dataProcessor.sliceByReddit(localstoragefactory.get('processedData'),

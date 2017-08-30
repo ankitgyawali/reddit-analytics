@@ -39,7 +39,7 @@
             </div>
           </md-toolbar> -->
         
-          <ul style="float: right;padding-right:5%" layout-align="end center" ng-if="reddit_hrefs"> Associated Reddit Posts:
+          <ul class="sentimentborder" style="list-style: none;" layout-align="end center" ng-if="reddit_hrefs"> Associated Reddit Posts:
             <li style="padding-left:5%" ng-repeat="id in reddit_hrefs track by $index"> <a target="_blank" href="http://www.reddit.com/{{id}}"> reddit.com/{{id}}</a><br></li>
           </ul>
 
