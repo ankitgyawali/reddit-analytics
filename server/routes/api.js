@@ -13,28 +13,30 @@ var db = new sqlite3.Database('db-reddit-analytics.db');
 
 //Searches the collection of appropriate type. Matches user name and password
 //Extracs required data, stores them in session value and sends back appropriate response.
-router.post('/initialize', routeCache.cacheSeconds(3600), function(req, res) {
-  db.serialize(function() {
-        db.all("SELECT * FROM thisWeek", function(err, allRows) {
-            if(err != null){
-               res.sendStatus(500);
-            }
-             res.json(JSON.parse(JSON.stringify(allRows).replace("\'","'")));
-        });
-    });
-});
 
-// router.post('/initialize', function(req, res) {
-//     db.serialize(function() {
-//           db.all("SELECT * FROM thisWeek", function(err, allRows) {
-//               if(err != null){
-//                  res.sendStatus(500);
-//               }
-//               console.log(allRows)
-//                res.json(JSON.parse(JSON.stringify(allRows).replace("\'","'")));
-//           });
-//       });
-//   });
+
+// ONLY ENABLE IN PROD
+// router.post('/initialize', routeCache.cacheSeconds(3600), function(req, res) {
+//   db.serialize(function() {
+//         db.all("SELECT * FROM thisWeek", function(err, allRows) {
+//             if(err != null){
+//                res.sendStatus(500);
+//             }
+//              res.json(JSON.parse(JSON.stringify(allRows).replace("\'","'")));
+//         });
+//     });
+// });
+
+router.post('/initialize', function(req, res) {
+    db.serialize(function() {
+          db.all("SELECT * FROM thisWeek", function(err, allRows) {
+              if(err != null){
+                 res.sendStatus(500);
+              }
+               res.json(JSON.parse(JSON.stringify(allRows).replace("\'","'")));
+          });
+      });
+  });
 
   
 //Export routes

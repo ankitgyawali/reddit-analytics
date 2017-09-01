@@ -16,3 +16,4 @@ bower_components
 .idea
 .idea*
 _build
+server/db-reddit-analytics _old sr_backup.db

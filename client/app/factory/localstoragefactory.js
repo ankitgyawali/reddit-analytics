@@ -45,12 +45,9 @@ function lsLength() {
 
 }
 
-
-
 function initialize(value){
-setItem("thisWeekData",value);
+  setItem("thisWeekData",value);
 return "Initialized";
-
 }
 
   return { //All of the data is stored as cookie by utilizing $cookies

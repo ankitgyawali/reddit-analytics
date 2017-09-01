@@ -4,7 +4,6 @@ import praw, time, re, requests, json, sqlite3, logging, configparser, ast
 from rosette.api import API, DocumentParameters, MorphologyOutput
 import rosette.api
 
-import initDataPocessor
 import initDB
 import databaseDriver
 

@@ -222,17 +222,9 @@ catch (e) {
 
 
 function createWordCloudWords(processed_data){
-  
-let score = [];
-let entity = [];
-// workaround for min?
-// let max =1, min =100, max_index, min_index; 
-// Find min & max so wordcloud size can be interpolated
-                  // console.log("XXXXXXXXXXXXX");
-                  // console.log(processed_data);
-
+  let score = [];
+  let entity = [];
 for(let i=0;i<processed_data.length;i++){ //post
-
           for(let j=0;j<processed_data[i].entities.length;j++){ //entities
                 let check = entity.indexOf(processed_data[i].entities[j].normalized);
                 if(check==-1){
@@ -283,8 +275,6 @@ if(score.length > CONSTANTS.NUMBER_OF_WORDS_IN_WORDCLOUD ){
 // Normalize the entities
 let min  = score[0].size;
 let max  = score[score.length-1].size;
-// console.log(min)
-// console.log(max)
 
 function convertRange( value, r1, r2 ) { 
     return ( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ];
@@ -302,7 +292,7 @@ score[l].size = convertRange(score[l].size,[min,max],[99,10]);
 function cutByTimenReddit(processed_data,subreddit,time){
   return _.filter(processed_data, function(reddit_post) { 
     // reddit_post.subreddit==subreddit && console.log(reddit_post)
-    return (reddit_post.subreddit==subreddit) && (time == dateFns.format(reddit_post.process_datetime,'MM/DD/YYYY'));
+    return (reddit_post.subreddit == subreddit) && (time == dateFns.format(reddit_post.process_datetime,'MM/DD/YYYY'));
    });
 }
 

@@ -84,8 +84,8 @@
 
     // routes
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/home.html',
+      .when('/sunburst', {
+        templateUrl: 'views/sunburst.html',
         controller: 'MainController',
         controllerAs: 'main'
         // activetab: 'home'
@@ -97,8 +97,8 @@
         // activetab: 'contact'
         
       })
-      .when('/explore', {
-        templateUrl: 'views/explore.html',
+      .when('/', {
+        templateUrl: 'views/wordcloud.html',
         controller: 'MainController',
         controllerAs: 'main'
         // activetab: 'explore'
@@ -180,12 +180,56 @@
     .module('reddit-analytics')
     .run(run);
 
-  run.$inject = ['$location'];
+  run.$inject = ['$location', 'CONSTANTS','dataProcessor','localstoragefactory','$http','lodash'];
 
-  function run($location) {
+  function run($location, CONSTANTS, dataProcessor, localstoragefactory, $http, notificationFactory, _) {
+    function clone(data){
+      return JSON.parse(JSON.stringify(data));
+    }
 
-    // put here everything that you need to run on page load
-   
+    // Check if data is freshed
+    let found = false;
+    if(localstoragefactory.get('processedData')){
+      for(let i=0;i<localstoragefactory.get('processedData').length;i++){
+        if(dateFns.format(new Date(localstoragefactory.get('processedData')[i].process_datetime),'MM/DD') == dateFns.format(new Date(),'MM/DD')){
+          found = true;
+          break;
+        }
+      }
+    }
+
+    // If data is not fresh request new data
+    if
+    (localstoragefactory.keys().indexOf("processedData") == 0 // Local Storage is wonky
+    ||
+    (localstoragefactory.get('processedData') && localstoragefactory.get('processedData').length < 10) // Data is wonky
+    ||
+    !found) // Data is old
+    {
+          $http({
+            method: 'POST',
+            url: CONSTANTS.API_URL[CONSTANTS.ENVIRONMENT]+'/initialize',
+            // set the headers so angular passing info as form data (not request payload)
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).success(function(data, status, headers, config) {
+
+                // Initialize first by trying to store data - this week raw data
+                localstoragefactory.initialize(clone(data)); //thisWeekData
+                localstoragefactory.set('initial_data_from_api', clone(data)); // Create a copy 
+                // Process data and save it
+                localstoragefactory.set('processedData',dataProcessor.processThisWeek(data))
+        })
+        .error(function(data, status, headers, config) {
+          notificationFactory.error("Something went wrong while fetching data from API. Report admin.")
+          notificationFactory.error(status)
+        });
+      } else {
+          // Main flow --
+          // Set processed data with a fresh clone copy so every time a new controller tries to draw it gets a new data
+          localstoragefactory.set('processedData',dataProcessor.processThisWeek(clone(localstoragefactory.get('initial_data_from_api'))));
+      }
   }
 
 
