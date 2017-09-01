@@ -123,7 +123,12 @@
         controller: 'MainController',
         controllerAs: 'main'
         // activetab: 'documentation'
-        
+      })
+      .when('/documentation', {
+        templateUrl: 'views/documentation.html',
+        controller: 'MainController',
+        controllerAs: 'main'
+        // activetab: 'documentation'
       })
       .otherwise({
         redirectTo: '/'

@@ -16,7 +16,7 @@
       <br>
       <br>
        <span ng-repeat="name in chartLabels.name track by $index">
-        <div class="labelbox" style="background:{{chartLabels.mapping[$index]}}"></div> &nbsp;&nbsp;{{name}} <br>
+        <div class="labelbox" style="background:{{chartLabels.mapping[$index+1]}}"></div> &nbsp;&nbsp;{{name}} <br>
       </span>
   </div>
 
