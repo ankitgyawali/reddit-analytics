@@ -1,14 +1,5 @@
 ;
 (function() {
-
-
- /**
-  * Sample factory
-  *
-  * You can fetch here some data from API and the use them
-  * in controller
-  * 
-  */
   angular
   .module('reddit-analytics')
   .controller('entityController', entityController);
@@ -25,70 +16,17 @@ function entityController(toastr,$timeout, dataDecoratorfactory, timefactory,loc
   $scope.currentReddit = $scope.subredditoptions[0];
 
   $scope.selectedPoint = {};
-
-  $scope.options = {
-    chart: {
-        tooltip: {
-            valueFormatter: function (d, i) {
-                return d;
-            },
-            keyFormatter: function (d, i) {
-                return d + " occurences - ";
-            }
-        },
-        legend: {
-            dispatch:{
-                // legendClick: function(d) { console.log(d); return d; }
-            }
-        },
-        type: 'scatterChart',
-        height: 500,
-        width: 800,
-        scatter: {
+  $scope.options = CHARTCONFIG.DISPERSION_CHART;
+  $scope.options.chart.scatter = {
             dispatch: {
                 elementClick:function (data)
                 {
                     $scope.selectedPoint = data.point;
-                    console.log($scope.selectedPoint)
                     $timeout(function() { $scope.$apply(); }, 1);
-                    // console.log(data.point);
                 }
             
             }
-        },
-        showDistX: true,
-        showDistY: true,
-        tooltipContent: function(key) {
-            return '<h3>' + key + '</h3>';
-        },
-        duration: 350,
-        xAxis: {
-            axisLabel: 'Date',
-            tickFormat: function(d){
-                // return d;
-                return $scope.unique_dates[parseInt(d/100)];
-            }
-        },
-        yAxis: {
-            axisLabel: 'Count',
-            tickFormat: function(d){
-                return d;
-            },
-            axisLabelDistance: -5
-        },
-        zoom: {
-            //NOTE: All attributes below are optional
-            enabled: false,
-            scaleExtent: [1, 10],
-            useFixedDomain: false,
-            useNiceScale: false,
-            horizontalOff: false,
-            verticalOff: false,
-            unzoomEventType: 'dblclick.zoom'
-        }
-    }
-};
-
+        };
 
 
 $scope.updateView = function(ids){

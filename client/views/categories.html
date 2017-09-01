@@ -1,85 +1,39 @@
 <div class="container cf" ng-controller ="categoryController">
-        <div layout="row" layout-xs="column">
-          <div flex="25"  class="radivider" style="padding:20px">
-            <b> Category Pie Chart</b> <br> <br> <br> 
-            <b>Timeset Chosen:</b>  
-        <md-select placeholder="{{timeOptions[0]}}" ng-model="currentTimeOption" md-on-open="loadTime()" style="color:black;min-width: 200px;"
-          ng-change="selectedItemChanged(currentTimeOption)" aria-label="current time">
+  <div layout="row" layout-xs="column">
+  <div flex="25"  class="radivider" style="padding:20px">
+     <b> Category Pie Chart</b> <br> <br> <br> 
+     <b>Timeset Chosen:</b>  
+     <md-select placeholder="{{timeOptions[0]}}" ng-model="currentTimeOption" md-on-open="loadTime()" style="color:black;min-width: 200px;"
+        ng-change="selectedItemChanged(currentTimeOption)" aria-label="current time">
         <md-option id="redditOptions{{$index}}" ng-value="timeOption" ng-repeat="timeOption in timeOptions track by $index">{{timeOption}}</md-option>
-        
-        </md-select>
-            <p class=""><b>Current Time:</b><br> {{ now }}</p>
-        
-            <md-radio-group ng-model="currentReddit"> 
-          <b>Subreddit:</b><br>
-        <!--<md-radio-button ng-class="{'md-checked':reddit == 'politics'}" required ng-click="cutbyReddit(reddit)" ng-repeat="reddit in subredditoptions"  value="{{reddit}}" class="md-primary">-->
-          <!-- <md-radio-button  id="test_test"> test</md-radio-button> -->
-
-          <md-radio-button id="radio_cat_{{$index}}" ng-click="cutbyReddit(reddit)" 
-          ng-repeat="reddit in subredditoptions track by reddit" ng-value="reddit" class="md-primary">
-          /r/{{reddit}}
+     </md-select>
+     <p class=""><b>Current Time:</b><br> {{ now }}</p>
+     <md-radio-group ng-model="currentReddit">
+        <b>Subreddit:</b><br>
+        <md-radio-button id="radio_cat_{{$index}}" ng-click="cutbyReddit(reddit)" 
+           ng-repeat="reddit in subredditoptions track by reddit" ng-value="reddit" class="md-primary">
+           /r/{{reddit}}
         </md-radio-button>
-        
-            </md-radio-group>
-        
-            <br>
-            <br>
-        
-          </div>
-          
-          <div flex="75">    
+     </md-radio-group>
+     <br>
+     <br>
+  </div>
 
-          <!-- <md-toolbar class="md-default" style="background-color: {{worddetails.color}};height:5%">
-            <div class="md-toolbar-tools">
-              <h4 class="md-flex" style="color:white">
-        Entity Name: {{worddetails.name}}, Label: 
-        {{worddetails.label}}, Confidence: {{worddetails.confidence}}%, Occurences:{{worddetails.occurences}}
-         
-              </h4>
-            </div>
-          </md-toolbar> -->
-        
-          <ul class="sentimentborder" style="list-style: none;" layout-align="end center" ng-if="reddit_hrefs"> Associated Reddit Posts:
-            <li style="padding-left:5%" ng-repeat="id in reddit_hrefs track by $index"> <a target="_blank" href="http://www.reddit.com/{{id}}"> reddit.com/{{id}}</a><br></li>
-          </ul>
-
-      <!-- <md-card-actions layout="row" layout-align="end center">
-        <md-button  class="linkBorder" ng-href="https://www.reddit.com/{{id}}" target="_blank" ng-repeat="id in hrefs track by $index">reddit.com/{{id}}</md-button>
-      </md-card-actions>
-   -->
-        
-                </md-card-title>
-        
-              </md-card>
-        
-        
-        
-            <div id="wordsCloud" style="padding-left:10%;width:65%;height:90%">
-                    <nvd3 options="options" data="data"></nvd3>
-     
-
-
-        <br> <br>    <br>    <br>   
-               <center><b>Category Pie Chart for</b>: {{currentTime}} - /r/{{currentReddit}}</center>
-            
-        
-        </div>
-
-
-        
-          <div>
-        
-        <br><br>
-        
-        
-        <div class="text-center">
-            <br> <br>
-           
-            <small>  Copyright &copy; 2017 <a target="_blank" href="http://www.ankitgyawali.com">Ankit Gyawali</a> | <a target="_blank" href="http://www.github.com/ankitgyawali/reddit-analytics">Github</a></small>
-        </div>
-        
-        
-
-
-
+  <div flex="75">
+  <ul class="sentimentborder" style="list-style: none;" layout-align="end center" ng-if="reddit_hrefs">
+     Associated Reddit Posts:
+     <li style="padding-left:5%" ng-repeat="id in reddit_hrefs track by $index"> <a target="_blank" href="http://www.reddit.com/{{id}}"> reddit.com/{{id}}</a><br></li>
+  </ul>
+  <div id="wordsCloud" style="padding-left:10%;width:65%;height:90%">
+     <nvd3 options="options" data="data"></nvd3>
+     <br> <br>    <br>    <br>   
+     <center><b>Category Pie Chart for</b>: {{currentTime}} - /r/{{currentReddit}}</center>
+  </div>
+  <div>
+     <br><br>
+     <div class="text-center">
+        <br> <br>
+        <small>  Copyright &copy; 2017 <a target="_blank" href="http://www.ankitgyawali.com">Ankit Gyawali</a> | <a target="_blank" href="http://www.github.com/ankitgyawali/reddit-analytics">Github</a></small>
+     </div>
+  </div>
 </div>

@@ -1,22 +1,12 @@
 ;
 (function() {
-
-
- /**
-  * Sample factory
-  *
-  * You can fetch here some data from API and the use them
-  * in controller
-  * 
-  */
   angular
   .module('reddit-analytics')
   .controller('categoryController', categoryController);
 
-  categoryController.$inject = ['toastr','$timeout', 'dataDecoratorfactory','timefactory','localstoragefactory','$element','$window','QueryService','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment','$route','CHARTCONFIG','chartfactory','lodash'];
+categoryController.$inject = ['toastr','$timeout', 'dataDecoratorfactory','timefactory','localstoragefactory','$element','$window','QueryService','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment','$route','CHARTCONFIG','chartfactory','lodash'];
 
 function categoryController(toastr,$timeout, dataDecoratorfactory, timefactory,localstoragefactory,$element,$window,QueryService,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,$route,CHARTCONFIG,chartfactory,_) {
- 
   // Initialize Default Vals
   $scope.subredditoptions = CONSTANTS.reddit;
   $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");  
@@ -31,6 +21,10 @@ function categoryController(toastr,$timeout, dataDecoratorfactory, timefactory,l
       elementClick: function (t){
         $scope.updateView(t.data.reddit_id);
       }
+    },
+    xAxis: {
+      axisLabel: 'Date',
+      tickFormat: function(d){ return $scope.unique_dates[parseInt(d/100)]; }
     }
   };
 
@@ -44,7 +38,6 @@ function categoryController(toastr,$timeout, dataDecoratorfactory, timefactory,l
     let reddit_ids = {};
     let dataToReturn = [];
     _.map(data, function(each_post){
-      console.log(each_post.reddit_id)
       tempData[each_post.categories.name] =  (tempData[each_post.categories.name] || 0) + 1;
       if(reddit_ids[each_post.categories.name]) {
         reddit_ids[each_post.categories.name].push(each_post.reddit_id)
@@ -71,16 +64,10 @@ function categoryController(toastr,$timeout, dataDecoratorfactory, timefactory,l
 
   // Do stuff once everything loads
   $timeout(function() {
-  
     localstoragefactory.set('catTime',$scope.timeOptions[0]);  // <--- Initialize first time
-  $scope.cutbyReddit(CONSTANTS.reddit[0]);
-
-  // angular.element("#test_test").trigger('click');
-  // angular.element("#radio_cat_0").click();
-  // console.log(  angular.element("#radio_cat_0"))
-  $scope.selectedItemChanged($scope.timeOptions[0]);  
-  
-}, 0);
+    $scope.cutbyReddit(CONSTANTS.reddit[0]);
+    $scope.selectedItemChanged($scope.timeOptions[0]);  
+  }, 0);
 
   $scope.selectedItemChanged = function(val){
     $scope.currentTime = val
@@ -92,9 +79,7 @@ function categoryController(toastr,$timeout, dataDecoratorfactory, timefactory,l
     $scope.data = $scope.nvCompatibleData($scope.cut_posts)
   }
 
-
-
-  return { //All of the data is stored as cookie by utilizing $cookies
+  return { 
 // sunburst:sunburst
   };
 

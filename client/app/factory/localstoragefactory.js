@@ -1,66 +1,53 @@
 ;
 (function() {
+    angular
+        .module('reddit-analytics')
+        .factory('localstoragefactory', localstoragefactory);
 
+    localstoragefactory.$inject = ['CONSTANTS', 'moment', 'localStorageService'];
 
- /**
-  * Sample factory
-  *
-  * You can fetch here some data from API and the use them
-  * in controller
-  * 
-  */
+    function localstoragefactory(CONSTANTS, moment, localStorageService) {
 
- angular
-  .module('reddit-analytics')
-  .factory('localstoragefactory', localstoragefactory);
+        function keys() {
+            return localStorageService.keys();
+        }
 
-   localstoragefactory.$inject = ['CONSTANTS','moment','localStorageService'];
-//    localstoragefactory.$inject = ['CONSTANTS','moment','localStorageService'];
+        function getItem(key) {
+            return localStorageService.get(key);
+        }
 
- function localstoragefactory(CONSTANTS,moment,localStorageService) {
+        function setItem(key, val) {
+            return localStorageService.set(key, val);
+        }
 
-function keys(){
-  return localStorageService.keys();
-}
+        function getKeys() {
+            return localStorageService.keys();
+        }
 
-function getItem(key) {
-   return localStorageService.get(key);
-}
+        function removeItem(key) {
+            return localStorageService.remove(key);
+        }
 
-function setItem(key, val) {
-   return localStorageService.set(key, val);
-}
+        //...
+        function lsLength() {
+            return localStorageService.length();
 
-function getKeys() {
-   return localStorageService.keys();
-}
+        }
 
-function removeItem(key) {
-   return localStorageService.remove(key);
-}
+        function initialize(value) {
+            setItem("thisWeekData", value);
+            return "Initialized";
+        }
 
-//...
-function lsLength() {
-   return localStorageService.length();
-
-}
-
-function initialize(value){
-  setItem("thisWeekData",value);
-return "Initialized";
-}
-
-  return { //All of the data is stored as cookie by utilizing $cookies
-get:getItem,
-set:setItem,
-getKeys:getKeys,
-removeItem:removeItem,
-lsLength:lsLength,
-initialize:initialize,
-keys:keys
-};
-}
-  
-
+        return { //All of the data is stored as cookie by utilizing $cookies
+            get: getItem,
+            set: setItem,
+            getKeys: getKeys,
+            removeItem: removeItem,
+            lsLength: lsLength,
+            initialize: initialize,
+            keys: keys
+        };
+    }
 
 })();

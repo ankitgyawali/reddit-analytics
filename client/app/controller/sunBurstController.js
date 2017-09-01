@@ -2,12 +2,12 @@
 
   angular
     .module('reddit-analytics')
-    .controller('homeController', homeController);
+    .controller('sunBurstController', sunBurstController);
 
-  homeController.$inject = ['$timeout','QueryService','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment'
+    sunBurstController.$inject = ['$timeout','QueryService','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment'
   ,'$route','localstoragefactory','CHARTCONFIG','chartfactory','timefactory','lodash','dataDecoratorfactory'];
 
-  function homeController($timeout,QueryService,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,
+  function sunBurstController($timeout,QueryService,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,
   $route,localstoragefactory,CHARTCONFIG,chartfactory,timefactory,_,dataDecoratorfactory) {
 
     $scope.data = {}; // Fresh data 
@@ -28,7 +28,7 @@
     $scope.currentBlob = new Date();
 
     // Sun burst chart empty data goes here
-    // Sunburst's central circl
+    // Sunburst's central circle
     $scope.createEmptyData = function(){
     let emptyData = [{
     name: "<b>Reddit</b><br><span style='font-size:80%'> Current Time:<br>" + dataProcessor.momentFormatter(new Date())+ "</span>"
@@ -48,6 +48,7 @@
     })
     return emptyData;
     } 
+    
     // Save up to localstorage
     localstoragefactory.set("sunburstEmpty",  $scope.createEmptyData() );
     // Iniitalize empty sunburst

@@ -47,8 +47,7 @@ angular
             css: {}
           }    
         },
-
-    }, // Sunburst chart
+    },
     CATEGORY_PIE_CHART: {
       chart: {
           type: 'pieChart',
@@ -57,9 +56,6 @@ angular
           y: function(d){return d.y;},
           showLabels: false,
           duration: 500,
-          // labelThreshold: 0.01,
-          // labelSunbeamLayout: false,
-
           tooltip: {
             duration: 0,
             gravity: "w",
@@ -73,10 +69,6 @@ angular
             valueFormatter:function (d, i) { return d + " post(s)"; },
             keyFormatter:function (d, i) { return "<b>"+ d + "</b>"; },
             fixedTop: null,
-            offset: {
-              left: 0,
-              top: 0
-            },
             hidden: true,
             data: null,
             id: "nvtooltip-76318"
@@ -91,11 +83,70 @@ angular
               }
           }
       }
-  }
-
-    
-        
+  },
+  SENTIMENT_CHART: {
+    chart: {
+        type: 'multiBarHorizontalChart',
+        height: 450,
+        valueFormat: function(d){ return d },
+        x: function(d){ return d.label;},
+        y: function(d){ return d.value;},
+        showControls: false,
+        showValues: true,
+        duration: 500,
+        xAxis: {
+            axisLabel: 'Dates',
+            // axisLabelDistance: 0,
+            showMaxMin: false,
+            tickFormat: function(d){
+                return dateFns.format(new Date(d),'MM/DD');
+            }
+        },
+        yAxis: {
+            axisLabel: '# of Posts',
+            tickFormat: function(d){
+                return d;
+            }
+        }
+    }
+  },
+  DISPERSION_CHART: {
+    chart: {
+        tooltip: {
+            valueFormatter: function (d, i) {
+                return d;
+            },
+            keyFormatter: function (d, i) {
+                return d + " occurences - ";
+            }
+        },
+        type: 'scatterChart',
+        height: 500,
+        width: 800,
+        showDistX: true,
+        showDistY: true,
+        tooltipContent: function(key) {
+            return '<h3>' + key + '</h3>';
+        },
+        duration: 350,
+        yAxis: {
+            axisLabel: 'Count',
+            tickFormat: function(d){
+                return d;
+            },
+            axisLabelDistance: -5
+        },
+        zoom: {
+            //NOTE: All attributes below are optional
+            enabled: false,
+            scaleExtent: [1, 10],
+            useFixedDomain: false,
+            useNiceScale: false,
+            horizontalOff: false,
+            verticalOff: false,
+            unzoomEventType: 'dblclick.zoom'
+        }
+    }
+}
 });
-
-
 })();

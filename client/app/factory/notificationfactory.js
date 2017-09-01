@@ -1,44 +1,35 @@
 ;
 (function() {
 
- angular
-  .module('reddit-analytics')
-  .factory('notificationFactory', notificationFactory);
+    angular
+        .module('reddit-analytics')
+        .factory('notificationFactory', notificationFactory);
 
- notificationFactory.$inject = ['CONSTANTS','moment','localStorageService','toastr'];
- /*
-            data [] } -> array of rows {} containing 
-                                          -> datetime ""
-                                          -> entities []
-                                          -> categories []
-                                          -> sntiment []
-                                          -> subreddit ""
+    notificationFactory.$inject = ['CONSTANTS', 'moment', 'localStorageService', 'toastr'];
 
- */
-
- function notificationFactory(CONSTANTS,moment,localStorageService,toastr){
-    function success(text) {
+    function notificationFactory(CONSTANTS, moment, localStorageService, toastr) {
+        function success(text) {
             toastr.options = {
-  "closeButton": false,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": false,
-  "positionClass": "toast-top-right",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "5000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-}
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
             toastr.success(text, "Success");
-    }
+        }
 
-        
+
 
         function info(text) {
             toastr.options = {
@@ -83,7 +74,7 @@
             toastr.warning(text, "Caution");
         }
 
-         function error(text) {
+        function error(text) {
             toastr.options = {
                 "closeButton": true,
                 "debug": false,
@@ -103,17 +94,11 @@
             };
             toastr.error(text, "Error");
         }
-   
-    
-    return {
-        //Success toaster for app
-        success: success,
-        //Information toaster
-        info: info,
-        //Warning toaster
-        warning: warning,
-        //Error toaster
-        error: error
-}
- };
+        return {
+            success: success,
+            info: info,
+            warning: warning,
+            error: error
+        }
+    };
 })();
