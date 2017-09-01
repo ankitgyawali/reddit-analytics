@@ -4,10 +4,10 @@
     .module('reddit-analytics')
     .controller('sunBurstController', sunBurstController);
 
-    sunBurstController.$inject = ['$timeout','QueryService','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment'
+    sunBurstController.$inject = ['$timeout','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment'
   ,'$route','localstoragefactory','CHARTCONFIG','chartfactory','timefactory','lodash','dataDecoratorfactory'];
 
-  function sunBurstController($timeout,QueryService,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,
+  function sunBurstController($timeout,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,
   $route,localstoragefactory,CHARTCONFIG,chartfactory,timefactory,_,dataDecoratorfactory) {
 
     $scope.data = {}; // Fresh data 
@@ -48,7 +48,7 @@
     })
     return emptyData;
     } 
-    
+
     // Save up to localstorage
     localstoragefactory.set("sunburstEmpty",  $scope.createEmptyData() );
     // Iniitalize empty sunburst

@@ -4,9 +4,9 @@
   .module('reddit-analytics')
   .controller('categoryController', categoryController);
 
-categoryController.$inject = ['toastr','$timeout', 'dataDecoratorfactory','timefactory','localstoragefactory','$element','$window','QueryService','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment','$route','CHARTCONFIG','chartfactory','lodash'];
+categoryController.$inject = ['toastr','$timeout', 'dataDecoratorfactory','timefactory','localstoragefactory','$element','$window','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment','$route','CHARTCONFIG','chartfactory','lodash'];
 
-function categoryController(toastr,$timeout, dataDecoratorfactory, timefactory,localstoragefactory,$element,$window,QueryService,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,$route,CHARTCONFIG,chartfactory,_) {
+function categoryController(toastr,$timeout, dataDecoratorfactory, timefactory,localstoragefactory,$element,$window,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,$route,CHARTCONFIG,chartfactory,_) {
   // Initialize Default Vals
   $scope.subredditoptions = CONSTANTS.reddit;
   $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");  

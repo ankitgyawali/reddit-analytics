@@ -6,9 +6,9 @@
   .module('reddit-analytics')
   .controller('wordCloudController', wordCloudController);
 
-  wordCloudController.$inject = ['toastr','$timeout','timefactory','localstoragefactory','$element','$window','QueryService','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment','$route','CHARTCONFIG','chartfactory'];
+  wordCloudController.$inject = ['toastr','$timeout','timefactory','localstoragefactory','$element','$window','$scope','CONSTANTS','$http','dataProcessor','$rootScope','moment','$route','CHARTCONFIG','chartfactory'];
 
-function wordCloudController(toastr,$timeout,timefactory,localstoragefactory,$element,$window,QueryService,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,$route,CHARTCONFIG,chartfactory) {
+function wordCloudController(toastr,$timeout,timefactory,localstoragefactory,$element,$window,$scope,CONSTANTS,$http,dataProcessor,$rootScope,moment,$route,CHARTCONFIG,chartfactory) {
     $scope.subredditoptions = CONSTANTS.reddit;
     // $scope.subredditoptions = CONSTANTS.reddit;
     $scope.now = timefactory.initNow();   

@@ -148,9 +148,9 @@
     .module('reddit-analytics')
     .factory('authInterceptor', authInterceptor);
 
-  authInterceptor.$inject = ['$rootScope', '$q', 'LocalStorage', '$location'];
+  authInterceptor.$inject = ['$rootScope', '$q', '$location'];
 
-  function authInterceptor($rootScope, $q, LocalStorage, $location) {
+  function authInterceptor($rootScope, $q, $location) {
 
     return {
 
