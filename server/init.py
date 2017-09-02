@@ -18,7 +18,7 @@ categorymappings = json.loads(config.get('MAPPING', 'CATEGORY_MAPPING'))
 
 logging.basicConfig(
     format = '[%(asctime)s] %(levelname)s: %(name)s: %(message)s',
-    filename = config.get('LOGGING', 'LOG_FILENAME'),
+    # filename = config.get('LOGGING', 'LOG_FILENAME'),
 level=logging.INFO)
 
 logging.info('Scraping data from reddit for reddit-analytics..')
@@ -109,18 +109,3 @@ for subreddit in ast.literal_eval(config.get('ALL', 'SUBREDDITS')):
     else:
         databaseDriver.addToDatabase(sql,*processedSubreddit[0])
     time.sleep(int(config.get('SLEEPTIME', 'SR_SLEEP'))) 
-
-# 5. Set parameters.
-# params["content"] = ', '.join(comments[0])[:49950] # rate limit of 50,000
-# params["content"] = 'test ankit gyawali 1234 @#!@# --- ... AAAA  grammar. He loved football. He was playing football. He had won five matches until that day. He had been playing football for ten years. He loves football. He is playing football. He has won five matches so far. He has been playing football for ten years. He will love football. He will be playing football. He will have won five matches by then. He will have been playing football for ten years.'
-# params["content"] =  '  MOSCOW (Reuters) - Russian state news organization Rossiya Segodnya said on Friday it objected to a Reuters article it said had falsely claimed that Kremlin-backed media had tried to influence the 2016 U.S. election.  A Reuters spokesperson said the news agency stood by the story which reported exclusively on April 19 that a Russian government think tank controlled by Vladimir Putin had developed a plan to swing the election in favor of Donald Trump by getting several state-backed media outlets to produce positive reports on Trump.  Three current and four former U.S. officials said Kremlin-backed TV channel RT and the Sputnik news agency were among state-backed news outlets which the Kremlin had instructed to weigh in on Trumps side and to try to undermine voters’ faith in the American electoral system.  Margarita Simonyan, editor-in-chief of Rossiya Segodnya and RT criticized the Reuters story on social media on Friday. She linked to an article by the RIA news agency, which along with Sputnik, is owned by Rossiya Segodnya. '
-
-
-
-# logging.info("SENTIMENT ANKIT")
-# logging.info(api.sentiment(params))
-# logging.info("CATAGORIES ANKIT")
-
-
-
-#   5 subreddits times 10 posts times 31 days times  6/day (every 4 hour)  -> API KEY 1

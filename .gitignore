@@ -11,6 +11,7 @@ client/npm-debug.log
 client/.idea
 client/style.css
 client/style.min.css
+client/dist
 node_modules
 bower_components
 .idea
