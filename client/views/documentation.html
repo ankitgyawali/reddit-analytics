@@ -1,5 +1,51 @@
 <!-- 404 -->
-<div class="text-center">
-    <h4>Documentation</h4>
+<div class="text-center"  ng-controller ="documentationController">
+    
+
+<div layout="row">
+    <div flex="10">
+      <!-- [flex="20"] -->
+    </div>
+    <div flex="90" style="padding-right:5%">
+
+    <h2>What is reddit-analytics?</h2> 
+    reddit-analytics analyzes popular posts from selected subreddits every 8 hours to product interesting visualizations. Currently visualizations are limited to past 7 days.
+    <br><br>
+    Technologies used for this project are: Angular JS, D3 js, Node JS/Express JS for API & Query caching, Python based Cron Script for Reddit Scraping, Rosette API for post to metadata conversion & Sqlite db for storage.
+        <br><br>
+        <a href="https://raw.githubusercontent.com/ankitgyawali/reddit-analytics/master/docs/basic-flow.jpg" target="_blank"> This</a> flow was roughly what I had in mind when I first started the project.
+    <br>
+    <br>
+    <h3> Entity Word Cloud </h3> - Create word cloud from most commonly used "entities". The color of text represents it's sentiment. Clicking on the word shows associated metadata and main reddit post.
+    <h3> Category Pie Chart </h3> - Categorize associated reddit post and represent them as a piechart. Clicking on each pie's will display list of associated reddit posts.
+    <h3> Sentiment Timeline </h3> - Amount of positive/neutral/negative posts for any subreddit over a period of week.
+    <h3> Entity Dispersion </h3> - Shows dominance of any particular topic in a subreddit.
+    <h3> Sunburst Chart </h3> - Categorize metadata of each subreddit into various buckets to see if they show any distinguishable pattern.
+
+    <br><br><br>
+        Only a week's worth of metadata is visualized at the time. Feel free to me contact me if you would like the whole database. Possible expansion for this project could include: Viewing metadata by date, custom subreddit analysis option so it could be used by mods of various subreddits etc.
+    <br><br>
+    <br>
+    <hr>
+    <h4>Did you like this project?</h4>
+    Acknowledgement is always nice, Contribute/Critique <a href="https://github.com/ankitgyawali/reddit-analytics/issues" target="_blank">here.</a> <br>
+    Interested in data visualization? Bootstrap your own stack with help of my other <a href="https://github.com/ankitgyawali/eflk" target="_blank">project.</a> <br>
+    <!-- Interested in blockchain technology? <a href="https://github.com/ankitgyawali/crypto-indicator" target="_blank">Check this out.</a> <br> -->
+    My email: <a href="mailto:mail@ankitgyawali.com">mail@ankitgyawali.com</a>
+    <br>
+    <br>
+    <br>
     <small>  Copyright &copy; 2017 <a target="_blank" href="http://www.ankitgyawali.com">Ankit Gyawali</a> | <a target="_blank" href="http://www.github.com/ankitgyawali/reddit-analytics">Github</a></small>
+    
+
+    </div>
+    <div flex hide-sm hide-xs>
+    </div>
+  </div>
+  
+
+  
+
+
+
 </div>

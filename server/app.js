@@ -31,7 +31,6 @@ app.use(require('express-session')({
 app.use('/', routes);
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));
-  console.log('ok');
 });
 
 
