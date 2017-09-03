@@ -1,5 +1,5 @@
 # reddit-analytics
-reddit-analytics analyzes popular posts from selected subreddits every 8 hours to product interesting data visualizations. Currently visualizations are limited to past 7 days.
+[reddit-analytics](https://reddit-analytics.us) analyzes popular posts from selected subreddits every 8 hours to product interesting data visualizations. Currently visualizations are limited to past 7 days.
 
 Technologies used for this project are: 
 - Angular JS
