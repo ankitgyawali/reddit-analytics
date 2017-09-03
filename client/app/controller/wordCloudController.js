@@ -57,7 +57,7 @@ function wordCloudController(toastr,$timeout,timefactory,localstoragefactory,$el
     localstoragefactory.set('wcTime',$scope.timeOptions[0]);  // <--- Initialize first time
     angular.element("#radio_0").triggerHandler('click');
     $scope.selectedItemChanged($scope.timeOptions[0]);  
-      }, 0);
+      }, 1000);
 
     $scope.selectedItemChanged = function(val){
       $scope.currentTime = val

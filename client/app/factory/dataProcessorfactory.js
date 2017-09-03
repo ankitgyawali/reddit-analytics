@@ -35,7 +35,10 @@
         }
 
         function sentimentLabelMaker(reddit_id, post_datetime, sentiment, garbage) {
-            let returnstring = "Reddit post: reddit.com/<b>" + reddit_id + "<br>Overall Sentiment:";
+            let sentiment_label = {
+              pos:"Positive", neu:"Neutral", neg: "Negative"
+            }
+            let returnstring = "Reddit post: reddit.com/<b>" + reddit_id + "<br>Overall Sentiment:" + sentiment_label[sentiment.label];
             returnstring += ", Confidence: " + sentiment.confidence + "% </center></b><br><span style='font-size:80%'>" +
                 momentFormatter(post_datetime) + "</span> <!--" + garbage + post_datetime.toString() + "-->";
             return returnstring;

@@ -6,7 +6,7 @@
 			'ENVIRONMENT': 'DEV',
 			// 'ENVIRONMENT': 'PROD',			
 			'NUMBER_OF_WORDS_IN_WORDCLOUD': 50,
-      		'API_URL': { DEV: 'http://localhost:3002', PROD: 'http://ankitgyawali.com:3049'},
+      		'API_URL': { DEV: 'http://localhost:3002', PROD: 'http://reddit-analytics.us'},
 			'reddit' :  ['all', 'askreddit','politics','videos','worldnews'],
 			'color' :  ['#FFwede','blue','green','maroon','purple','red'],
 			'category_mapping' : [
