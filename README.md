@@ -1,5 +1,5 @@
 # reddit-analytics
-reddit-analytics analyzes popular posts from selected subreddits every 8 hours to product interesting visualizations. Currently visualizations are limited to past 7 days.
+reddit-analytics analyzes popular posts from selected subreddits every 8 hours to product interesting data visualizations. Currently visualizations are limited to past 7 days.
 
 Technologies used for this project are: 
 - Angular JS
@@ -29,5 +29,19 @@ Category Pie Chart
 ### Sunburst Chart
 - Categorize metadata of each subreddit into various buckets to see if they show any distinguishable pattern. 
 
+
+Feel free to contact me if you would like the whole database with converted metadata.
+
+Possible expansion for this project could include: Viewing metadata by date, custom subreddit analysis option so it could be used by mods of various subreddits etc.
+
+
 ## Docs
-![Basic Flow](docs/basic-flow.jpb?raw=true "Basic Flow")
+![Basic Flow](docs/basic-flow.jpg?raw=true "Basic Flow")
+
+
+## Issues
+Report all issues related to reddit-analytics on this separate <a href="https://github.com/ankitgyawali/reddit-analytics/issues" target="_blank">issue page</a>.
+
+## License
+
+[![CC0](http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/cc-zero.svg)](https://creativecommons.org/publicdomain/zero/1.0/)
