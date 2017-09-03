@@ -9,16 +9,14 @@ Technologies used for this project are:
 - Rosette API for post to metadata conversion
 - Sqlite db for storage. 
 
-
 ## Usage
 
 ### Entity Word Cloud
 
 - Create word cloud from most commonly used "entities". The color of text represents it's sentiment. Clicking on the word shows associated metadata and main reddit post.
-Category Pie Chart
 
 ### Category Pie Chart 
-- Categorize associated reddit post and represent them as a piechart. Clicking on each pie's will display list of associated reddit posts.
+- Categorize associated reddit post and represent them as a piechart. Clicking on each pie will display list of associated reddit posts.
 
 ### Sentiment Timeline
 - Amount of positive/neutral/negative posts for any subreddit over a period of week.
@@ -30,10 +28,19 @@ Category Pie Chart
 - Categorize metadata of each subreddit into various buckets to see if they show any distinguishable pattern. 
 
 
-Feel free to contact me if you would like the whole database with converted metadata.
+
+Feel free to contact me if you would like the whole database with converted metadata. (mail@ankitgyawali.com)
 
 Possible expansion for this project could include: Viewing metadata by date, custom subreddit analysis option so it could be used by mods of various subreddits etc.
 
+## Running locally as dev mode
+Basic steps to run:
+- Clone the repository. Ensure you have python & node js installed on your system.
+- Copy `sample-config.ini` to `config.ini` inside server folder & configure with rosette api key & reddit script secret.
+- Install server requirements by running `pip install -r requirements.txt` from server folder.
+- Install node dependencies by running `npm install` from both `server` & `client` folder.
+- Iniitialize database by running `init.py` on server folder, `python init.py`
+- Run server, by running `node server.js` or `npm run start` from server folder. Visualizations should for the day should now be accessible on `localhost:3002`.
 
 ## Docs
 ![Basic Flow](docs/basic-flow.jpg?raw=true "Basic Flow")
