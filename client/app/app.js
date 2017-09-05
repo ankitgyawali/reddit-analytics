@@ -206,25 +206,38 @@
     ||
     !found) // Data is old
     {
-          $http({
-            method: 'POST',
-            url: CONSTANTS.API_URL[CONSTANTS.ENVIRONMENT]+'/initialize',
-            // set the headers so angular passing info as form data (not request payload)
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).success(function(data, status, headers, config) {
 
-                // Initialize first by trying to store data - this week raw data
-                localstoragefactory.initialize(clone(data)); //thisWeekData
-                localstoragefactory.set('initial_data_from_api', clone(data)); // Create a copy 
-                // Process data and save it
-                localstoragefactory.set('processedData',dataProcessor.processThisWeek(data))
-        })
-        .error(function(data, status, headers, config) {
-          notificationFactory.error("Something went wrong while fetching data from API. Report admin.")
-          notificationFactory.error(status)
-        });
+
+      var request = new XMLHttpRequest();
+      request.open('POST',  CONSTANTS.API_URL[CONSTANTS.ENVIRONMENT]+'/initialize' , false); 
+      request.send(null);
+      let data = JSON.parse(request.responseText);
+      // Initialize first by trying to store data - this week raw data
+      localstoragefactory.initialize(clone(data)); //thisWeekData
+      localstoragefactory.set('initial_data_from_api', clone(data)); // Create a copy 
+      // Process data and save it
+      localstoragefactory.set('processedData',dataProcessor.processThisWeek(data))
+
+        //   $http({
+        //     method: 'POST',
+        //     url: CONSTANTS.API_URL[CONSTANTS.ENVIRONMENT]+'/initialize',
+        //     // set the headers so angular passing info as form data (not request payload)
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // }).success(function(data, status, headers, config) {
+
+        //         // Initialize first by trying to store data - this week raw data
+        //         localstoragefactory.initialize(clone(data)); //thisWeekData
+        //         localstoragefactory.set('initial_data_from_api', clone(data)); // Create a copy 
+        //         // Process data and save it
+        //         localstoragefactory.set('processedData',dataProcessor.processThisWeek(data))
+        // })
+        // .error(function(data, status, headers, config) {
+        //   notificationFactory.error("Something went wrong while fetching data from API. Report admin.")
+        //   notificationFactory.error(status)
+        // });
+
       } else {
           // Main flow --
           // Set processed data with a fresh clone copy so every time a new controller tries to draw it gets a new data
