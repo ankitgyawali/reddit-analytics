@@ -20,7 +20,7 @@
             $http({
                 method: 'POST',
                 // url: '/bydate?date=' + new Date(new Date($scope.ctrl.myDate).getTime() - (24*60*60*1000)).toISOString().substr(0, 10),
-                url: '/bydate?date=' + new Date($scope.ctrl.myDate),
+                url: '/bydate?date=' + new Date($scope.ctrl.myDate).toISOString().substr(0, 10),
                 // set the headers so angular passing info as form data (not request payload)
                 headers: {
                     'Content-Type': 'application/json'
@@ -32,7 +32,7 @@
                     // Process data and save it
                     localstoragefactory.set('processedData',dataProcessor.processThisWeek(data));
                     notificationFactory.info("Local Storage dataset set to: "+
-                    new Date($scope.ctrl.myDate))
+                    new Date($scope.ctrl.myDate).toISOString().substr(0, 10))
             })
             .error(function(data, status, headers, config) {
                 notificationFactory.error("Something went wrong while fetching data from API. Report admin.")
