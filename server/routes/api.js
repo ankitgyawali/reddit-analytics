@@ -25,6 +25,34 @@ router.post('/initialize', routeCache.cacheSeconds(3600), function(req, res) {
     });
 });
 
+router.post('/bydate', function(req, res) {
+    let sr =  ['all', 'askreddit','politics','videos','worldnews']
+    let query = []
+
+    if(!req.query || !req.query.date || req.query.date.length != 10){
+        res.status(404).send("Something wrong with date query format.")
+    } else {
+    for (let index=0; index<sr.length;index++){
+        query.push('SELECT "'+ index +'" as id, process_datetime,reddit_id ,sentiment ,entities ,catagories FROM "'+sr[index]
+    // +'" WHERE DATE(process_datetime) >= DATE("now", "-7 days")');
+    +'" WHERE DATE(process_datetime) LIKE "' + req.query.date + '"');
+    }
+
+    
+    console.log(query.join(" UNION ALL "))
+    db.serialize(function() {
+          db.all(query.join(" UNION ALL "), function(err, allRows) {
+              if(err != null){
+                 res.sendStatus(500);
+              }
+               res.json(JSON.parse(JSON.stringify(allRows).replace("\'","'")));
+          });
+      });
+    } 
+
+  });
+
+
 // router.post('/initialize', function(req, res) {
 //     db.serialize(function() {
 //           db.all("SELECT * FROM thisWeek", function(err, allRows) {

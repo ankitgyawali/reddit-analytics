@@ -16,5 +16,7 @@ node_modules
 bower_components
 .idea
 .idea*
+build
+dist
 _build
 server/db-reddit-analytics _old sr_backup.db

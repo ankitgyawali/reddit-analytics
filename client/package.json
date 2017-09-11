@@ -28,6 +28,10 @@
     "thenby": "^1.2.3"
   },
   "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-util": "^3.0.8",
     "watch": "^0.13.0"
   },
   "repository": {

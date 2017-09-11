@@ -52,11 +52,32 @@ function wordCloudController(toastr,$timeout,timefactory,localstoragefactory,$el
     }
 
     $timeout(function() {
-    $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");  
-    $scope.currentTime = $scope.timeOptions[0];
-    localstoragefactory.set('wcTime',$scope.timeOptions[0]);  // <--- Initialize first time
-    angular.element("#radio_0").triggerHandler('click');
-    $scope.selectedItemChanged($scope.timeOptions[0]);  
+
+    try {
+      $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");  
+      $scope.currentTime = $scope.timeOptions[0];
+      localstoragefactory.set('wcTime',$scope.timeOptions[0]);  // <--- Initialize first time
+      angular.element("#radio_0").triggerHandler('click');
+      $scope.selectedItemChanged($scope.timeOptions[0]); 
+    } catch (e) {
+      var request = new XMLHttpRequest();
+      request.open('POST',  CONSTANTS.API_URL[CONSTANTS.ENVIRONMENT]+'/initialize' , false); 
+      request.send(null);
+      let data = JSON.parse(request.responseText);
+      // Initialize first by trying to store data - this week raw data
+      localstoragefactory.initialize(clone(data)); //thisWeekData
+      localstoragefactory.set('initial_data_from_api', clone(data)); // Create a copy 
+      // Process data and save it
+      localstoragefactory.set('processedData',dataProcessor.processThisWeek(data))
+
+      /// catch
+      $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");  
+      $scope.currentTime = $scope.timeOptions[0];
+      localstoragefactory.set('wcTime',$scope.timeOptions[0]);  // <--- Initialize first time
+      angular.element("#radio_0").triggerHandler('click');
+      $scope.selectedItemChanged($scope.timeOptions[0]); 
+    }
+    
       }, 1000);
 
     $scope.selectedItemChanged = function(val){

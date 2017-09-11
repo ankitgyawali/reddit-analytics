@@ -130,6 +130,12 @@
         controllerAs: 'main'
         // activetab: 'documentation'
       })
+      .when('/bydate', {
+        templateUrl: 'views/bydate.html',
+        controller: 'MainController',
+        controllerAs: 'main'
+        // activetab: 'documentation'
+      })
       .otherwise({
         redirectTo: '/'
       });

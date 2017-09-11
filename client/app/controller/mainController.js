@@ -6,7 +6,7 @@
 
   MainController.$inject = ['CONSTANTS','dataProcessor','localstoragefactory','$http','lodash'];
 
-  function MainController(CONSTANTS, dataProcessor, localstoragefactory, $http, notificationFactory, _) {
+  function MainController(CONSTANTS, dataProcessor, localstoragefactory, $http, _) {
       // Function to clone of object
 
   }

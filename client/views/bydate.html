@@ -1,0 +1,57 @@
+<!-- 404 -->
+<div class="text-center"  ng-controller ="byDateController">
+    
+
+<div layout="row">
+    <div flex="10">
+      <!-- [flex="20"] -->
+    </div>
+    <div flex="90" style="padding-right:5%">
+
+
+            <br>
+            Fetch a dataset for and switch tabs to view visualization for specific days.
+            <br>
+        <h2>Request data for this week: </h2> 
+        Data for this week is indexed, cached & loaded by default by reddit-analytics.
+        <br><br>
+    
+        <md-button class="md-raised md-primary" ng-disabled="!buttonEnabled" ng-click="setThisWeekData()">Fetch This Week's Data</md-button>
+        
+<br>
+<br>
+<br>
+    <h2>Request data for certain date: </h2> 
+    Since the NLP cron was setup on September 2, 
+    currently, only dates later than September 2, 2017 is supported for analysis.
+    <br><br>
+
+   Pick a date to get timeset from:
+    
+    <md-datepicker ng-model="ctrl.myDate" md-placeholder="Enter date"
+    md-min-date="ctrl.minDate" md-max-date="ctrl.maxDate"></md-datepicker>
+
+    <br>
+
+    <md-button class="md-raised md-primary" ng-click="setDate()">Fetch Data for this Date</md-button>
+    
+        <br><br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <small>  Copyright &copy; 2017 <a target="_blank" href="http://www.ankitgyawali.com">Ankit Gyawali</a> | <a target="_blank" href="http://www.github.com/ankitgyawali/reddit-analytics">Github</a></small>
+    
+
+    </div>
+    <div flex hide-sm hide-xs>
+    </div>
+  </div>
+  
+
+  
+
+
+
+</div>
