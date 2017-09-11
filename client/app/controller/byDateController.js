@@ -15,7 +15,7 @@
             // console.log($scope.ctrl.myDate)
             $http({
                 method: 'POST',
-                url: CONSTANTS.API_URL[CONSTANTS.ENVIRONMENT]+'/bydate?date=' + new Date(new Date($scope.ctrl.myDate).getTime() - (24*60*60*1000)).toISOString().substr(0, 10),
+                url: '/bydate?date=' + new Date(new Date($scope.ctrl.myDate).getTime() - (24*60*60*1000)).toISOString().substr(0, 10),
                 // set the headers so angular passing info as form data (not request payload)
                 headers: {
                     'Content-Type': 'application/json'
@@ -42,7 +42,7 @@
         $scope.setThisWeekData = function(){
             $http({
                 method: 'POST',
-                url: CONSTANTS.API_URL[CONSTANTS.ENVIRONMENT]+'/initialize',
+                url: '/initialize',
                 // set the headers so angular passing info as form data (not request payload)
                 headers: {
                     'Content-Type': 'application/json'

@@ -61,7 +61,7 @@ function wordCloudController(toastr,$timeout,timefactory,localstoragefactory,$el
       $scope.selectedItemChanged($scope.timeOptions[0]); 
     } catch (e) {
       var request = new XMLHttpRequest();
-      request.open('POST',  CONSTANTS.API_URL[CONSTANTS.ENVIRONMENT]+'/initialize' , false); 
+      request.open('POST', '/initialize', false); 
       request.send(null);
       let data = JSON.parse(request.responseText);
       // Initialize first by trying to store data - this week raw data
