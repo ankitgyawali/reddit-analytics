@@ -8,7 +8,9 @@ border-bottom:2px solid blue;
 }
 
 
-
+.ratopnav{
+  font-size:85%;
+}
 
 .navBardemoBasicUsage md-content .ext-content {
   padding: 50px;

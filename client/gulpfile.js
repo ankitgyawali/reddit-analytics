@@ -8,7 +8,7 @@ var del = require('del');
 var gutil = require('gulp-util');
 
 var paths = {
-  scripts: ['app/*.js', 'app/config/*.js',  'app/factory/*','app/controller/*','app/components/directives/*.js','app/components/services/*.js'],
+  scripts: ['app/*.js', 'components/directives/main.nav.directive.js','components/services/*.js', 'components/directives/responsive.nav.directive.js', 'app/config/*.js',  'app/factory/*','app/controller/*'],
 //   scripts: ['app/*.js', 'app/config/*.js', 'app/controller/*.js', 'app/factory/*.js','app/services/*.js', 'components/directives/*.js'],
   images: 'client/img/**/*',
   css: 'styles/custom.css'
