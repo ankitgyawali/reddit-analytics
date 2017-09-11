@@ -19,6 +19,10 @@ function wordCloudController(toastr,$timeout,timefactory,localstoragefactory,$el
     $scope.rotate =  function () {
         return ~~(Math.random() * 2) * 90;
     }
+
+    $scope.clone = function (data){
+      return JSON.parse(JSON.stringify(data));
+  }
 		
     $scope.wordClicked = function (word){
         $scope.worddetails = word.custom;
@@ -54,31 +58,33 @@ function wordCloudController(toastr,$timeout,timefactory,localstoragefactory,$el
     $timeout(function() {
 
     try {
-      $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");  
-      $scope.currentTime = $scope.timeOptions[0];
-      localstoragefactory.set('wcTime',$scope.timeOptions[0]);  // <--- Initialize first time
-      angular.element("#radio_0").triggerHandler('click');
-      $scope.selectedItemChanged($scope.timeOptions[0]); 
+        $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");  
+        $scope.currentTime = $scope.timeOptions[0];
+        localstoragefactory.set('wcTime',$scope.timeOptions[0]);  // <--- Initialize first time
+        angular.element("#radio_0").triggerHandler('click');
+        $scope.selectedItemChanged($scope.timeOptions[0]); 
     } catch (e) {
-      var request = new XMLHttpRequest();
-      request.open('POST', '/initialize', false); 
-      request.send(null);
-      let data = JSON.parse(request.responseText);
-      // Initialize first by trying to store data - this week raw data
-      localstoragefactory.initialize(clone(data)); //thisWeekData
-      localstoragefactory.set('initial_data_from_api', clone(data)); // Create a copy 
-      // Process data and save it
-      localstoragefactory.set('processedData',dataProcessor.processThisWeek(data))
+        var request = new XMLHttpRequest();
+        request.open('POST', '/initialize', false); 
+        request.send(null);
+        let data = JSON.parse(request.responseText);
+        // Initialize first by trying to store data - this week raw data
+        localstoragefactory.initialize($scope.clone(data)); //thisWeekData
+        localstoragefactory.set('initial_data_from_api', $scope.clone(data)); // Create a copy 
+        // Process data and save it
+        localstoragefactory.set('processedData',dataProcessor.processThisWeek(data))
 
-      /// catch
-      $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");  
-      $scope.currentTime = $scope.timeOptions[0];
-      localstoragefactory.set('wcTime',$scope.timeOptions[0]);  // <--- Initialize first time
-      angular.element("#radio_0").triggerHandler('click');
-      $scope.selectedItemChanged($scope.timeOptions[0]); 
+        $timeout(function() {
+          /// catch
+          $scope.timeOptions  =  localstoragefactory.get("unique_timestamps");  
+          $scope.currentTime = $scope.timeOptions[0];
+          localstoragefactory.set('wcTime',$scope.timeOptions[0]);  // <--- Initialize first time
+          angular.element("#radio_0").triggerHandler('click');
+          $scope.selectedItemChanged($scope.timeOptions[0]); 
+        }, 500);
     }
     
-      }, 1000);
+      }, 500);
 
     $scope.selectedItemChanged = function(val){
       $scope.currentTime = val

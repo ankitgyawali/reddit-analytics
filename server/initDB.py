@@ -2,7 +2,7 @@ import sqlite3
 
 # Initialize tables
 def initializeDB(sql,tables,logging):
-    thisWeekView = 'CREATE VIEW IF NOT EXISTS thisWeek AS '
+    thisWeekView = 'CREATE VIEW thisWeek AS '
     viewselects = []
     for index, table in enumerate(tables):
         sql.cursor().execute('CREATE TABLE  IF NOT EXISTS "'+ table + '" ( "id" INTEGER NOT NULL PRIMARY KEY, "process_datetime" DATETIME DEFAULT CURRENT_TIMESTAMP, "reddit_id" TEXT, "sentiment" TEXT, "entities" TEXT,"catagories" TEXT)')
@@ -11,6 +11,7 @@ def initializeDB(sql,tables,logging):
         logging.info("Initialized table: " + table)
     thisWeekView += ' UNION ALL '.join(viewselects)
     logging.info(thisWeekView)
+    sql.cursor().execute('DROP VIEW IF EXISTS thisWeek')
     sql.cursor().execute(thisWeekView)
     sql.commit()
     return

@@ -37,9 +37,7 @@ router.post('/bydate', function(req, res) {
     // +'" WHERE DATE(process_datetime) >= DATE("now", "-7 days")');
     +'" WHERE DATE(process_datetime) LIKE "' + req.query.date + '"');
     }
-
     
-    console.log(query.join(" UNION ALL "))
     db.serialize(function() {
           db.all(query.join(" UNION ALL "), function(err, allRows) {
               if(err != null){

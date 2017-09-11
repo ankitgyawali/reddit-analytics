@@ -10,6 +10,10 @@
       function byDateController($timeout,notificationFactory,dataProcessor, $scope,CONSTANTS,$http,$rootScope,dataDecoratorfactory,
       $route,localstoragefactory,timefactory,_) {
     
+        $scope.clone = function (data){
+            return JSON.parse(JSON.stringify(data));
+        }
+
         $scope.setDate = function(){
             
             // console.log($scope.ctrl.myDate)
@@ -22,8 +26,8 @@
                 }
             }).success(function(data, status, headers, config) {
                     // Initialize first by trying to store data - this week raw data
-                    localstoragefactory.initialize(clone(data)); //thisWeekData
-                    localstoragefactory.set('initial_data_from_api', clone(data)); // Create a copy 
+                    localstoragefactory.initialize($scope.clone(data)); //thisWeekData
+                    localstoragefactory.set('initial_data_from_api', $scope.clone(data)); // Create a copy 
                     // Process data and save it
                     localstoragefactory.set('processedData',dataProcessor.processThisWeek(data));
                     notificationFactory.info("Local Storage dataset set to: "+
@@ -35,9 +39,7 @@
             });
         }
 
-        function clone(data){
-            return JSON.parse(JSON.stringify(data));
-        }
+   
 
         $scope.setThisWeekData = function(){
             $http({
@@ -49,8 +51,8 @@
                 }
             }).success(function(data, status, headers, config) {
                     // Initialize first by trying to store data - this week raw data
-                    localstoragefactory.initialize(clone(data)); //thisWeekData
-                    localstoragefactory.set('initial_data_from_api', clone(data)); // Create a copy 
+                    localstoragefactory.initialize($scope.clone(data)); //thisWeekData
+                    localstoragefactory.set('initial_data_from_api', $scope.clone(data)); // Create a copy 
                     // Process data and save it
                     localstoragefactory.set('processedData',dataProcessor.processThisWeek(data));
                     notificationFactory.info("Local Storage dataset set to this week's.")
